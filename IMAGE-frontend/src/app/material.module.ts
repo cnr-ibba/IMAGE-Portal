@@ -1,8 +1,9 @@
 import {NgModule} from '@angular/core';
+import {MatSidenavModule} from "@angular/material";
 
 @NgModule({
-  imports: [],
-  exports: []
+  imports: [MatSidenavModule],
+  exports: [MatSidenavModule]
 })
 export class MaterialModule {}
 
