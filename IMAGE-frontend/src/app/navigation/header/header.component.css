@@ -17,3 +17,8 @@ a:hover, a:active {
   display: inline-block;
   padding-left: 6px;
 }
+
+.logo-image {
+  height: 5%;
+  width: 5%;
+}
