@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from "@angular/router";
-import {TablesService} from "../../tables.service";
+import {ActivatedRoute, Params} from '@angular/router';
+import {TablesService} from '../../tables.service';
 
 @Component({
   selector: 'app-organism',

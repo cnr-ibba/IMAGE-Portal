@@ -31,4 +31,12 @@ export class TablesService {
       }
     }
   }
+
+  getSpecimen(specimenId: string) {
+    for (const item of this.data) {
+      if (item['accession'] === specimenId) {
+        return item;
+      }
+    }
+  }
 }
