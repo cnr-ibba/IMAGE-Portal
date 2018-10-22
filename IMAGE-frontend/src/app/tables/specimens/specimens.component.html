@@ -1,4 +1,10 @@
 <app-filters></app-filters>
+<div class="download-button">
+  <mat-chip>
+    Download data
+    <mat-icon>save</mat-icon>
+  </mat-chip>
+</div>
 <mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</mat-header-cell>

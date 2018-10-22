@@ -55,12 +55,14 @@
 </mat-expansion-panel>
 
 <h3>Active filters:</h3>
-<mat-chip-list class="active-filters">
-  <mat-chip [removable]="true">
-    One fish
-    <mat-icon>cancel</mat-icon>
-  </mat-chip>
-  <mat-chip color="primary" selected>Primary fish<mat-icon>cancel</mat-icon></mat-chip>
-  <mat-chip color="accent" selected>Accent fish<mat-icon>cancel</mat-icon></mat-chip>
-  <mat-chip color="warn" selected>One fish<mat-icon>cancel</mat-icon></mat-chip>
-</mat-chip-list>
+<div class="active-filters">
+  <mat-chip-list>
+    <mat-chip [removable]="true">
+      One fish
+      <mat-icon>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip color="primary" selected>Primary fish<mat-icon>cancel</mat-icon></mat-chip>
+    <mat-chip color="accent" selected>Accent fish<mat-icon>cancel</mat-icon></mat-chip>
+    <mat-chip color="warn" selected>One fish<mat-icon>cancel</mat-icon></mat-chip>
+  </mat-chip-list>
+</div>
