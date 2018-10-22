@@ -23,4 +23,12 @@ export class TablesService {
     }
     return specimens;
   }
+
+  getOrganism(organismId: string) {
+    for (const item of this.data) {
+      if (item['accession'] === organismId) {
+        return item;
+      }
+    }
+  }
 }

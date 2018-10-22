@@ -5,17 +5,21 @@ import {MaterialModule} from '../material.module';
 import { OrganismsComponent } from './organisms/organisms.component';
 import { SpecimensComponent } from './specimens/specimens.component';
 import { ExperimentsComponent } from './experiments/experiments.component';
+import { OrganismComponent } from './organisms/organism/organism.component';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
     TablesComponent,
     OrganismsComponent,
     SpecimensComponent,
-    ExperimentsComponent
+    ExperimentsComponent,
+    OrganismComponent
   ],
   imports: [
     TablesRoutingModule,
-    MaterialModule
+    MaterialModule,
+    CommonModule
   ]
 })
 export class TablesModule {}

@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {
+  MatCardModule, MatDividerModule,
   MatExpansionModule,
   MatIconModule,
   MatListModule, MatPaginatorModule,
@@ -17,7 +18,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatExpansionModule,
-    MatSortModule
+    MatSortModule,
+    MatCardModule,
+    MatDividerModule
   ],
   exports: [
     MatSidenavModule,
@@ -28,7 +31,9 @@ import {
     MatTableModule,
     MatPaginatorModule,
     MatExpansionModule,
-    MatSortModule
+    MatSortModule,
+    MatCardModule,
+    MatDividerModule
   ]
 })
 export class MaterialModule {}

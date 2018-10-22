@@ -8,7 +8,7 @@
 <mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element.accession }}</mat-cell>
+    <mat-cell *matCellDef="let element"><a [routerLink]="['organism', element.accession]">{{ element.accession }}</a></mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="species">

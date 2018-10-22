@@ -1,0 +1,105 @@
+<section class="organism-details" fxLayout fxLayoutAlign="center">
+  <mat-card fxFlex.xs="100%" fxFlex="400px">
+    <mat-card-title fxLayoutAlign="center"><b>Organism: </b>{{ id }}</mat-card-title>
+    <mat-card-content fxLayoutAlign="center">
+      <p *ngIf="data['characteristics']['Alternative id']">
+        <b>Alternative id: </b> {{ data['characteristics']['Alternative id'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Submission title']">
+        <b>Submission title: </b> {{ data['characteristics']['Submission title'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Material']">
+        <b>Material: </b> {{ data['characteristics']['Material'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Person last name']">
+        <b>Person last name: </b> {{ data['characteristics']['Person last name'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Person email']">
+        <b>Person email: </b> {{ data['characteristics']['Person email'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Person affiliation']">
+        <b>Person affiliation: </b> {{ data['characteristics']['Person affiliation'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Person role']">
+        <b>Person role: </b> {{ data['characteristics']['Person role'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Organization name']">
+        <b>Organization name: </b> {{ data['characteristics']['Organization name'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Organization role']">
+        <b>Organization role: </b> {{ data['characteristics']['Organization role'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Gene bank name']">
+        <b>Gene bank name: </b> {{ data['characteristics']['Gene bank name'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Gene bank country']">
+        <b>Gene bank country: </b> {{ data['characteristics']['Gene bank country'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Data source type']">
+        <b>Data source type: </b> {{ data['characteristics']['Data source type'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Data source version']">
+        <b>Data source version: </b> {{ data['characteristics']['Data source version'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Species']">
+        <b>Species: </b> {{ data['characteristics']['Species'][0]['text'] }}
+      </p>
+      <mat-divider [inset]="true"></mat-divider>
+      <p *ngIf="data['characteristics']['Submission description']">
+        <b>Submission description: </b> {{ data['characteristics']['Submission description'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Person first name']">
+        <b>Person first name: </b> {{ data['characteristics']['Person first name'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Organization address']">
+        <b>Organization address: </b> {{ data['characteristics']['Organization address'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Organization country']">
+        <b>Organization country: </b> {{ data['characteristics']['Organization country'][0]['text'] }}
+      </p>
+      <mat-divider [inset]="true"></mat-divider>
+      <p *ngIf="data['characteristics']['Description']">
+        <b>Description: </b> {{ data['characteristics']['Description'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Person initial']">
+        <b>Person initial: </b> {{ data['characteristics']['Person initial'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Organization uri']">
+        <b>Organization uri: </b> {{ data['characteristics']['Organization uri'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Publication DOI']">
+        <b>Publication DOI: </b> {{ data['characteristics']['Publication DOI'][0]['text'] }}
+      </p>
+      <mat-divider [inset]="true"></mat-divider>
+      <p *ngIf="data['characteristics']['Supplied breed']">
+        <b>Supplied breed: </b> {{ data['characteristics']['Supplied breed'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['EFABIS Breed country']">
+        <b>EFABIS Breed country: </b> {{ data['characteristics']['EFABIS Breed country'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Sex']">
+        <b>Sex: </b> {{ data['characteristics']['Sex'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Birth location accuracy']">
+        <b>Birth location accuracy: </b> {{ data['characteristics']['Birth location accuracy'][0]['text'] }}
+      </p>
+      <mat-divider [inset]="true"></mat-divider>
+      <p *ngIf="data['characteristics']['Mapped breed']">
+        <b>Mapped breed: </b> {{ data['characteristics']['Mapped breed'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Birth location']">
+        <b>Birth location: </b> {{ data['characteristics']['Birth location'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Birth location longitude']">
+        <b>Birth location longitude: </b> {{ data['characteristics']['Birth location longitude'][0]['text'] }}
+      </p>
+      <p *ngIf="data['characteristics']['Birth location latitude']">
+        <b>Birth location latitude: </b> {{ data['characteristics']['Birth location latitude'][0]['text'] }}
+      </p>
+      <mat-divider [inset]="true"></mat-divider>
+      <p *ngIf="data['characteristics']['Child of']">
+        <b>Child of: </b> {{ data['characteristics']['Child of'][0]['text'] }}
+      </p>
+    </mat-card-content>
+  </mat-card>
+</section>
