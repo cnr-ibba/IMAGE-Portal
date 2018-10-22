@@ -1,4 +1,24 @@
-<app-filters></app-filters>
+<mat-expansion-panel>
+  <mat-expansion-panel-header>
+    <h3>Filters:</h3>
+  </mat-expansion-panel-header>
+  <app-filters title="Data source ID"></app-filters>
+  <app-filters title="Species"></app-filters>
+  <app-filters title="Derived from"></app-filters>
+  <app-filters title="Organism part"></app-filters>
+</mat-expansion-panel>
+<h3>Active filters:</h3>
+<div class="active-filters">
+  <mat-chip-list>
+    <mat-chip [removable]="true">
+      One fish
+      <mat-icon>cancel</mat-icon>
+    </mat-chip>
+    <mat-chip color="primary" selected>Primary fish<mat-icon>cancel</mat-icon></mat-chip>
+    <mat-chip color="accent" selected>Accent fish<mat-icon>cancel</mat-icon></mat-chip>
+    <mat-chip color="warn" selected>One fish<mat-icon>cancel</mat-icon></mat-chip>
+  </mat-chip-list>
+</div>
 <div class="download-button">
   <mat-chip>
     Download data

@@ -39,4 +39,12 @@ export class TablesService {
       }
     }
   }
+
+  getOrganismFilter(filterId: string) {
+
+  }
+
+  getSpecimenFilter(filterId: string) {
+
+  }
 }
