@@ -8,6 +8,7 @@ import { ExperimentsComponent } from './experiments/experiments.component';
 import { OrganismComponent } from './organisms/organism/organism.component';
 import {CommonModule} from '@angular/common';
 import { SpecimenComponent } from './specimens/specimen/specimen.component';
+import { FiltersComponent } from './filters/filters.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SpecimenComponent } from './specimens/specimen/specimen.component';
     SpecimensComponent,
     ExperimentsComponent,
     OrganismComponent,
-    SpecimenComponent
+    SpecimenComponent,
+    FiltersComponent
   ],
   imports: [
     TablesRoutingModule,

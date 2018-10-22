@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {
   MatCardModule, MatDividerModule,
-  MatExpansionModule,
+  MatExpansionModule, MatGridListModule,
   MatIconModule,
   MatListModule, MatPaginatorModule,
   MatSidenavModule, MatSortModule, MatTableModule, MatTabsModule,
@@ -20,7 +20,8 @@ import {
     MatExpansionModule,
     MatSortModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatGridListModule
   ],
   exports: [
     MatSidenavModule,
@@ -33,7 +34,8 @@ import {
     MatExpansionModule,
     MatSortModule,
     MatCardModule,
-    MatDividerModule
+    MatDividerModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule {}
