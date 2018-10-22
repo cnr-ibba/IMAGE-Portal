@@ -41,10 +41,22 @@ export class TablesService {
   }
 
   getOrganismFilter(filterId: string) {
-
+    const organisms = this.getOrganisms();
+    const results = {};
+    for (const organism of organisms) {
+      const key = organism['characteristics'][filterId][0]['text'];
+      results.hasOwnProperty(key) ? results[key] +=1 : results[key] = 1;
+    }
+    return results;
   }
 
   getSpecimenFilter(filterId: string) {
-
+    const specimens = this.getSpecimens();
+    const results = {};
+    for (const specimen of specimens) {
+      const key = specimen['characteristics'][filterId][0]['text'];
+      results.hasOwnProperty(key) ? results[key] +=1 : results[key] = 1;
+    }
+    return results;
   }
 }

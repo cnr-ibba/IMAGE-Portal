@@ -21,3 +21,7 @@ a:hover, a:active {
 h3 {
   margin-left: 10px;
 }
+
+mat-icon {
+  margin-left: 5px;
+}
