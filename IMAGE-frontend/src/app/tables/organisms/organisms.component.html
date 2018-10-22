@@ -1,27 +1,34 @@
-<mat-table [dataSource]="dataSource" matSort fxFlex="60">
+<!--<mat-expansion-panel>-->
+  <!--<mat-expansion-panel-header>-->
+    <!--Filters:-->
+  <!--</mat-expansion-panel-header>-->
+  <!--This the expansion 1 content-->
+<!--</mat-expansion-panel>-->
+
+<mat-table [dataSource]="dataSource" matSort>
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ element.accession }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="species">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Species</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ element['characteristics']['Species'][0]['text'] }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="breed">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ element['characteristics']['Supplied breed'][0]['text'] }}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="sex">
     <mat-header-cell *matHeaderCellDef mat-sort-header>Sex</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element }}</mat-cell>
+    <mat-cell *matCellDef="let element">{{ element['characteristics']['Sex'][0]['text'] }}</mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
   <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 </mat-table>
 
-<mat-paginator [pageSize]="10" [pageSizeOptions]="[10, 20, 50, 100]">
+<mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 10, 20, 50, 100]" showFirstLastButtons>
 </mat-paginator>

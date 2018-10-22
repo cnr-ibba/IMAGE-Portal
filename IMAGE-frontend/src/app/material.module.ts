@@ -3,7 +3,7 @@ import {
   MatExpansionModule,
   MatIconModule,
   MatListModule, MatPaginatorModule,
-  MatSidenavModule, MatTableModule, MatTabsModule,
+  MatSidenavModule, MatSortModule, MatTableModule, MatTabsModule,
   MatToolbarModule
 } from '@angular/material';
 
@@ -16,7 +16,8 @@ import {
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSortModule
   ],
   exports: [
     MatSidenavModule,
@@ -26,7 +27,8 @@ import {
     MatTabsModule,
     MatTableModule,
     MatPaginatorModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatSortModule
   ]
 })
 export class MaterialModule {}

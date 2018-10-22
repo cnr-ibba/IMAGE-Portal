@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import {MatTableDataSource} from '@angular/material';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {TablesService} from "../tables.service";
 
 @Component({
   selector: 'app-specimens',
@@ -8,11 +9,16 @@ import {MatTableDataSource} from '@angular/material';
 })
 export class SpecimensComponent implements OnInit {
   displayedColumns = ['id', 'species', 'derived', 'organism'];
-  dataSource = new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource(this.tablesService.getSpecimens());
 
-  constructor() { }
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  constructor(private tablesService: TablesService) { }
 
   ngOnInit() {
+    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator;
   }
 
 }

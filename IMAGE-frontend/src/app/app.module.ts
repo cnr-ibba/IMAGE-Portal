@@ -11,6 +11,7 @@ import { HeaderComponent } from './navigation/header/header.component';
 import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
+import {TablesService} from "./tables/tables.service";
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { SearchComponent } from './search/search.component';
     FlexLayoutModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [TablesService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
