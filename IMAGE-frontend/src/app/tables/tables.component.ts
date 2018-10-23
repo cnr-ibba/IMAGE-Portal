@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TablesService} from './tables.service';
 
 @Component({
   selector: 'app-tables',
@@ -7,9 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TablesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tablesService: TablesService) { }
 
   ngOnInit() {
+  }
+
+  onClick($event: any) {
+    if ($event.srcElement.textContent === 'Organisms' ||
+      $event.srcElement.textContent === 'Specimens' ||
+      $event.srcElement.textContent === 'Experiments') {
+      this.emptyActiveFilters();
+    }
+  }
+
+  emptyActiveFilters() {
+    this.tablesService.emptyActiveFilters();
   }
 
 }
