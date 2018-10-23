@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TablesService} from './tables.service';
 
 @Component({
   selector: 'app-tables',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class TablesComponent implements OnInit {
 
-  constructor() { }
+  constructor(private tableService: TablesService) { }
 
   ngOnInit() {
+  }
+
+  onClick() {
+    this.tableService.emptyActiveFilters();
   }
 
 }

@@ -24,11 +24,9 @@ export class FiltersComponent implements OnInit {
 
   onClick(filterItem: string) {
     this.tableService.addRemoveActiveFilters(filterItem);
-    // console.log(this.tableService.activeFilters);
   }
 
   isSelected(filterItem: string) {
-    // console.log(filterItem);
     if (typeof this.tableService.activeFilters !== 'undefined') {
       return this.tableService.activeFilters.indexOf(filterItem) !== -1;
     } else {

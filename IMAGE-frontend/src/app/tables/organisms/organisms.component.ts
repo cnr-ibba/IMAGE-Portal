@@ -1,16 +1,18 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {TablesService} from '../tables.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-organisms',
   templateUrl: './organisms.component.html',
   styleUrls: ['./organisms.component.css']
 })
-export class OrganismsComponent implements OnInit, AfterViewInit {
+export class OrganismsComponent implements OnInit, AfterViewInit, OnDestroy {
   displayedColumns = ['id', 'species', 'breed', 'sex'];
   dataSource = new MatTableDataSource(this.tablesService.getOrganisms());
-  activeFilters: string[];
+  activeFilters;
+  activeFiltersSubscription: Subscription;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -20,7 +22,9 @@ export class OrganismsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
-    this.activeFilters = this.tablesService.activeFilters;
+    this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
+      this.activeFilters = data;
+    });
   }
 
   ngAfterViewInit() {
@@ -28,6 +32,10 @@ export class OrganismsComponent implements OnInit, AfterViewInit {
 
   hasActiveFilters() {
     return this.tablesService.activeFilters.length !== 0;
+  }
+
+  ngOnDestroy() {
+    this.activeFiltersSubscription.unsubscribe();
   }
 
 }
