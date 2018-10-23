@@ -8,7 +8,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './organisms.component.html',
   styleUrls: ['./organisms.component.css']
 })
-export class OrganismsComponent implements OnInit, AfterViewInit, OnDestroy {
+export class OrganismsComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'species', 'breed', 'sex'];
   dataSource = new MatTableDataSource(this.tablesService.getOrganisms());
   activeFilters;
@@ -27,11 +27,12 @@ export class OrganismsComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit() {
-  }
-
   hasActiveFilters() {
     return this.tablesService.activeFilters.length !== 0;
+  }
+
+  onRemoveActiveFilter(filterItem: string) {
+    this.tablesService.addRemoveActiveFilters(filterItem);
   }
 
   ngOnDestroy() {

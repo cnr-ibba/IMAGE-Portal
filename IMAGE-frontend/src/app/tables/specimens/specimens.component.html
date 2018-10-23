@@ -9,7 +9,9 @@
 <div class="active-filters" *ngIf="hasActiveFilters()">
   <h3>Active filters:</h3>
   <mat-chip-list>
-    <mat-chip *ngFor="let filter of activeFilters" color="warn" selected>{{ filter }}<mat-icon matChipRemove>cancel</mat-icon></mat-chip>
+    <mat-chip *ngFor="let filter of activeFilters" color="warn" selected>{{ filter }}
+      <mat-icon matChipRemove (click)="onRemoveActiveFilter(filter)">cancel</mat-icon>
+    </mat-chip>
   </mat-chip-list>
 </div>
 <div class="download-button">
