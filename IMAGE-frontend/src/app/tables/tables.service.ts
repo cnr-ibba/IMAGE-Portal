@@ -48,7 +48,7 @@ export class TablesService {
     const results = {};
     for (const organism of organisms) {
       const key = organism['characteristics'][filterId][0]['text'];
-      results.hasOwnProperty(key) ? results[key] +=1 : results[key] = 1;
+      results.hasOwnProperty(key) ? results[key] += 1 : results[key] = 1;
     }
     return results;
   }
@@ -58,7 +58,7 @@ export class TablesService {
     const results = {};
     for (const specimen of specimens) {
       const key = specimen['characteristics'][filterId][0]['text'];
-      results.hasOwnProperty(key) ? results[key] +=1 : results[key] = 1;
+      results.hasOwnProperty(key) ? results[key] += 1 : results[key] = 1;
     }
     return results;
   }

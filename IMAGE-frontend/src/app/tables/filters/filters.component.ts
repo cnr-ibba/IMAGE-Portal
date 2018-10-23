@@ -1,15 +1,18 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TablesService} from '../tables.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-filters',
   templateUrl: './filters.component.html',
   styleUrls: ['./filters.component.css']
 })
-export class FiltersComponent implements OnInit {
+export class FiltersComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() tab: string;
   filters;
+  activeFilters;
+  activeFilterSubscription: Subscription;
 
   constructor(private tableService: TablesService) { }
 
@@ -20,6 +23,10 @@ export class FiltersComponent implements OnInit {
       this.filters = this.tableService.getSpecimenFilter(this.title);
     }
     this.filters = Object.entries(this.filters);
+    // console.log(this.filters);
+    this.activeFilterSubscription = this.tableService.filtersChanged.subscribe(data => {
+      this.activeFilters = data;
+    });
   }
 
   onClick(filterItem: string) {
@@ -27,11 +34,15 @@ export class FiltersComponent implements OnInit {
   }
 
   isSelected(filterItem: string) {
-    if (typeof this.tableService.activeFilters !== 'undefined') {
-      return this.tableService.activeFilters.indexOf(filterItem) !== -1;
-    } else {
+    if (typeof this.activeFilters === 'undefined') {
       return false;
+    } else {
+      return this.activeFilters.indexOf(filterItem) !== -1;
     }
+  }
+
+  ngOnDestroy() {
+    this.activeFilterSubscription.unsubscribe();
   }
 
 }
