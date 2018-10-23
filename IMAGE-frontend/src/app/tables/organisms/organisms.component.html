@@ -6,20 +6,14 @@
   <app-filters title="Supplied breed" tab="organism"></app-filters>
   <app-filters title="Sex" tab="organism"></app-filters>
 </mat-expansion-panel>
-<h3>Active filters:</h3>
-<div class="active-filters">
+<div class="active-filters" *ngIf="hasActiveFilters()">
+  <h3>Active filters:</h3>
   <mat-chip-list>
-    <mat-chip [removable]="true">
-      One fish
-      <mat-icon>cancel</mat-icon>
-    </mat-chip>
-  <mat-chip color="primary" selected>Primary fish<mat-icon>cancel</mat-icon></mat-chip>
-  <mat-chip color="accent" selected>Accent fish<mat-icon>cancel</mat-icon></mat-chip>
-  <mat-chip color="warn" selected>One fish<mat-icon>cancel</mat-icon></mat-chip>
+    <mat-chip *ngFor="let filter of activeFilters" color="warn" selected>{{ filter }}<mat-icon>cancel</mat-icon></mat-chip>
   </mat-chip-list>
 </div>
 <div class="download-button">
-  <mat-chip>
+  <mat-chip color="primary" selected>
     Download data
     <mat-icon>save</mat-icon>
   </mat-chip>

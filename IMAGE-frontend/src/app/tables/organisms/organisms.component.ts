@@ -10,6 +10,7 @@ import {TablesService} from '../tables.service';
 export class OrganismsComponent implements OnInit, AfterViewInit {
   displayedColumns = ['id', 'species', 'breed', 'sex'];
   dataSource = new MatTableDataSource(this.tablesService.getOrganisms());
+  activeFilters: string[];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -19,9 +20,14 @@ export class OrganismsComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.activeFilters = this.tablesService.activeFilters;
   }
 
   ngAfterViewInit() {
+  }
+
+  hasActiveFilters() {
+    return this.tablesService.activeFilters.length !== 0;
   }
 
 }

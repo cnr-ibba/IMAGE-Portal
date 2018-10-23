@@ -3,7 +3,7 @@
     {{ title }}
   </mat-expansion-panel-header>
   <mat-chip-list>
-    <mat-chip *ngFor="let filter of filters">
+    <mat-chip *ngFor="let filter of filters" [selected]="isSelected(filter[0])" (click)="onClick(filter[0])" color="accent">
       {{ filter[0] }}:  <b>{{ filter[1] }}</b>
     </mat-chip>
   </mat-chip-list>

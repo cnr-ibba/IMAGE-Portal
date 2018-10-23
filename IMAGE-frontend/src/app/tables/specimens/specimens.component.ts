@@ -10,6 +10,7 @@ import {TablesService} from "../tables.service";
 export class SpecimensComponent implements OnInit {
   displayedColumns = ['id', 'species', 'derived', 'organism'];
   dataSource = new MatTableDataSource(this.tablesService.getSpecimens());
+  activeFilters: string[];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -19,6 +20,11 @@ export class SpecimensComponent implements OnInit {
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
+    this.activeFilters = this.tablesService.activeFilters;
+  }
+
+  hasActiveFilters() {
+    return this.tablesService.activeFilters.length !== 0;
   }
 
 }
