@@ -9,6 +9,12 @@
 <div class="active-filters" *ngIf="hasActiveFilters()">
   <h3>Active filters:</h3>
   <mat-chip-list>
+    <mat-chip>
+      Remove all filters
+      <mat-icon matChipRemove (click)="emptyActiveFilters()">cancel</mat-icon>
+    </mat-chip>
+  </mat-chip-list>
+  <mat-chip-list>
     <ng-container *ngFor="let filter of activeFilters">
       <mat-chip *ngFor="let item of filter[1]" color="warn" selected>{{ item }}
         <mat-icon matChipRemove (click)="onRemoveActiveFilter(item, filter[0])">cancel</mat-icon>

@@ -103,6 +103,10 @@ export class SpecimensComponent implements OnInit, OnDestroy {
     return field === value;
   }
 
+  emptyActiveFilters() {
+    this.tablesService.emptyActiveFilters();
+  }
+
   ngOnDestroy() {
     this.activeFiltersSubscription.unsubscribe();
   }
