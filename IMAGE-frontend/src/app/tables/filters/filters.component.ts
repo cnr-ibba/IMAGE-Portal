@@ -23,21 +23,21 @@ export class FiltersComponent implements OnInit, OnDestroy {
       this.filters = this.tableService.getSpecimenFilter(this.title);
     }
     this.filters = Object.entries(this.filters);
-    // console.log(this.filters);
     this.activeFilterSubscription = this.tableService.filtersChanged.subscribe(data => {
       this.activeFilters = data;
     });
   }
 
-  onClick(filterItem: string) {
-    this.tableService.addRemoveActiveFilters(filterItem);
+  onClick(filterItem: string, title: string) {
+    this.tableService.addRemoveActiveFilters(filterItem, title);
   }
 
-  isSelected(filterItem: string) {
+  isSelected(filterItem: string, title: string) {
+    const key = this.tableService.convertTitleToKey(title);
     if (typeof this.activeFilters === 'undefined') {
       return false;
     } else {
-      return this.activeFilters.indexOf(filterItem) !== -1;
+      return this.activeFilters[key].indexOf(filterItem) !== -1;
     }
   }
 
