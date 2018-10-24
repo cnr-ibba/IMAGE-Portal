@@ -25,3 +25,12 @@ h3 {
 mat-icon {
   margin-left: 5px;
 }
+
+table {
+  width: 100%;
+}
+
+.sticky-header {
+  height: 400px;
+  overflow: auto;
+}

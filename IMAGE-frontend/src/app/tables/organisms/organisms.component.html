@@ -20,30 +20,32 @@
     <mat-icon>save</mat-icon>
   </mat-chip>
 </div>
-<mat-table [dataSource]="dataSource" matSort>
-  <ng-container matColumnDef="id">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</mat-header-cell>
-    <mat-cell *matCellDef="let element"><a [routerLink]="['organism', element.accession]">{{ element.accession }}</a></mat-cell>
-  </ng-container>
+<div class="sticky-header">
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</th>
+      <td mat-cell *matCellDef="let element"><a [routerLink]="['organism', element.accession]">{{ element.accession }}</a></td>
+    </ng-container>
 
-  <ng-container matColumnDef="species">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Species</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element['characteristics']['Species'][0]['text'] }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="species">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Species</th>
+      <td mat-cell *matCellDef="let element">{{ element['characteristics']['Species'][0]['text'] }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="breed">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element['characteristics']['Supplied breed'][0]['text'] }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="breed">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</th>
+      <td mat-cell *matCellDef="let element">{{ element['characteristics']['Supplied breed'][0]['text'] }}</td>
+    </ng-container>
 
-  <ng-container matColumnDef="sex">
-    <mat-header-cell *matHeaderCellDef mat-sort-header>Sex</mat-header-cell>
-    <mat-cell *matCellDef="let element">{{ element['characteristics']['Sex'][0]['text'] }}</mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="sex">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sex</th>
+      <td mat-cell *matCellDef="let element">{{ element['characteristics']['Sex'][0]['text'] }}</td>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
-</mat-table>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
 
 <mat-paginator [pageSize]="3" [pageSizeOptions]="[3, 10, 20, 50, 100]" showFirstLastButtons>
 </mat-paginator>
