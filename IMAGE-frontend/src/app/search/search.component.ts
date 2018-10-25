@@ -15,17 +15,21 @@ export class SearchComponent implements OnInit {
   displayedColumnsSpecimens = ['id', 'species', 'derived', 'organism'];
 
   constructor(private tablesService: TablesService) {
-    this.dataSourceOrganism = new MatTableDataSource(this.tablesService.getOrganisms());
-    this.dataSourceSpecimen = new MatTableDataSource(this.tablesService.getSpecimens());
+    this.dataSourceOrganism = new MatTableDataSource(this.tablesService.organismsData);
+    this.dataSourceSpecimen = new MatTableDataSource(this.tablesService.specimensData);
   }
 
   ngOnInit() {
   }
 
   applyFilter(filterValue: string) {
-    this.showResults = true;
-    this.dataSourceSpecimen.filter = filterValue.trim().toLowerCase();
-    this.dataSourceOrganism.filter = filterValue.trim().toLowerCase();
+    if (filterValue === '') {
+      this.showResults = false;
+    } else {
+      this.showResults = true;
+      this.dataSourceSpecimen.filter = filterValue.trim().toLowerCase();
+      this.dataSourceOrganism.filter = filterValue.trim().toLowerCase();
+    }
   }
 
 }
