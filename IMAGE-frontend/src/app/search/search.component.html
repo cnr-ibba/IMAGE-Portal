@@ -10,7 +10,7 @@
     <table mat-table [dataSource]="dataSourceOrganism">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['organism', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'organism', element.id]">{{ element.id }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
@@ -37,7 +37,7 @@
     <table mat-table [dataSource]="dataSourceSpecimen">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['specimen', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'specimen', element.id]">{{ element.id }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
