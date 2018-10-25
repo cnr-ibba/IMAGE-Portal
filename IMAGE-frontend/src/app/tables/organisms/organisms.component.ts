@@ -10,14 +10,15 @@ import {Subscription} from 'rxjs';
 })
 export class OrganismsComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'species', 'breed', 'sex'];
-  dataSource = new MatTableDataSource(this.tablesService.getOrganisms());
   activeFilters;
   activeFiltersSubscription: Subscription;
+  dataSource: any;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private tablesService: TablesService) {
+    this.dataSource = new MatTableDataSource(this.tablesService.getOrganisms());
     this.dataSource.filterPredicate = (data, filter) => {
       if (!this.hasActiveFilters()) {
         return true;
