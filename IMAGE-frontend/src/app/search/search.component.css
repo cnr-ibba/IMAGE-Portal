@@ -1,0 +1,17 @@
+a {
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+a:hover, a:active {
+  color: lightgrey;
+}
+
+table {
+  width: 100%;
+}
+
+.sticky-header {
+  height: 400px;
+  overflow: auto;
+}

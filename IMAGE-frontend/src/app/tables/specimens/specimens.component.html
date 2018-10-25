@@ -32,22 +32,22 @@
   <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
     <ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</th>
-      <td mat-cell *matCellDef="let element"><a [routerLink]="['specimen', element.accession]">{{ element.accession }}</a></td>
+      <td mat-cell *matCellDef="let element"><a [routerLink]="['specimen', element.id]">{{ element.id }}</a></td>
     </ng-container>
 
     <ng-container matColumnDef="species">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Species</th>
-      <td mat-cell *matCellDef="let element">{{ element['characteristics']['Species'][0]['text'] }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.species }}</td>
     </ng-container>
 
     <ng-container matColumnDef="derived">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Derived from</th>
-      <td mat-cell *matCellDef="let element">{{ element['characteristics']['Derived from'][0]['text'] }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.derived }}</td>
     </ng-container>
 
     <ng-container matColumnDef="organism">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Organism part</th>
-      <td mat-cell *matCellDef="let element">{{ element['characteristics']['Organism part'][0]['text'] }}</td>
+      <td mat-cell *matCellDef="let element">{{ element.organismPart }}</td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

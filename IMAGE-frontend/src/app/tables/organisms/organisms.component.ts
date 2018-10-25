@@ -18,7 +18,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private tablesService: TablesService) {
-    this.dataSource = new MatTableDataSource(this.tablesService.getOrganisms());
+    this.dataSource = new MatTableDataSource(this.tablesService.organismsData);
     this.dataSource.filterPredicate = (data, filter) => {
       if (!this.hasActiveFilters()) {
         return true;
@@ -31,8 +31,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
               willBeIn[0] = true;
             } else {
               for (const value of item[1]) {
-                const field = data['characteristics']['Species'][0]['text'];
-                if (this.checkValueIn(field, value) === true) {
+                if (this.checkValueIn(data.species, value) === true) {
                   willBeIn[0] = true;
                 }
               }
@@ -44,8 +43,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
               willBeIn[1] = true;
             } else {
               for (const value of item[1]) {
-                const field = data['characteristics']['Supplied breed'][0]['text'];
-                if (this.checkValueIn(field, value) === true) {
+                if (this.checkValueIn(data.breed, value) === true) {
                   willBeIn[1] = true;
                 }
               }
@@ -57,8 +55,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
               willBeIn[2] = true;
             } else {
               for (const value of item[1]) {
-                const field = data['characteristics']['Sex'][0]['text'];
-                if (this.checkValueIn(field, value) === true) {
+                if (this.checkValueIn(data.sex, value) === true) {
                   willBeIn[2] = true;
                 }
               }

@@ -18,7 +18,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(private tablesService: TablesService) {
-    this.dataSource = new MatTableDataSource(this.tablesService.getSpecimens());
+    this.dataSource = new MatTableDataSource(this.tablesService.specimensData);
     this.dataSource.filterPredicate = (data, filter) => {
       if (!this.hasActiveFilters()) {
         return true;
@@ -31,8 +31,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
               willBeIn[0] = true;
             } else {
               for (const value of item[1]) {
-                const field = data['characteristics']['Species'][0]['text'];
-                if (this.checkValueIn(field, value) === true) {
+                if (this.checkValueIn(data.species, value) === true) {
                   willBeIn[0] = true;
                 }
               }
@@ -44,8 +43,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
               willBeIn[1] = true;
             } else {
               for (const value of item[1]) {
-                const field = data['characteristics']['Derived from'][0]['text'];
-                if (this.checkValueIn(field, value) === true) {
+                if (this.checkValueIn(data.derived, value) === true) {
                   willBeIn[1] = true;
                 }
               }
@@ -57,8 +55,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
               willBeIn[2] = true;
             } else {
               for (const value of item[1]) {
-                const field = data['characteristics']['Organism part'][0]['text'];
-                if (this.checkValueIn(field, value) === true) {
+                if (this.checkValueIn(data.organismPart, value) === true) {
                   willBeIn[2] = true;
                 }
               }
