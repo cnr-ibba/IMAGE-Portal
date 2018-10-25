@@ -47,6 +47,17 @@ export class TablesService {
     {id: 'SAMEA5159546', species: 'Capra hircus', derived: 'ANIMAL:::ID:::VERCH1539971_2010', organismPart: 'Semen'},
     {id: 'SAMEA5159547', species: 'Capra hircus', derived: 'ANIMAL:::ID:::VERCH1539971_2010', organismPart: 'Blood'},
   ];
+
+  optionsCsv = {
+    fieldSeparator: ',',
+    quoteStrings: '"',
+    decimalseparator: '.',
+    showLabels: false,
+    headers: [],
+    useBom: false,
+    removeNewLines: true,
+  };
+
   activeFilters = {
     species: [],
     breed: [],

@@ -12,6 +12,7 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import {TablesService} from './tables/tables.service';
+import {Angular2CsvModule} from "angular2-csv";
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {TablesService} from './tables/tables.service';
     BrowserAnimationsModule,
     MaterialModule,
     FlexLayoutModule,
-    AppRoutingModule
+    AppRoutingModule,
+    Angular2CsvModule
   ],
   providers: [TablesService],
   bootstrap: [AppComponent]

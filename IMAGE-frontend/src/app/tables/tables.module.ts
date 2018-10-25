@@ -10,6 +10,7 @@ import { ExperimentsComponent } from './experiments/experiments.component';
 import { OrganismComponent } from './organisms/organism/organism.component';
 import { SpecimenComponent } from './specimens/specimen/specimen.component';
 import { FiltersComponent } from './filters/filters.component';
+import { ExportComponent } from './export/export.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FiltersComponent } from './filters/filters.component';
     ExperimentsComponent,
     OrganismComponent,
     SpecimenComponent,
-    FiltersComponent
+    FiltersComponent,
+    ExportComponent
   ],
   imports: [
     TablesRoutingModule,

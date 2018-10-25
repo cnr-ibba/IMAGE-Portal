@@ -23,10 +23,10 @@
   </mat-chip-list>
 </div>
 <div class="download-button">
-  <mat-chip color="primary" selected>
+  <app-export [data]="exportData" [filename]="'image_data'" [options]="optionsCsv">
     Download data
     <mat-icon>save</mat-icon>
-  </mat-chip>
+  </app-export>
 </div>
 <div class="sticky-header">
   <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">

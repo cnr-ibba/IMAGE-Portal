@@ -13,6 +13,8 @@ export class OrganismsComponent implements OnInit, OnDestroy {
   activeFilters;
   activeFiltersSubscription: Subscription;
   dataSource: any;
+  optionsCsv;
+  exportData;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -69,6 +71,9 @@ export class OrganismsComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.exportData = this.dataSource.data;
+    this.optionsCsv = this.tablesService.optionsCsv;
+    this.optionsCsv.headers = this.displayedColumns;
     this.dataSource.sort = this.sort;
     this.dataSource.paginator = this.paginator;
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
@@ -95,6 +100,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
 
   doFilter() {
     this.dataSource.filter = this.activeFilters;
+    this.exportData = this.dataSource.filteredData;
   }
 
   checkValueIn(field: any, value: string) {
