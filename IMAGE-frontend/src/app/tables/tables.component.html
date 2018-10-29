@@ -1,11 +1,17 @@
 <mat-tab-group (click)="onClick($event)">
   <mat-tab label="Organisms">
-    <app-organisms></app-organisms>
+    <ng-template matTabContent>
+      <app-organisms></app-organisms>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Specimens">
-    <app-specimens></app-specimens>
+    <ng-template matTabContent>
+      <app-specimens></app-specimens>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Experiments">
-    <app-experiments></app-experiments>
+    <ng-template matTabContent>
+      <app-experiments></app-experiments>
+    </ng-template>
   </mat-tab>
 </mat-tab-group>

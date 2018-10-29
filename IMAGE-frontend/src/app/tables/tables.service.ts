@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Subject, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {HostSetting} from './host-setting';
-import {catchError, map, retry} from "rxjs/operators";
+import {catchError, map, retry} from 'rxjs/operators';
 
 export interface Organisms {
   id: string;

@@ -109,8 +109,10 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   }
 
   doFilter() {
-    this.dataSource.filter = this.activeFilters;
-    this.exportData = this.dataSource.filteredData;
+    if (typeof this.dataSource !== 'undefined') {
+      this.dataSource.filter = this.activeFilters;
+      this.exportData = this.dataSource.filteredData;
+    }
   }
 
   checkValueIn(field: any, value: string) {
