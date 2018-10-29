@@ -263,19 +263,13 @@ export class TablesService {
   }
 
   getOrganism(organismId: string) {
-    for (const item of this.data) {
-      if (item['accession'] === organismId) {
-        return item;
-      }
-    }
+    const url = this.hostSetting.host + 'organism/' + organismId;
+    return this.http.get(url);
   }
 
   getSpecimen(specimenId: string) {
-    for (const item of this.data) {
-      if (item['accession'] === specimenId) {
-        return item;
-      }
-    }
+    const url = this.hostSetting.host + 'specimen/' + specimenId;
+    return this.http.get(url);
   }
 
   getOrganismFilter(filterId: string) {

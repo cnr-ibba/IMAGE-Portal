@@ -17,7 +17,22 @@ export class OrganismComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
     });
-    this.data = this.tablesService.getOrganism(this.id);
+    this.tablesService.getOrganism(this.id).subscribe(
+      data => {
+        this.data = data;
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  }
+
+  checkExistence(key: string, organism = false) {
+    if (organism) {
+      return typeof this.data !== 'undefined' && this.data['organisms'][0][key] !== '';
+    } else {
+      return typeof this.data !== 'undefined' && this.data[key] !== '';
+    }
   }
 
 }

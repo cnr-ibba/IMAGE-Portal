@@ -17,7 +17,22 @@ export class SpecimenComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = params['id'];
     });
-    this.data = this.tablesService.getSpecimen(this.id);
+    this.tablesService.getSpecimen(this.id).subscribe(
+      data => {
+        this.data = data;
+      },
+      error => {
+        console.log(error);
+      }
+      );
+  }
+
+  checkExistence(key: string, organism = false) {
+    if (organism) {
+      return typeof this.data !== 'undefined' && this.data['specimens'][0][key] !== '';
+    } else {
+      return typeof this.data !== 'undefined' && this.data[key] !== '';
+    }
   }
 
 }
