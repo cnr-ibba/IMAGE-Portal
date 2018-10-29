@@ -19,8 +19,30 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tablesService: TablesService) {
-    this.dataSource = new MatTableDataSource(this.tablesService.specimensData);
+  constructor(private tablesService: TablesService) {}
+
+  ngOnInit() {
+    this.tablesService.getAllSpecimens().subscribe(
+      data => {
+        this.dataSource = new MatTableDataSource(data);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.exportData = this.dataSource.data;
+        this.setFilter();
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    this.optionsCsv = this.tablesService.optionsCsv;
+    this.optionsCsv.headers = this.displayedColumns;
+    this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
+      this.activeFilters = Object.entries(data);
+      this.doFilter();
+    });
+  }
+
+  setFilter() {
     this.dataSource.filterPredicate = (data, filter) => {
       if (!this.hasActiveFilters()) {
         return true;
@@ -68,18 +90,6 @@ export class SpecimensComponent implements OnInit, OnDestroy {
       }
       return willBeIn[0] === true && willBeIn[1] === true && willBeIn[2] === true;
     };
-  }
-
-  ngOnInit() {
-    this.exportData = this.dataSource.data;
-    this.optionsCsv = this.tablesService.optionsCsv;
-    this.optionsCsv.headers = this.displayedColumns;
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
-      this.activeFilters = Object.entries(data);
-      this.doFilter();
-    });
   }
 
   hasActiveFilters() {

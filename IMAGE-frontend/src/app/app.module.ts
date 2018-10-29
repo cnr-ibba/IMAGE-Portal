@@ -13,6 +13,7 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './search/search.component';
 import {TablesService} from './tables/tables.service';
 import {Angular2CsvModule} from 'angular2-csv';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {Angular2CsvModule} from 'angular2-csv';
     MaterialModule,
     FlexLayoutModule,
     AppRoutingModule,
-    Angular2CsvModule
+    Angular2CsvModule,
+    HttpClientModule
   ],
   providers: [TablesService],
   bootstrap: [AppComponent]
