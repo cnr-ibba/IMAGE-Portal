@@ -2,6 +2,35 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.4.
 
+## To run app:
+1. Install Docker
+
+2. Run: 
+
+```docker-compose run angular```
+
+```docker-compose up -d nginx```
+
+## To stop app:
+
+```docker-compose down```
+
+## To run backend for this app:
+
+```git clone https://github.com/cnr-ibba/IMAGE-CommonDataPool.git```
+
+```cd image_backend```
+
+```docker-compose run web ./manage.py makemigrations```
+
+```docker-compose run web ./manage.py migrate```
+
+```docker-compose up```
+
+## To stop backend for this app:
+
+```docker-compose down```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
