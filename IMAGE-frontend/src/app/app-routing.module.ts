@@ -4,13 +4,15 @@ import {HomeComponent} from './home/home.component';
 import {SearchComponent} from './search/search.component';
 import {AboutComponent} from './about/about.component';
 import {HelpComponent} from './help/help.component';
+import {ApiComponent} from './help/api/api.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'search', component: SearchComponent},
   { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
   { path: 'about', component: AboutComponent },
-  { path: 'help', component: HelpComponent }
+  { path: 'help', component: HelpComponent },
+  { path: 'help/api', component: ApiComponent }
 ];
 
 @NgModule({

@@ -16,6 +16,7 @@ import {Angular2CsvModule} from 'angular2-csv';
 import {HttpClientModule} from '@angular/common/http';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
+import { ApiComponent } from './help/api/api.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HelpComponent } from './help/help.component';
     SearchComponent,
     AboutComponent,
     HelpComponent,
+    ApiComponent,
   ],
   imports: [
     BrowserModule,
