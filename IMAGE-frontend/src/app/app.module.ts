@@ -14,6 +14,8 @@ import { SearchComponent } from './search/search.component';
 import {TablesService} from './tables/tables.service';
 import {Angular2CsvModule} from 'angular2-csv';
 import {HttpClientModule} from '@angular/common/http';
+import { AboutComponent } from './about/about.component';
+import { HelpComponent } from './help/help.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import {HttpClientModule} from '@angular/common/http';
     SidenavListComponent,
     HomeComponent,
     SearchComponent,
+    AboutComponent,
+    HelpComponent,
   ],
   imports: [
     BrowserModule,
