@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MatTableDataSource} from '@angular/material';
 import {TablesService} from '../tables/tables.service';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-search',
@@ -15,7 +16,7 @@ export class SearchComponent implements OnInit {
   displayedColumnsOrganisms = ['id', 'species', 'breed', 'sex'];
   displayedColumnsSpecimens = ['id', 'species', 'derived', 'organism'];
 
-  constructor(private tablesService: TablesService) {
+  constructor(private tablesService: TablesService, private titleService: Title) {
     this.tablesService.getAllOrganisms().subscribe(
       data => {
         this.dataSourceOrganism = new MatTableDataSource(data);
@@ -35,6 +36,7 @@ export class SearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle('IMAGE|Search');
   }
 
   applyFilter(filterValue: string) {

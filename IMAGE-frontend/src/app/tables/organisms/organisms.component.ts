@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {TablesService} from '../tables.service';
 import {Subscription} from 'rxjs';
+import {Title} from '@angular/platform-browser';
 
 @Component({
   selector: 'app-organisms',
@@ -20,9 +21,10 @@ export class OrganismsComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tablesService: TablesService, public snackBar: MatSnackBar) {}
+  constructor(private tablesService: TablesService, public snackBar: MatSnackBar, private titleService: Title) {}
 
   ngOnInit() {
+    this.titleService.setTitle('IMAGE Organisms');
     this.tablesService.getAllOrganisms().subscribe(
       data => {
         this.dataSource = new MatTableDataSource(data);
