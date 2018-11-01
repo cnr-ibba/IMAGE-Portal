@@ -139,6 +139,8 @@ export class TablesService {
   };
   filtersChanged = new Subject();
   hostSetting = new HostSetting;
+  organismSubject = new Subject();
+  specimenSubject = new Subject();
 
   constructor(private http: HttpClient) {}
 
@@ -272,24 +274,40 @@ export class TablesService {
     return this.http.get(url);
   }
 
-  getOrganismFilter(filterId: string) {
-    const organisms = this.getOrganisms();
-    const results = {};
+  generateOrganismFilters(organisms: Organisms[]) {
+    const species = {};
+    const breed = {};
+    const sex = {};
     for (const organism of organisms) {
-      const key = organism['characteristics'][filterId][0]['text'];
-      results.hasOwnProperty(key) ? results[key] += 1 : results[key] = 1;
+      species.hasOwnProperty(organism['species']) ? species[organism['species']] += 1 : species[organism['species']] = 1;
+      breed.hasOwnProperty(organism['breed']) ? breed[organism['breed']] += 1 : breed[organism['breed']] = 1;
+      sex.hasOwnProperty(organism['sex']) ? sex[organism['sex']] += 1 : sex[organism['sex']] = 1;
     }
-    return results;
+    const results = {
+      species: species,
+      breed: breed,
+      sex: sex
+    };
+    this.organismSubject.next(results);
   }
 
-  getSpecimenFilter(filterId: string) {
-    const specimens = this.getSpecimens();
-    const results = {};
+  generateSpecimenFilters(specimens: Specimens[]) {
+    const species = {};
+    const derivedFrom = {};
+    const organismPart = {};
     for (const specimen of specimens) {
-      const key = specimen['characteristics'][filterId][0]['text'];
-      results.hasOwnProperty(key) ? results[key] += 1 : results[key] = 1;
+      species.hasOwnProperty(specimen['species']) ? species[specimen['species']] += 1 : species[specimen['species']] = 1;
+      derivedFrom.hasOwnProperty(specimen['derivedFrom']) ? derivedFrom[specimen['derivedFrom']] += 1 :
+        derivedFrom[specimen['derivedFrom']] = 1;
+      organismPart.hasOwnProperty(specimen['organismPart']) ? organismPart[specimen['organismPart']] += 1 :
+        organismPart[specimen['organismPart']] = 1;
     }
-    return results;
+    const results = {
+      species: species,
+      derivedFrom: derivedFrom,
+      organismPart: organismPart
+    };
+    this.specimenSubject.next(results);
   }
 
   addRemoveActiveFilters(filterItem: string, title: string) {

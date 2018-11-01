@@ -28,6 +28,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.exportData = this.dataSource.data;
+        this.tablesService.generateOrganismFilters(this.dataSource.data);
         this.setFilter();
         },
       error => {
@@ -111,6 +112,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     if (typeof  this.dataSource !== 'undefined') {
       this.dataSource.filter = this.activeFilters;
       this.exportData = this.dataSource.filteredData;
+      this.tablesService.generateOrganismFilters(this.dataSource.filteredData);
     }
   }
 

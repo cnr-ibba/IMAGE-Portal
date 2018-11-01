@@ -28,6 +28,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
         this.exportData = this.dataSource.data;
+        this.tablesService.generateSpecimenFilters(this.dataSource.data);
         this.setFilter();
       },
       error => {
@@ -67,7 +68,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
               willBeIn[1] = true;
             } else {
               for (const value of item[1]) {
-                if (this.checkValueIn(data.derived, value) === true) {
+                if (this.checkValueIn(data.derivedFrom, value) === true) {
                   willBeIn[1] = true;
                 }
               }
@@ -112,6 +113,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
     if (typeof this.dataSource !== 'undefined') {
       this.dataSource.filter = this.activeFilters;
       this.exportData = this.dataSource.filteredData;
+      this.tablesService.generateSpecimenFilters(this.dataSource.filteredData);
     }
   }
 

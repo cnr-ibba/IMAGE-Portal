@@ -11,6 +11,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   @Input() title: string;
   @Input() tab: string;
   filters;
+  filtersSubsctiption: Subscription;
   activeFilters;
   activeFilterSubscription: Subscription;
 
@@ -18,11 +19,20 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     if (this.tab === 'organism') {
-      this.filters = this.tableService.getOrganismFilter(this.title);
+      this.filtersSubsctiption = this.tableService.organismSubject.subscribe(data => {
+        const key = this.tableService.convertTitleToKey(this.title);
+        this.filters = Object.entries(data[key]).sort(function(a: any, b: any) {
+          return b[1] - a[1];
+        });
+      });
     } else {
-      this.filters = this.tableService.getSpecimenFilter(this.title);
+      this.filtersSubsctiption = this.tableService.specimenSubject.subscribe(data => {
+        const key = this.tableService.convertTitleToKey(this.title);
+        this.filters = Object.entries(data[key]).sort(function(a: any, b: any) {
+          return b[1] - a[1];
+        });
+      });
     }
-    this.filters = Object.entries(this.filters);
     this.activeFilterSubscription = this.tableService.filtersChanged.subscribe(data => {
       this.activeFilters = data;
     });
@@ -43,6 +53,9 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.activeFilterSubscription.unsubscribe();
+    if (typeof this.filtersSubsctiption !== 'undefined') {
+      this.filtersSubsctiption.unsubscribe();
+    }
   }
 
 }
