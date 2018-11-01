@@ -11,12 +11,27 @@ export class SearchComponent implements OnInit {
   showResults = false;
   dataSourceOrganism: any;
   dataSourceSpecimen: any;
+  error: any;
   displayedColumnsOrganisms = ['id', 'species', 'breed', 'sex'];
   displayedColumnsSpecimens = ['id', 'species', 'derived', 'organism'];
 
   constructor(private tablesService: TablesService) {
-    this.dataSourceOrganism = new MatTableDataSource(this.tablesService.organismsData);
-    this.dataSourceSpecimen = new MatTableDataSource(this.tablesService.specimensData);
+    this.tablesService.getAllOrganisms().subscribe(
+      data => {
+        this.dataSourceOrganism = new MatTableDataSource(data);
+      },
+      error => {
+        this.error = error;
+      }
+    );
+    this.tablesService.getAllSpecimens().subscribe(
+      data => {
+        this.dataSourceSpecimen = new MatTableDataSource(data);
+      },
+      error => {
+        this.error = error;
+      }
+    );
   }
 
   ngOnInit() {
