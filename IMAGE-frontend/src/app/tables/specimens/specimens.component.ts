@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
 import {TablesService} from '../tables.service';
 import {Subscription} from 'rxjs';
 
@@ -15,11 +15,12 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   dataSource: any;
   optionsCsv;
   exportData;
+  error: any;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tablesService: TablesService) {}
+  constructor(private tablesService: TablesService, public snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.tablesService.getAllSpecimens().subscribe(
@@ -32,7 +33,10 @@ export class SpecimensComponent implements OnInit, OnDestroy {
         this.setFilter();
       },
       error => {
-        console.log(error);
+        this.error = error;
+        this.snackBar.open(this.error, 'close', {
+          duration: 5000,
+        });
       }
     );
     this.optionsCsv = this.tablesService.optionsCsv;
@@ -123,6 +127,10 @@ export class SpecimensComponent implements OnInit, OnDestroy {
 
   emptyActiveFilters() {
     this.tablesService.emptyActiveFilters();
+  }
+
+  hasErrors() {
+    return typeof this.error !== 'undefined';
   }
 
   ngOnDestroy() {

@@ -1,60 +1,60 @@
-<mat-expansion-panel [expanded]="true">
-  <mat-expansion-panel-header>
-    <h3>Filters:</h3>
-  </mat-expansion-panel-header>
-  <app-filters title="Species" tab="organism"></app-filters>
-  <app-filters title="Supplied breed" tab="organism"></app-filters>
-  <app-filters title="Sex" tab="organism"></app-filters>
-</mat-expansion-panel>
-<div class="active-filters" *ngIf="hasActiveFilters()">
-  <h3>Active filters:</h3>
-  <mat-chip-list>
-    <mat-chip>
-      Remove all filters
-      <mat-icon matChipRemove (click)="emptyActiveFilters()">cancel</mat-icon>
-    </mat-chip>
-  </mat-chip-list>
-  <mat-chip-list>
-    <ng-container *ngFor="let filter of activeFilters">
-      <mat-chip *ngFor="let item of filter[1]" color="warn" selected>{{ item }}
-        <mat-icon matChipRemove (click)="onRemoveActiveFilter(item, filter[0])">cancel</mat-icon>
+<ng-container *ngIf="!hasErrors()">
+  <mat-expansion-panel [expanded]="true">
+    <mat-expansion-panel-header>
+      <h3>Filters:</h3>
+    </mat-expansion-panel-header>
+    <app-filters title="Species" tab="organism"></app-filters>
+    <app-filters title="Supplied breed" tab="organism"></app-filters>
+    <app-filters title="Sex" tab="organism"></app-filters>
+  </mat-expansion-panel>
+  <div class="active-filters" *ngIf="hasActiveFilters()">
+    <h3>Active filters:</h3>
+    <mat-chip-list>
+      <mat-chip>
+        Remove all filters
+        <mat-icon matChipRemove (click)="emptyActiveFilters()">cancel</mat-icon>
       </mat-chip>
-    </ng-container>
-  </mat-chip-list>
-</div>
-<div class="download-button">
-  <app-export [data]="exportData" [filename]="'image_data'" [options]="optionsCsv">
-    Download data
-    <mat-icon>save</mat-icon>
-  </app-export>
-</div>
-<div class="sticky-header">
-  <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</th>
-      <td mat-cell *matCellDef="let element"><a [routerLink]="['organism', element.id]">{{ element.id }}</a></td>
-    </ng-container>
+    </mat-chip-list>
+    <mat-chip-list>
+      <ng-container *ngFor="let filter of activeFilters">
+        <mat-chip *ngFor="let item of filter[1]" color="warn" selected>{{ item }}
+          <mat-icon matChipRemove (click)="onRemoveActiveFilter(item, filter[0])">cancel</mat-icon>
+        </mat-chip>
+      </ng-container>
+    </mat-chip-list>
+  </div>
+  <div class="download-button">
+    <app-export [data]="exportData" [filename]="'image_data'" [options]="optionsCsv">
+      Download data
+      <mat-icon>save</mat-icon>
+    </app-export>
+  </div>
+  <div class="sticky-header">
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</th>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['organism', element.id]">{{ element.id }}</a></td>
+      </ng-container>
 
-    <ng-container matColumnDef="species">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Species</th>
-      <td mat-cell *matCellDef="let element">{{ element.species }}</td>
-    </ng-container>
+      <ng-container matColumnDef="species">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Species</th>
+        <td mat-cell *matCellDef="let element">{{ element.species }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="breed">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</th>
-      <td mat-cell *matCellDef="let element">{{ element.breed }}</td>
-    </ng-container>
+      <ng-container matColumnDef="breed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</th>
+        <td mat-cell *matCellDef="let element">{{ element.breed }}</td>
+      </ng-container>
 
-    <ng-container matColumnDef="sex">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>Sex</th>
-      <td mat-cell *matCellDef="let element">{{ element.sex }}</td>
-    </ng-container>
+      <ng-container matColumnDef="sex">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sex</th>
+        <td mat-cell *matCellDef="let element">{{ element.sex }}</td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
-  <mat-paginator [pageSize]="5" [pageSizeOptions]="[3, 10, 20, 50, 100]" showFirstLastButtons>
-  </mat-paginator>
-</div>
-
-
+      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[3, 10, 20, 50, 100]" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</ng-container>
