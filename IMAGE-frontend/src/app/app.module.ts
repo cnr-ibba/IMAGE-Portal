@@ -17,6 +17,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { ApiComponent } from './help/api/api.component';
+import { NotExistsPathComponent } from './not-exists-path/not-exists-path.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { ApiComponent } from './help/api/api.component';
     AboutComponent,
     HelpComponent,
     ApiComponent,
+    NotExistsPathComponent,
   ],
   imports: [
     BrowserModule,
