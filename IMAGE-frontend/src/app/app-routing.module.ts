@@ -5,7 +5,7 @@ import {SearchComponent} from './search/search.component';
 import {AboutComponent} from './about/about.component';
 import {HelpComponent} from './help/help.component';
 import {ApiComponent} from './help/api/api.component';
-import {NotExistsPathComponent} from "./not-exists-path/not-exists-path.component";
+import {NotExistsPathComponent} from './not-exists-path/not-exists-path.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },

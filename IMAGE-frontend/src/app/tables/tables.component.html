@@ -1,17 +1,27 @@
-<mat-tab-group (click)="onClick($event)">
-  <mat-tab label="Organisms">
-    <ng-template matTabContent>
-      <app-organisms></app-organisms>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Specimens">
-    <ng-template matTabContent>
-      <app-specimens></app-specimens>
-    </ng-template>
-  </mat-tab>
-  <mat-tab label="Experiments">
-    <ng-template matTabContent>
-      <app-experiments></app-experiments>
-    </ng-template>
-  </mat-tab>
-</mat-tab-group>
+<!--<mat-tab-group (click)="onClick($event)">-->
+  <!--<mat-tab label="Organisms">-->
+    <!--<ng-template matTabContent>-->
+      <!--<app-organisms></app-organisms>-->
+    <!--</ng-template>-->
+  <!--</mat-tab>-->
+  <!--<mat-tab label="Specimens">-->
+    <!--<ng-template matTabContent>-->
+      <!--<app-specimens></app-specimens>-->
+    <!--</ng-template>-->
+  <!--</mat-tab>-->
+  <!--<mat-tab label="Experiments">-->
+    <!--<ng-template matTabContent>-->
+      <!--<app-experiments></app-experiments>-->
+    <!--</ng-template>-->
+  <!--</mat-tab>-->
+<!--</mat-tab-group>-->
+<nav mat-tab-nav-bar>
+  <a mat-tab-link [routerLink]="'organism'">
+    Organisms
+  </a>
+  <a mat-tab-link [routerLink]="'specimen'">
+    Specimens
+  </a>
+</nav>
+
+<router-outlet></router-outlet>

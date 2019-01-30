@@ -1,3 +1,11 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link [routerLink]="['../', 'organism']" [active]="false">
+    Organisms
+  </a>
+  <a mat-tab-link [routerLink]="['../', 'specimen']" [active]="true">
+    Specimens
+  </a>
+</nav>
 <ng-container *ngIf="!hasErrors()">
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
@@ -33,7 +41,7 @@
     <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['specimen', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="[element.id]">{{ element.id }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">

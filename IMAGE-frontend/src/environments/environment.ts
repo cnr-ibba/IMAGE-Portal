@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'http://localhost/api/backend/'
+  host: 'https://wp5image.eu/data_portal/backend/'
 };
 
 /*

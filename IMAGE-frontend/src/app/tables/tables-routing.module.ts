@@ -3,10 +3,14 @@ import {RouterModule, Routes} from '@angular/router';
 import {TablesComponent} from './tables.component';
 import {OrganismComponent} from './organisms/organism/organism.component';
 import {SpecimenComponent} from './specimens/specimen/specimen.component';
+import {OrganismsComponent} from './organisms/organisms.component';
+import {SpecimensComponent} from './specimens/specimens.component';
 
 const routes: Routes = [
-  {path: '', component: TablesComponent},
+  {path: '', redirectTo: '/tables/organism', pathMatch: 'full'},
+  {path: 'organism', component: OrganismsComponent},
   {path: 'organism/:id', component: OrganismComponent},
+  {path: 'specimen', component: SpecimensComponent},
   {path: 'specimen/:id', component: SpecimenComponent}
 ];
 
