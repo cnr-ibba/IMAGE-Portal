@@ -3,7 +3,6 @@ import {CommonModule} from '@angular/common';
 import {MaterialModule} from '../material.module';
 import {TablesRoutingModule} from './tables-routing.module';
 
-import {TablesComponent} from './tables.component';
 import { OrganismsComponent } from './organisms/organisms.component';
 import { SpecimensComponent } from './specimens/specimens.component';
 import { ExperimentsComponent } from './experiments/experiments.component';
@@ -14,7 +13,6 @@ import { ExportComponent } from './export/export.component';
 
 @NgModule({
   declarations: [
-    TablesComponent,
     OrganismsComponent,
     SpecimensComponent,
     ExperimentsComponent,

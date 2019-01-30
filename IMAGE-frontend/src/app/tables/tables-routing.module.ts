@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {TablesComponent} from './tables.component';
 import {OrganismComponent} from './organisms/organism/organism.component';
 import {SpecimenComponent} from './specimens/specimen/specimen.component';
 import {OrganismsComponent} from './organisms/organisms.component';
