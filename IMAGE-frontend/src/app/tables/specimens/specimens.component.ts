@@ -3,6 +3,7 @@ import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/m
 import {TablesService} from '../tables.service';
 import {Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
+import {ActivatedRoute, Params, Router} from "@angular/router";
 
 @Component({
   selector: 'app-specimens',
@@ -21,10 +22,33 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private tablesService: TablesService, public snackBar: MatSnackBar, private titleService: Title) {}
+  constructor(private tablesService: TablesService,
+              public snackBar: MatSnackBar,
+              private titleService: Title,
+              private router: Router,
+              private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.titleService.setTitle('IMAGE Specimens');
+    this.activatedRoute.queryParams.subscribe((params: Params) => {
+      const filters = {
+        species: [],
+        breed: [],
+        sex: [],
+        derivedFrom: [],
+        organismPart: [],
+      };
+      for (const key in params) {
+        if (Array.isArray(params[key])) {
+          filters[key] = params[key];
+        } else {
+          filters[key] = [params[key]];
+        }
+      }
+      this.activeFilters = Object.entries(filters);
+      this.tablesService.activeFilters = filters;
+      this.doFilter();
+    });
     this.tablesService.getAllSpecimens().subscribe(
       data => {
         this.dataSource = new MatTableDataSource(data);
@@ -33,6 +57,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
         this.exportData = this.dataSource.data;
         this.tablesService.generateSpecimenFilters(this.dataSource.data);
         this.setFilter();
+        this.doFilter();
       },
       error => {
         this.error = error;
@@ -44,8 +69,13 @@ export class SpecimensComponent implements OnInit, OnDestroy {
     this.optionsCsv = this.tablesService.optionsCsv;
     this.optionsCsv.headers = this.displayedColumns;
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
-      this.activeFilters = Object.entries(data);
-      this.doFilter();
+      const params = {};
+      for (const key in data) {
+        if (data[key].length !== 0) {
+          params[key] = data[key];
+        }
+      }
+      this.router.navigate(['tables', 'specimen'], {queryParams: params});
     });
   }
 
@@ -136,6 +166,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.emptyActiveFilters();
     this.activeFiltersSubscription.unsubscribe();
   }
 

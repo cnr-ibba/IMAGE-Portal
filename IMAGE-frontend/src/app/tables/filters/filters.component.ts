@@ -45,7 +45,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   isSelected(filterItem: string, title: string) {
     const key = this.tableService.convertTitleToKey(title);
     if (typeof this.activeFilters === 'undefined') {
-      return false;
+      return this.tableService.activeFilters[key].indexOf(filterItem) !== -1;
     } else {
       return this.activeFilters[key].indexOf(filterItem) !== -1;
     }
