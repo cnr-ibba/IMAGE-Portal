@@ -1,4 +1,4 @@
-<ng-container *ngIf="!hasError()">
+<ng-container>
   <section class="specimen-details" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-title fxLayoutAlign="center"><b>Specimen: </b>{{ id }}</mat-card-title>
@@ -91,12 +91,22 @@
         <p *ngIf="checkExistence('specimen_collection_protocol', true)">
           <b>Specimen collection protocol: </b> {{ data['specimens'][0]['specimen_collection_protocol'] }}
         </p>
+
         <p *ngIf="checkExistence('collection_place_latitude', true)">
           <b>Collection place latitude: </b> {{ data['specimens'][0]['collection_place_latitude'] }}
+        </p>
+        <p *ngIf="!checkExistence('collection_place_latitude', true)">
+          <b>Collection place latitude: </b> No data
         </p>
         <p *ngIf="checkExistence('collection_place_longitude', true)">
           <b>Collection place longitude: </b> {{ data['specimens'][0]['collection_place_longitude'] }}
         </p>
+        <p *ngIf="!checkExistence('collection_place_longitude', true)">
+          <b>Collection place longitude: </b> No data
+        </p>
+        <div id="map" class="map"></div>
+        <p></p>
+
         <p *ngIf="checkExistence('developmental_stage', true)">
           <b>Developmental stage: </b> {{ data['specimens'][0]['developmental_stage'] }}
         </p>

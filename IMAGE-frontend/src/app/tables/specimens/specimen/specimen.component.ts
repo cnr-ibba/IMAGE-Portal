@@ -4,6 +4,7 @@ import {TablesService} from '../../tables.service';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material';
 
+declare var ol: any;
 @Component({
   selector: 'app-specimen',
   templateUrl: './specimen.component.html',
@@ -13,6 +14,10 @@ export class SpecimenComponent implements OnInit {
   id: string;
   data;
   error: any;
+  map: any;
+  longitude = 39.879552;
+  latitude = 57.613696;
+  zoom = 1;
 
   constructor(private route: ActivatedRoute, private tablesService: TablesService,
               private titleService: Title, public snackBar: MatSnackBar) { }
@@ -25,6 +30,12 @@ export class SpecimenComponent implements OnInit {
     this.tablesService.getSpecimen(this.id).subscribe(
       data => {
         this.data = data;
+        if (this.checkExistence('collection_place_latitude', true) &&
+          this.checkExistence('collection_place_longitude', true)) {
+          this.latitude = data['specimens'][0]['collection_place_latitude'];
+          this.longitude = data['specimens'][0]['collection_place_longitude'];
+          this.zoom = 8;
+        }
       },
       error => {
         this.error = error;
@@ -33,11 +44,25 @@ export class SpecimenComponent implements OnInit {
         });
       }
       );
+
+    this.map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([this.longitude, this.latitude]),
+        zoom: this.zoom
+      })
+    });
   }
 
   checkExistence(key: string, organism = false) {
     if (organism) {
-      return typeof this.data !== 'undefined' && this.data['specimens'][0][key] !== '';
+      return typeof this.data !== 'undefined' && this.data['specimens'][0][key] !== '' &&
+        this.data['specimens'][0][key] !== null;
     } else {
       return typeof this.data !== 'undefined' && this.data[key] !== '';
     }
