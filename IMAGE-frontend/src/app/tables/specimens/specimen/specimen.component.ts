@@ -17,7 +17,10 @@ export class SpecimenComponent implements OnInit {
   map: any;
   longitude = 39.855115;
   latitude = 57.634874;
-  zoom = 1;
+  baseMapLayer: any;
+  marker: any;
+  vectorSource: any;
+  markerVercotLayer: any;
 
   constructor(private route: ActivatedRoute, private tablesService: TablesService,
               private titleService: Title, public snackBar: MatSnackBar) { }
@@ -34,19 +37,27 @@ export class SpecimenComponent implements OnInit {
           this.checkExistence('collection_place_longitude', true)) {
           this.latitude = data['specimens'][0]['collection_place_latitude'];
           this.longitude = data['specimens'][0]['collection_place_longitude'];
-          this.zoom = 8;
+          this.baseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
           this.map = new ol.Map({
             target: 'map',
-            layers: [
-              new ol.layer.Tile({
-                source: new ol.source.OSM()
-              })
-            ],
+            layers: [this.baseMapLayer],
             view: new ol.View({
               center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-              zoom: this.zoom
+              zoom: 12
             })
           });
+          this.marker = new ol.Feature({
+            geometry: new ol.geom.Point(
+              ol.proj.fromLonLat([this.longitude, this.latitude])
+            ),
+          });
+          this.vectorSource = new ol.source.Vector({
+            features: [this.marker]
+          });
+          this.markerVercotLayer = new ol.layer.Vector({
+            source: this.vectorSource,
+          });
+          this.map.addLayer(this.markerVercotLayer);
         }
       },
       error => {
