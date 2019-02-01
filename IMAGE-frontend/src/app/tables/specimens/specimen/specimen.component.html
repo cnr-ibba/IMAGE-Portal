@@ -3,6 +3,8 @@
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-title fxLayoutAlign="center"><b>Specimen: </b>{{ id }}</mat-card-title>
       <mat-card-content fxLayoutAlign="center">
+
+
         <p *ngIf="checkExistence('alternative_id')">
           <b>Alternative id: </b> {{ data['alternative_id'] }}
         </p>
@@ -46,6 +48,8 @@
           <b>Species: </b> {{ data['species'] }}
         </p>
         <mat-divider [inset]="true"></mat-divider>
+
+
         <p *ngIf="checkExistence('submission_description')">
           <b>Submission description: </b> {{ data['submission_description'] }}
         </p>
@@ -58,7 +62,11 @@
         <p *ngIf="checkExistence('organization_country')">
           <b>Organization country: </b> {{ data['organization_country'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('submission_description') ||
+        checkExistence('person_first_name') || checkExistence('organization_address') ||
+        checkExistence('organization_country')"></mat-divider>
+
+
         <p *ngIf="checkExistence('description')">
           <b>Description: </b> {{ data['description'] }}
         </p>
@@ -71,7 +79,10 @@
         <p *ngIf="checkExistence('publication_doi')">
           <b>Publication DOI: </b> {{ data['publication_doi'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('description') || checkExistence('person_initial') ||
+        checkExistence('organization_uri') || checkExistence('publication_doi')"></mat-divider>
+
+
         <p *ngIf="checkExistence('derived_from', true)">
           <b>Derived from: </b> {{ data['specimens'][0]['derived_from'] }}
         </p>
@@ -87,7 +98,11 @@
         <p *ngIf="checkExistence('organism_part', true)">
           <b>Organism part: </b> {{ data['specimens'][0]['organism_part'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('derived_from', true) ||
+        checkExistence('collection_date', true) || checkExistence('collection_place', true) ||
+        checkExistence('collection_place_accuracy', true) || checkExistence('organism_part', true)"></mat-divider>
+
+
         <p *ngIf="checkExistence('specimen_collection_protocol', true)">
           <b>Specimen collection protocol: </b> {{ data['specimens'][0]['specimen_collection_protocol'] }}
         </p>
@@ -100,7 +115,6 @@
         </p>
         <div id="map" class="map"></div>
         <p></p>
-
         <p *ngIf="checkExistence('developmental_stage', true)">
           <b>Developmental stage: </b> {{ data['specimens'][0]['developmental_stage'] }}
         </p>
@@ -116,7 +130,13 @@
         <p *ngIf="checkExistence('sample_storage_processing', true)">
           <b>Sample storage processing: </b> {{ data['specimens'][0]['sample_storage_processing'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('specimen_collection_protocol', true) ||
+        checkExistence('collection_place_latitude', true) || checkExistence('collection_place_longitude', true) ||
+        checkExistence('developmental_stage', true) || checkExistence('physiological_stage', true) ||
+        checkExistence('availability', true) || checkExistence('sample_storage', true) ||
+        checkExistence('sample_storage_processing', true)"></mat-divider>
+
+
         <p *ngIf="checkExistence('animal_age_at_collection', true)">
           <b>Animal age at collection: </b> {{ data['specimens'][0]['animal_age_at_collection'] }}
         </p>

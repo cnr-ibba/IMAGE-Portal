@@ -3,6 +3,8 @@
     <mat-card fxFlex.xs="100%" fxFlex="400px">
       <mat-card-title fxLayoutAlign="center"><b>Organism: </b>{{ id }}</mat-card-title>
       <mat-card-content fxLayoutAlign="center">
+
+
         <p *ngIf="checkExistence('alternative_id')">
           <b>Alternative id: </b> {{ data['alternative_id'] }}
         </p>
@@ -46,6 +48,8 @@
           <b>Species: </b> {{ data['species'] }}
         </p>
         <mat-divider [inset]="true"></mat-divider>
+
+
         <p *ngIf="checkExistence('submission_description')">
           <b>Submission description: </b> {{ data['submission_description'] }}
         </p>
@@ -58,7 +62,11 @@
         <p *ngIf="checkExistence('organization_country')">
           <b>Organization country: </b> {{ data['organization_country'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('submission_description') ||
+        checkExistence('person_first_name') || checkExistence('organization_address') ||
+        checkExistence('organization_country')"></mat-divider>
+
+
         <p *ngIf="checkExistence('description')">
           <b>Description: </b> {{ data['description'] }}
         </p>
@@ -71,7 +79,10 @@
         <p *ngIf="checkExistence('publication_doi')">
           <b>Publication DOI: </b> {{ data['publication_doi'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('description') || checkExistence('person_initial') ||
+        checkExistence('organization_uri') || checkExistence('publication_doi')"></mat-divider>
+
+
         <p *ngIf="checkExistence('supplied_breed', true)">
           <b>Supplied breed: </b> {{ data['organisms'][0]['supplied_breed'] }}
         </p>
@@ -84,7 +95,11 @@
         <p *ngIf="checkExistence('birth_location_accuracy', true)">
           <b>Birth location accuracy: </b> {{ data['organisms'][0]['birth_location_accuracy'] }}
         </p>
-        <mat-divider [inset]="true"></mat-divider>
+        <mat-divider [inset]="true" *ngIf="checkExistence('supplied_breed', true) ||
+        checkExistence('efabis_breed_country', true) || checkExistence('sex', true) ||
+        checkExistence('birth_location_accuracy', true)"></mat-divider>
+
+
         <p *ngIf="checkExistence('mapped_breed', true)">
           <b>Mapped breed: </b> {{ data['organisms'][0]['mapped_breed'] }}
         </p>
@@ -100,8 +115,11 @@
         </p>
         <div id="map" class="map"></div>
         <p></p>
+        <mat-divider [inset]="true" *ngIf="checkExistence('mapped_breed', true) ||
+        checkExistence('birth_location', true) || checkExistence('birth_location_longitude', true) ||
+        checkExistence('birth_location_latitude', true)"></mat-divider>
 
-        <mat-divider [inset]="true"></mat-divider>
+
         <p *ngIf="checkExistence('child_of', true)">
           <b>Child of: </b> {{ data['organisms'][0]['child_of'] }}
         </p>
