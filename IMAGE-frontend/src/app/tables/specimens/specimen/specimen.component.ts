@@ -15,8 +15,8 @@ export class SpecimenComponent implements OnInit {
   data;
   error: any;
   map: any;
-  longitude = 39.879552;
-  latitude = 57.613696;
+  longitude = 39.855115;
+  latitude = 57.634874;
   zoom = 1;
 
   constructor(private route: ActivatedRoute, private tablesService: TablesService,

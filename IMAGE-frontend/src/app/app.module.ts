@@ -18,7 +18,7 @@ import { AboutComponent } from './about/about.component';
 import { HelpComponent } from './help/help.component';
 import { ApiComponent } from './help/api/api.component';
 import { NotExistsPathComponent } from './not-exists-path/not-exists-path.component';
-import { SummaryMapComponent } from './summary-map/summary-map.component';
+import { SummaryComponent } from './summary/summary.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { SummaryMapComponent } from './summary-map/summary-map.component';
     HelpComponent,
     ApiComponent,
     NotExistsPathComponent,
-    SummaryMapComponent,
+    SummaryComponent,
   ],
   imports: [
     BrowserModule,
