@@ -95,14 +95,8 @@
         <p *ngIf="checkExistence('birth_location_longitude', true)">
           <b>Birth location longitude: </b> {{ data['organisms'][0]['birth_location_longitude'] }}
         </p>
-        <p *ngIf="!checkExistence('birth_location_longitude', true)">
-          <b>Birth location longitude: </b> No data
-        </p>
         <p *ngIf="checkExistence('birth_location_latitude', true)">
           <b>Birth location latitude: </b> {{ data['organisms'][0]['birth_location_latitude'] }}
-        </p>
-        <p *ngIf="!checkExistence('birth_location_latitude', true)">
-          <b>Birth location latitude: </b> No data
         </p>
         <div id="map" class="map"></div>
         <p></p>

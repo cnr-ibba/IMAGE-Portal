@@ -35,6 +35,18 @@ export class SpecimenComponent implements OnInit {
           this.latitude = data['specimens'][0]['collection_place_latitude'];
           this.longitude = data['specimens'][0]['collection_place_longitude'];
           this.zoom = 8;
+          this.map = new ol.Map({
+            target: 'map',
+            layers: [
+              new ol.layer.Tile({
+                source: new ol.source.OSM()
+              })
+            ],
+            view: new ol.View({
+              center: ol.proj.fromLonLat([this.longitude, this.latitude]),
+              zoom: this.zoom
+            })
+          });
         }
       },
       error => {
@@ -44,19 +56,6 @@ export class SpecimenComponent implements OnInit {
         });
       }
       );
-
-    this.map = new ol.Map({
-      target: 'map',
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        })
-      ],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-        zoom: this.zoom
-      })
-    });
   }
 
   checkExistence(key: string, organism = false) {

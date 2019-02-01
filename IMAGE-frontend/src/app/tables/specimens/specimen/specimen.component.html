@@ -95,14 +95,8 @@
         <p *ngIf="checkExistence('collection_place_latitude', true)">
           <b>Collection place latitude: </b> {{ data['specimens'][0]['collection_place_latitude'] }}
         </p>
-        <p *ngIf="!checkExistence('collection_place_latitude', true)">
-          <b>Collection place latitude: </b> No data
-        </p>
         <p *ngIf="checkExistence('collection_place_longitude', true)">
           <b>Collection place longitude: </b> {{ data['specimens'][0]['collection_place_longitude'] }}
-        </p>
-        <p *ngIf="!checkExistence('collection_place_longitude', true)">
-          <b>Collection place longitude: </b> No data
         </p>
         <div id="map" class="map"></div>
         <p></p>
