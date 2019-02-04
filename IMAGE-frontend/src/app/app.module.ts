@@ -19,6 +19,7 @@ import { HelpComponent } from './help/help.component';
 import { ApiComponent } from './help/api/api.component';
 import { NotExistsPathComponent } from './not-exists-path/not-exists-path.component';
 import { SummaryComponent } from './summary/summary.component';
+import {ChartsModule} from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SummaryComponent } from './summary/summary.component';
     FlexLayoutModule,
     AppRoutingModule,
     Angular2CsvModule,
-    HttpClientModule
+    HttpClientModule,
+    ChartsModule
   ],
   providers: [TablesService],
   bootstrap: [AppComponent]
