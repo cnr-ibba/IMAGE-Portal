@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {TablesService} from '../tables/tables.service';
 
 declare var ol: any;
 @Component({
@@ -7,100 +8,96 @@ declare var ol: any;
   styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit {
-  map: any;
+  birthMap: any;
+  birthBaseMapLayer: any;
+  birthVectorSource: any;
+  birthMarkerVectorLayer: any;
+
+  collectionMap: any;
+  collectionBaseMapLayer: any;
+  collectionVectorSource: any;
+  collectionMarkerVectorLayer: any;
+
   longitude = 39.855115;
   latitude = 57.634874;
-  baseMapLayer: any;
-  marker: any;
-  marker1: any;
-  marker2: any;
-  marker3: any;
-  marker4: any;
-  marker5: any;
-  marker6: any;
-  marker7: any;
-  marker8: any;
-  marker9: any;
-  vectorSource: any;
-  markerVercotLayer: any;
+
   public doughnutChartLabels;
   public doughnutChartData;
   public doughnutChartType;
 
-  constructor() { }
+  birthCoordinates = [];
+  collectionCoordinates = [];
+
+  constructor(private tableService: TablesService) { }
 
   ngOnInit() {
-    this.doughnutChartLabels = ['Sus scrofa', 'Capra hircus', 'Cinta Senese'];
-    this.doughnutChartData = [350, 450, 100];
-    this.doughnutChartType = 'doughnut';
+    this.tableService.getAllOrganisms().subscribe(data => {
+      for (const point in data) {
+        if (data[point]['birthLocationLatitude'] !== null && data[point]['birthLocationLongitude'] !== null) {
+          const latitude = data[point]['birthLocationLatitude'];
+          const longitude = data[point]['birthLocationLongitude'];
+          const flag = new ol.Feature({
+            geometry: new ol.geom.Point(
+              ol.proj.fromLonLat([longitude, latitude])
+            ),
+          });
+          this.birthCoordinates.push(flag);
+        }
+      }
+      this.birthBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
+      this.birthMap = new ol.Map({
+        target: 'birthMap',
+        layers: [this.birthBaseMapLayer],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([this.longitude, this.latitude]),
+          zoom: 2
+        })
+      });
 
-    this.baseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
-    this.map = new ol.Map({
-      target: 'map',
-      layers: [this.baseMapLayer],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-        zoom: 2
-      })
+      this.birthVectorSource = new ol.source.Vector({
+        features: this.birthCoordinates
+      });
+      this.birthMarkerVectorLayer = new ol.layer.Vector({
+        source: this.birthVectorSource,
+      });
+      this.birthMap.addLayer(this.birthMarkerVectorLayer);
     });
-    this.marker = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([this.longitude, this.latitude])
-      ),
+
+    this.tableService.getAllSpecimens().subscribe(data => {
+      for (const point in data) {
+        if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
+          const latitude = data[point]['collectionPlaceLatitude'];
+          const longitude = data[point]['collectionPlaceLongitude'];
+          const flag = new ol.Feature({
+            geometry: new ol.geom.Point(
+              ol.proj.fromLonLat([longitude, latitude])
+            ),
+          });
+          this.collectionCoordinates.push(flag);
+        }
+      }
+      this.collectionBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
+      this.collectionMap = new ol.Map({
+        target: 'collectionMap',
+        layers: [this.collectionBaseMapLayer],
+        view: new ol.View({
+          center: ol.proj.fromLonLat([this.longitude, this.latitude]),
+          zoom: 2
+        })
+      });
+
+      this.collectionVectorSource = new ol.source.Vector({
+        features: this.collectionCoordinates
+      });
+      this.collectionMarkerVectorLayer = new ol.layer.Vector({
+        source: this.collectionVectorSource,
+      });
+      this.collectionMap.addLayer(this.collectionMarkerVectorLayer);
     });
-    this.marker1 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([57.634874, 39.855115])
-      ),
-    });
-    this.marker2 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([58.634874, 37.855115])
-      ),
-    });
-    this.marker3 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([55.634874, 35.855115])
-      ),
-    });
-    this.marker4 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([27.634874, 29.855115])
-      ),
-    });
-    this.marker5 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([47.634874, 49.855115])
-      ),
-    });
-    this.marker6 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([17.634874, 19.855115])
-      ),
-    });
-    this.marker7 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([67.634874, 69.855115])
-      ),
-    });
-    this.marker8 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([87.634874, 89.855115])
-      ),
-    });
-    this.marker9 = new ol.Feature({
-      geometry: new ol.geom.Point(
-        ol.proj.fromLonLat([81.634874, 19.855115])
-      ),
-    });
-    this.vectorSource = new ol.source.Vector({
-      features: [this.marker, this.marker1, this.marker2, this.marker3, this.marker4, this.marker5, this.marker6,
-        this.marker7, this.marker8, this.marker9]
-    });
-    this.markerVercotLayer = new ol.layer.Vector({
-      source: this.vectorSource,
-    });
-    this.map.addLayer(this.markerVercotLayer);
+    // this.doughnutChartLabels = ['Sus scrofa', 'Capra hircus', 'Cinta Senese'];
+    // this.doughnutChartData = [350, 450, 100];
+    // this.doughnutChartType = 'doughnut';
+    //
   }
 
   chartHovered(event: any) {
