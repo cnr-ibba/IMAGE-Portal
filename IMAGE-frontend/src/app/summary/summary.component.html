@@ -1,25 +1,29 @@
 <ng-container>
   <section class="summary" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="1375px">
-      <mat-card-title fxLayoutAlign="center"><b>Birth location coordinates</b></mat-card-title>
+      <mat-card-title fxLayoutAlign="center"><b>Birth location coordinates for organisms</b></mat-card-title>
       <mat-card-content fxLayoutAlign="center">
 
         <div id="birthMap" class="map"></div>
 
-        <!--<div style="display: block">-->
-          <!--<canvas baseChart-->
-                  <!--[data]="doughnutChartData"-->
-                  <!--[labels]="doughnutChartLabels"-->
-                  <!--[chartType]="doughnutChartType"-->
-                  <!--(chartHover)="chartHovered($event)"-->
-                  <!--(chartClick)="chartClicked($event)"></canvas>-->
-          <!--<canvas baseChart-->
-                  <!--[data]="doughnutChartData"-->
-                  <!--[labels]="doughnutChartLabels"-->
-                  <!--[chartType]="doughnutChartType"-->
-                  <!--(chartHover)="chartHovered($event)"-->
-                  <!--(chartClick)="chartClicked($event)"></canvas>-->
-        <!--</div>-->
+        <div style="display: block">
+          <canvas baseChart
+                  [data]="organismSpeciesData"
+                  [labels]="organismSpeciesLabels"
+                  [chartType]="doughnutChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"
+                  [options]="organismSpeciesOptions"
+                  *ngIf="organismSpeciesData.length !== 0"></canvas>
+          <canvas baseChart
+                  [data]="organismBreedData"
+                  [labels]="organismBreedLabels"
+                  [chartType]="doughnutChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"
+                  [options]="organismBreedOptions"
+                  *ngIf="organismBreedData.length !== 0"></canvas>
+        </div>
 
       </mat-card-content>
     </mat-card>
@@ -29,10 +33,29 @@
 <ng-container>
   <section class="summary" fxLayout fxLayoutAlign="center">
     <mat-card fxFlex.xs="100%" fxFlex="1375px">
-      <mat-card-title fxLayoutAlign="center"><b>Collection location coordinates</b></mat-card-title>
+      <mat-card-title fxLayoutAlign="center"><b>Collection location coordinates for specimens</b></mat-card-title>
       <mat-card-content fxLayoutAlign="center">
 
         <div id="collectionMap" class="map"></div>
+
+        <div style="display: block">
+          <canvas baseChart
+                  [data]="specimenSpeciesData"
+                  [labels]="specimenSpeciesLabels"
+                  [chartType]="doughnutChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"
+                  [options]="organismSpeciesOptions"
+                  *ngIf="specimenSpeciesData.length !== 0"></canvas>
+          <canvas baseChart
+                  [data]="specimenPartData"
+                  [labels]="specimenPartLabels"
+                  [chartType]="doughnutChartType"
+                  (chartHover)="chartHovered($event)"
+                  (chartClick)="chartClicked($event)"
+                  [options]="specimenPartOptions"
+                  *ngIf="specimenPartData.length !== 0"></canvas>
+        </div>
 
       </mat-card-content>
     </mat-card>

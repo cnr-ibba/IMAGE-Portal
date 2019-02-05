@@ -28,14 +28,47 @@ export class SummaryComponent implements OnInit {
   birthCoordinates = [];
   collectionCoordinates = [];
 
+  organismSpeciesLabels = [];
+  organismSpeciesData = [];
+  organismBreedLabels = [];
+  organismBreedData = [];
+
+  specimenSpeciesLabels = [];
+  specimenSpeciesData = [];
+  specimenPartLabels = [];
+  specimenPartData = [];
+
+  organismSpeciesOptions = {
+    title: {
+      text: 'Species',
+      display: true
+    }
+  };
+  organismBreedOptions = {
+    title: {
+      text: 'Supplied breed',
+      display: true
+    }
+  };
+  specimenPartOptions = {
+    title: {
+      text: 'Organism part',
+      display: true
+    }
+  };
+
   constructor(private tableService: TablesService) { }
 
   ngOnInit() {
     this.tableService.getAllOrganisms().subscribe(data => {
+      const species = {};
+      const breed = {};
       for (const point in data) {
         if (data[point]['birthLocationLatitude'] !== null && data[point]['birthLocationLongitude'] !== null) {
           const latitude = data[point]['birthLocationLatitude'];
           const longitude = data[point]['birthLocationLongitude'];
+          this.latitude = latitude;
+          this.longitude = longitude;
           const flag = new ol.Feature({
             geometry: new ol.geom.Point(
               ol.proj.fromLonLat([longitude, latitude])
@@ -43,7 +76,16 @@ export class SummaryComponent implements OnInit {
           });
           this.birthCoordinates.push(flag);
         }
+        species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
+          species[data[point]['species']] = 1;
+        breed.hasOwnProperty(data[point]['breed']) ? breed[data[point]['breed']] += 1 : breed[data[point]['breed']] = 1;
       }
+
+      this.organismSpeciesLabels = Object.keys(species);
+      this.organismSpeciesData = Object.values(species);
+      this.organismBreedLabels = Object.keys(breed);
+      this.organismBreedData = Object.values(breed);
+
       this.birthBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
       this.birthMap = new ol.Map({
         target: 'birthMap',
@@ -64,10 +106,15 @@ export class SummaryComponent implements OnInit {
     });
 
     this.tableService.getAllSpecimens().subscribe(data => {
+      const species = {};
+      const part = {};
       for (const point in data) {
+        console.log(data);
         if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
           const latitude = data[point]['collectionPlaceLatitude'];
           const longitude = data[point]['collectionPlaceLongitude'];
+          this.latitude = latitude;
+          this.longitude = longitude;
           const flag = new ol.Feature({
             geometry: new ol.geom.Point(
               ol.proj.fromLonLat([longitude, latitude])
@@ -75,7 +122,17 @@ export class SummaryComponent implements OnInit {
           });
           this.collectionCoordinates.push(flag);
         }
+        species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
+          species[data[point]['species']] = 1;
+        part.hasOwnProperty(data[point]['organismPart']) ? part[data[point]['organismPart']] += 1 :
+          part[data[point]['organismPart']] = 1;
       }
+
+      this.specimenSpeciesLabels = Object.keys(species);
+      this.specimenSpeciesData = Object.values(species);
+      this.specimenPartLabels = Object.keys(part);
+      this.specimenPartData = Object.values(part);
+
       this.collectionBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
       this.collectionMap = new ol.Map({
         target: 'collectionMap',
@@ -94,10 +151,8 @@ export class SummaryComponent implements OnInit {
       });
       this.collectionMap.addLayer(this.collectionMarkerVectorLayer);
     });
-    // this.doughnutChartLabels = ['Sus scrofa', 'Capra hircus', 'Cinta Senese'];
-    // this.doughnutChartData = [350, 450, 100];
-    // this.doughnutChartType = 'doughnut';
-    //
+    this.doughnutChartType = 'doughnut';
+
   }
 
   chartHovered(event: any) {
