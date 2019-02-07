@@ -105,7 +105,7 @@ export class SummaryComponent implements OnInit {
         layers: [this.birthBaseMapLayer],
         view: new ol.View({
           center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-          zoom: 3
+          zoom: 2.7
         })
       });
 
@@ -157,7 +157,7 @@ export class SummaryComponent implements OnInit {
         layers: [this.collectionBaseMapLayer],
         view: new ol.View({
           center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-          zoom: 3
+          zoom: 2.7
         })
       });
 
