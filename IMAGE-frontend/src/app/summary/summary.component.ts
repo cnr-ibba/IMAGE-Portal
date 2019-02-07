@@ -105,7 +105,7 @@ export class SummaryComponent implements OnInit {
         layers: [this.birthBaseMapLayer],
         view: new ol.View({
           center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-          zoom: 1
+          zoom: 3
         })
       });
 
@@ -116,6 +116,7 @@ export class SummaryComponent implements OnInit {
         source: this.birthVectorSource,
       });
       this.birthMap.addLayer(this.birthMarkerVectorLayer);
+      this.birthMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
     });
 
     this.tableService.getAllSpecimens().subscribe(data => {
@@ -156,7 +157,7 @@ export class SummaryComponent implements OnInit {
         layers: [this.collectionBaseMapLayer],
         view: new ol.View({
           center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-          zoom: 1
+          zoom: 3
         })
       });
 
@@ -167,6 +168,7 @@ export class SummaryComponent implements OnInit {
         source: this.collectionVectorSource,
       });
       this.collectionMap.addLayer(this.collectionMarkerVectorLayer);
+      this.collectionMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
     });
     this.doughnutChartType = 'doughnut';
 
