@@ -109,7 +109,6 @@ export class SummaryComponent implements OnInit {
       const species = {};
       const part = {};
       for (const point in data) {
-        console.log(data);
         if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
           const latitude = data[point]['collectionPlaceLatitude'];
           const longitude = data[point]['collectionPlaceLongitude'];
