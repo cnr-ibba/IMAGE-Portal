@@ -21,8 +21,6 @@ export class SummaryComponent implements OnInit {
   longitude = 39.855115;
   latitude = 57.634874;
 
-  public doughnutChartLabels;
-  public doughnutChartData;
   public doughnutChartType;
 
   birthCoordinates = [];
