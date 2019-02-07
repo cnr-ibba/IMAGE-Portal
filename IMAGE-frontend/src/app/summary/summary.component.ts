@@ -30,11 +30,15 @@ export class SummaryComponent implements OnInit {
   organismSpeciesData = [];
   organismBreedLabels = [];
   organismBreedData = [];
+  organismCountryLabels = [];
+  organismCountryData = [];
 
   specimenSpeciesLabels = [];
   specimenSpeciesData = [];
   specimenPartLabels = [];
   specimenPartData = [];
+  specimenCountryLabels = [];
+  specimenCountryData = [];
 
   organismSpeciesOptions = {
     title: {
@@ -54,6 +58,12 @@ export class SummaryComponent implements OnInit {
       display: true
     }
   };
+  organismCountryOptions = {
+    title: {
+      text: 'Gene bank country',
+      display: true
+    }
+  };
 
   constructor(private tableService: TablesService) { }
 
@@ -61,6 +71,7 @@ export class SummaryComponent implements OnInit {
     this.tableService.getAllOrganisms().subscribe(data => {
       const species = {};
       const breed = {};
+      const country = {};
       for (const point in data) {
         if (data[point]['birthLocationLatitude'] !== null && data[point]['birthLocationLongitude'] !== null) {
           const latitude = data[point]['birthLocationLatitude'];
@@ -77,12 +88,16 @@ export class SummaryComponent implements OnInit {
         species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
           species[data[point]['species']] = 1;
         breed.hasOwnProperty(data[point]['breed']) ? breed[data[point]['breed']] += 1 : breed[data[point]['breed']] = 1;
+        country.hasOwnProperty(data[point]['geneBankCountry']) ? country[data[point]['geneBankCountry']] += 1 :
+          country[data[point]['geneBankCountry']] = 1;
       }
 
       this.organismSpeciesLabels = Object.keys(species);
       this.organismSpeciesData = Object.values(species);
       this.organismBreedLabels = Object.keys(breed);
       this.organismBreedData = Object.values(breed);
+      this.organismCountryLabels = Object.keys(country);
+      this.organismCountryData = Object.values(country);
 
       this.birthBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
       this.birthMap = new ol.Map({
@@ -90,7 +105,7 @@ export class SummaryComponent implements OnInit {
         layers: [this.birthBaseMapLayer],
         view: new ol.View({
           center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-          zoom: 2
+          zoom: 1
         })
       });
 
@@ -106,6 +121,7 @@ export class SummaryComponent implements OnInit {
     this.tableService.getAllSpecimens().subscribe(data => {
       const species = {};
       const part = {};
+      const country = {};
       for (const point in data) {
         if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
           const latitude = data[point]['collectionPlaceLatitude'];
@@ -123,12 +139,16 @@ export class SummaryComponent implements OnInit {
           species[data[point]['species']] = 1;
         part.hasOwnProperty(data[point]['organismPart']) ? part[data[point]['organismPart']] += 1 :
           part[data[point]['organismPart']] = 1;
+        country.hasOwnProperty(data[point]['geneBankCountry']) ? country[data[point]['geneBankCountry']] += 1 :
+          country[data[point]['geneBankCountry']] = 1;
       }
 
       this.specimenSpeciesLabels = Object.keys(species);
       this.specimenSpeciesData = Object.values(species);
       this.specimenPartLabels = Object.keys(part);
       this.specimenPartData = Object.values(part);
+      this.specimenCountryLabels = Object.keys(country);
+      this.specimenCountryData = Object.values(country);
 
       this.collectionBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
       this.collectionMap = new ol.Map({
