@@ -12,7 +12,7 @@
           <b>Submission title: </b> {{ data['submission_title'] }}
         </p>
         <p *ngIf="checkExistence('material')">
-          <b>Material: </b> {{ data['material'] }}
+          <b>Material: </b> <a href="http://purl.obolibrary.org/obo/OBI_0001479">{{ data['material'] }}</a>
         </p>
         <p *ngIf="checkExistence('person_last_name')">
           <b>Person last name: </b> {{ data['person_last_name'] }}
