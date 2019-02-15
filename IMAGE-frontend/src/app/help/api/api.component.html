@@ -1,3 +1,73 @@
-<p>
-  api works!
-</p>
+<ng-container>
+  <section class="api-help" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="1400px">
+      <mat-card-title fxLayoutAlign="center"><b>API Help Page</b>{{ id }}</mat-card-title>
+
+      <mat-card-content fxLayoutAlign="left">
+        <p><b>1. There are two main entrypoints:</b>
+          <br>
+          one for organism: <a href="https://wp5image.eu/data_portal/backend/organism/">https://wp5image.eu/data_portal/backend/organism/</a>
+          <br>
+          one for specimen: <a href="https://wp5image.eu/data_portal/backend/specimen/">https://wp5image.eu/data_portal/backend/specimen/</a>
+        </p>
+      </mat-card-content>
+
+      <mat-card-content fxLayoutAlign="left">
+        <p>
+          <b>2. To get list of all organisms:</b>
+          <br>
+          API format
+          <br>
+          <span>curl https://wp5image.eu/data_portal/backend/organism/?format=api</span>
+
+          <br>
+          JSON format
+          <br>
+          <span>curl https://wp5image.eu/data_portal/backend/organism/?format=json</span>
+        </p>
+      </mat-card-content>
+
+      <mat-card-content fxLayoutAlign="left">
+        <p><b>3. To get information about specific organism:</b>
+          <br>
+          API format
+          <br>
+          <span>https://wp5image.eu/data_portal/backend/organism/SAMEA5159526/?format=api</span>
+
+          <br>
+          JSON format
+          <br>
+          <span>https://wp5image.eu/data_portal/backend/organism/SAMEA5159526/?format=json</span>
+        </p>
+      </mat-card-content>
+
+      <mat-card-content fxLayoutAlign="left">
+        <p><b>4. To get list of all specimens:</b>
+          <br>
+          API format
+          <br>
+          <span>curl https://wp5image.eu/data_portal/backend/specimen/?format=api</span>
+
+          <br>
+          JSON format
+          <br>
+          <span>curl https://wp5image.eu/data_portal/backend/specimen/?format=json</span>
+        </p>
+      </mat-card-content>
+
+      <mat-card-content fxLayoutAlign="left">
+        <p><b>5. To get information about specific specimens:</b>
+          <br>
+          API format
+          <br>
+          <span>https://wp5image.eu/data_portal/backend/specimen/SAMEA5159523/?format=api</span>
+
+          <br>
+          JSON format
+          <br>
+          <span>https://wp5image.eu/data_portal/backend/specimen/SAMEA5159523/?format=json</span>
+        </p>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</ng-container>

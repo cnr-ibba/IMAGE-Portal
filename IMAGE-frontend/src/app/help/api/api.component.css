@@ -1,0 +1,26 @@
+.api-help {
+  padding: 30px;
+}
+
+p {
+  font-size: large;
+}
+
+a {
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+a:hover, a:active {
+  color: lightgrey;
+}
+
+span {
+  background-color: black;
+  background-image: radial-gradient(
+    rgba(0, 150, 0, 0.75), black 120%
+  );
+  height: 100vh;
+  color: white;
+  font: 1.3rem Inconsolata, monospace;
+}
