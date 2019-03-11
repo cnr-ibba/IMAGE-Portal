@@ -74,8 +74,8 @@ export class SummaryComponent implements OnInit {
       const country = {};
       for (const point in data) {
         if (data[point]['birthLocationLatitude'] !== null && data[point]['birthLocationLongitude'] !== null) {
-          const latitude = data[point]['birthLocationLatitude'];
-          const longitude = data[point]['birthLocationLongitude'];
+          const latitude = +data[point]['birthLocationLatitude'];
+          const longitude = +data[point]['birthLocationLongitude'];
           this.latitude = latitude;
           this.longitude = longitude;
           const flag = new ol.Feature({
@@ -125,8 +125,8 @@ export class SummaryComponent implements OnInit {
       const country = {};
       for (const point in data) {
         if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
-          const latitude = data[point]['collectionPlaceLatitude'];
-          const longitude = data[point]['collectionPlaceLongitude'];
+          const latitude = +data[point]['collectionPlaceLatitude'];
+          const longitude = +data[point]['collectionPlaceLongitude'];
           this.latitude = latitude;
           this.longitude = longitude;
           const flag = new ol.Feature({

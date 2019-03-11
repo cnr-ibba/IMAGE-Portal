@@ -42,13 +42,13 @@ export class SpecimenComponent implements OnInit {
             target: 'map',
             layers: [this.baseMapLayer],
             view: new ol.View({
-              center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-              zoom: 12
+              center: ol.proj.fromLonLat([+this.longitude, +this.latitude]),
+              zoom: 6
             })
           });
           this.marker = new ol.Feature({
             geometry: new ol.geom.Point(
-              ol.proj.fromLonLat([this.longitude, this.latitude])
+              ol.proj.fromLonLat([+this.longitude, +this.latitude])
             ),
           });
           this.vectorSource = new ol.source.Vector({

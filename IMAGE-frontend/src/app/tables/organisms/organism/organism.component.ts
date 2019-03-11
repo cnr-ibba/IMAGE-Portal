@@ -37,18 +37,20 @@ export class OrganismComponent implements OnInit {
           this.checkExistence('birth_location_longitude', true)) {
           this.latitude = data['organisms'][0]['birth_location_latitude'];
           this.longitude = data['organisms'][0]['birth_location_longitude'];
+          console.log(this.latitude);
+          console.log(this.longitude);
           this.baseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
           this.map = new ol.Map({
             target: 'map',
             layers: [this.baseMapLayer],
             view: new ol.View({
-              center: ol.proj.fromLonLat([this.longitude, this.latitude]),
-              zoom: 12
+              center: ol.proj.fromLonLat([+this.longitude, +this.latitude]),
+              zoom: 6
             })
           });
           this.marker = new ol.Feature({
             geometry: new ol.geom.Point(
-              ol.proj.fromLonLat([this.longitude, this.latitude])
+              ol.proj.fromLonLat([+this.longitude, +this.latitude])
             ),
           });
           this.vectorSource = new ol.source.Vector({
