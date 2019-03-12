@@ -19,6 +19,9 @@ a:hover, a:active {
 }
 
 .logo-image {
-  height: 5%;
-  width: 5%;
+  height: 8%;
+  width: 8%;
+  background-color: whitesmoke;
+  border-radius: 10px;
 }
+
