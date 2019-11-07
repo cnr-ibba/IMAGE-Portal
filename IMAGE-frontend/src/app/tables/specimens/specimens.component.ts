@@ -19,8 +19,8 @@ export class SpecimensComponent implements OnInit, OnDestroy {
   exportData;
   error: any;
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   constructor(private tablesService: TablesService,
               public snackBar: MatSnackBar,
@@ -70,7 +70,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
     this.optionsCsv.headers = this.displayedColumns;
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
-      for (const key in data) {
+      for (const key in Object.keys(data)) {
         if (data[key].length !== 0) {
           params[key] = data[key];
         }
