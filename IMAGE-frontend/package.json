@@ -23,6 +23,7 @@
     "@angular/platform-browser": "^8.2.13",
     "@angular/platform-browser-dynamic": "^8.2.13",
     "@angular/router": "^8.2.13",
+    "angular2-cookie-law": "^7.0.1",
     "angular2-csv": "^0.2.9",
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",

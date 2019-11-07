@@ -20,6 +20,7 @@ import { ApiComponent } from './help/api/api.component';
 import { NotExistsPathComponent } from './not-exists-path/not-exists-path.component';
 import { SummaryComponent } from './summary/summary.component';
 import {ChartsModule} from 'ng2-charts';
+import {CookieLawModule} from 'angular2-cookie-law';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {ChartsModule} from 'ng2-charts';
     AppRoutingModule,
     Angular2CsvModule,
     HttpClientModule,
-    ChartsModule
+    ChartsModule,
+    CookieLawModule
   ],
   providers: [TablesService],
   bootstrap: [AppComponent]

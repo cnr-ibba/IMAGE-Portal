@@ -6,6 +6,16 @@
     <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
     <main>
       <router-outlet></router-outlet>
+
+      <cookie-law #cookieLaw
+                  name="ng4CookieLaw"
+                  (isSeen)="cookieLawSeen = $event"
+                  learnMore="/false"
+                  target="_blank">
+        This website requires cookies, and the limited processing of your personal data in order to function. By using the
+        site you are agreeing to this as outlined in our
+        <a href="https://wp5image.eu/image/privacy/" target="_blank">Privacy Notice</a>
+      </cookie-law>
     </main>
   </mat-sidenav-content>
 </mat-sidenav-container>
