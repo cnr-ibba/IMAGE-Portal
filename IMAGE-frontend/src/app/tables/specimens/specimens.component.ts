@@ -3,7 +3,7 @@ import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/m
 import {TablesService} from '../tables.service';
 import {Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
-import {ActivatedRoute, Params, Router} from "@angular/router";
+import {ActivatedRoute, Params, Router} from '@angular/router';
 
 @Component({
   selector: 'app-specimens',
