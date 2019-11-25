@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   envName: 'prod',
-  host: 'https://wp5image.eu/data_portal/backend/'
+  host: 'https://www.image2020genebank.eu/data_portal/backend/'
 };
