@@ -70,7 +70,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
       for (const key in Object.keys(data)) {
-        if (data[key].length !== 0) {
+        if (data[key] && data[key].length !== 0) {
           params[key] = data[key];
         }
       }

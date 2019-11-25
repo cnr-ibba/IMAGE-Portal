@@ -9,7 +9,7 @@ export class AppComponent implements OnInit {
   title = 'IMAGE-frontend';
   cookieLawSeen: boolean;
 
-  @ViewChild('cookieLaw', {static: false})
+  @ViewChild('cookieLaw', {static: true})
   cookieLawEl: any;
 
   ngOnInit() {
