@@ -1,6 +1,6 @@
-# IMAGEFrontend
+# IMAGE-portal frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.4.
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
 
 ## To run app:
 1. Install Docker
