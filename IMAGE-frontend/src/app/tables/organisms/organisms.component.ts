@@ -51,6 +51,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     });
     this.tablesService.getAllOrganisms().subscribe(
       data => {
+        console.log(data[0]);
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;

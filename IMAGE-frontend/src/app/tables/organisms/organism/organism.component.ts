@@ -74,14 +74,35 @@ export class OrganismComponent implements OnInit {
   checkExistence(key: string, organism = false) {
     if (organism) {
       return typeof this.data !== 'undefined' && this.data['organisms'][0][key] !== '' &&
-        this.data['organisms'][0][key] !== null;
+        this.data['organisms'][0][key] !== null && this.data['organisms'][0][key].length !== 0;
     } else {
-      return typeof this.data !== 'undefined' && this.data[key] !== '';
+      return typeof this.data !== 'undefined' && this.data[key] !== '' && this.data[key].length !== 0;
     }
   }
 
   hasError() {
     return typeof this.error !== 'undefined';
+  }
+
+  convertArrayToStr(arrayToConvert) {
+    return arrayToConvert.join(', ');
+  }
+
+  formatEmailStr(emailStr) {
+    return emailStr.split('mailto:')[1];
+  }
+
+  getOntologyField(fieldName) {
+    const dataToReturn = [];
+    for (let i = 0; i < this.data[fieldName].length; i++) {
+      dataToReturn.push(
+        {
+          'text': this.data[fieldName][i],
+          'ontology': this.data[fieldName + '_ontology'][i]
+        }
+      );
+    }
+    return dataToReturn;
   }
 
 }

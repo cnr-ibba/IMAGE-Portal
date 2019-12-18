@@ -10,21 +10,28 @@ export interface Organisms {
   project: string;
   submissionTitle: string;
   material: string;
+  materialOntology: string;
   personLastName: string;
   personEmail: string;
   personAffiliation: string;
   personRole: string;
+  personRoleOntology: string;
   organizationName: string;
   organizationRole: string;
+  organizationRoleOntology: string;
   geneBankName: string;
   geneBankCountry: string;
+  geneBankCountryOntology: string;
   dataSourceType: string;
   dataSourceVersion: string;
   species: string;
+  speciesOntology: string;
+  etag: string;
   submissionDescription: string;
   personFirstName: string;
   organizationAddress: string;
   organizationCountry: string;
+  organizationCountryOntology: string;
   description: string;
   personInitial: string;
   organizationUri: string;
@@ -32,13 +39,18 @@ export interface Organisms {
   breed: string;
   efabisBreedCountry: string;
   sex: string;
+  sexOntology: string;
   birthLocationAccuracy: string;
   mappedBreed: string;
+  mappedBreedOntology: string;
+  birthDate: string;
+  birthDateUnit: string;
   birthLocation: string;
   birthLocationLongitude: string;
+  birthLocationLongitudeUnit: string;
   birthLocationLatitude: string;
+  birthLocationLatitudeUnit: string;
   childOf: string;
-  sample: string;
 }
 
 export interface Specimens {
@@ -123,21 +135,28 @@ export class TablesService {
           project: entry['project'],
           submissionTitle: entry['submission_title'],
           material: entry['material'],
+          materialOntology: entry['material_ontology'],
           personLastName: entry['person_last_name'],
           personEmail: entry['person_email'],
           personAffiliation: entry['person_affiliation'],
           personRole: entry['person_role'],
+          personRoleOntology: entry['person_role_ontology'],
           organizationName: entry['organization_name'],
           organizationRole: entry['organization_role'],
+          organizationRoleOntology: entry['organization_role_ontology'],
           geneBankName: entry['gene_bank_name'],
           geneBankCountry: entry['gene_bank_country'],
+          geneBankCountryOntology: entry['gene_bank_country_ontology'],
           dataSourceType: entry['data_source_type'],
           dataSourceVersion: entry['data_source_version'],
           species: entry['species'],
+          speciesOntology: entry['species_ontology'],
+          etag: entry['etag'],
           submissionDescription: entry['submission_description'],
           personFirstName: entry['person_first_name'],
           organizationAddress: entry['organization_address'],
           organizationCountry: entry['organization_country'],
+          organizationCountryOntology: entry['organization_country_ontology'],
           description: entry['description'],
           personInitial: entry['person_initial'],
           organizationUri: entry['organization_uri'],
@@ -145,11 +164,17 @@ export class TablesService {
           breed: entry['organisms'][0]['supplied_breed'],
           efabisBreedCountry: entry['organisms'][0]['efabis_breed_country'],
           sex: entry['organisms'][0]['sex'],
+          sexOntology: entry['organisms'][0]['sex_ontology'],
           birthLocationAccuracy: entry['organisms'][0]['birth_location_accuracy'],
           mappedBreed: entry['organisms'][0]['mapped_breed'],
+          mappedBreedOntology: entry['organisms'][0]['mapped_breed_ontology'],
+          birthDate: entry['organisms'][0]['birth_date'],
+          birthDateUnit: entry['organisms'][0]['birth_date_unit'],
           birthLocation: entry['organisms'][0]['birth_location'],
           birthLocationLongitude: entry['organisms'][0]['birth_location_longitude'],
+          birthLocationLongitudeUnit: entry['organisms'][0]['birth_location_longitude_unit'],
           birthLocationLatitude: entry['organisms'][0]['birth_location_latitude'],
+          birthLocationLatitudeUnit: entry['organisms'][0]['birth_location_latitude_unit'],
           childOf: entry['organisms'][0]['child_of'],
           sample: entry['organisms'][0]['sample']
         } as Organisms)
