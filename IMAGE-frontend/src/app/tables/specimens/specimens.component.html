@@ -49,12 +49,12 @@
         <td mat-cell *matCellDef="let element"><a href="{{element.speciesOntology}}">{{ element.species }}</a></td>
       </ng-container>
 
-      <ng-container matColumnDef="derived">
+      <ng-container matColumnDef="derivedFrom">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Derived from</th>
         <td mat-cell *matCellDef="let element"><a [routerLink]="['/tables/organism', element.derivedFrom]">{{ element.derivedFrom }}</a></td>
       </ng-container>
 
-      <ng-container matColumnDef="organism">
+      <ng-container matColumnDef="organismPart">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Organism part</th>
         <td mat-cell *matCellDef="let element"><a href="element.organismPartOntology">{{ element.organismPart }}</a></td>
       </ng-container>

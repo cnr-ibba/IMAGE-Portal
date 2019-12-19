@@ -11,7 +11,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
   styleUrls: ['./specimens.component.css']
 })
 export class SpecimensComponent implements OnInit, OnDestroy {
-  displayedColumns = ['id', 'species', 'derived', 'organism'];
+  displayedColumns = ['id', 'species', 'derivedFrom', 'organismPart'];
   activeFilters;
   activeFiltersSubscription: Subscription;
   dataSource: any;
