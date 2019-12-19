@@ -70,7 +70,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
     this.optionsCsv.headers = this.displayedColumns;
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
-      for (const key in Object.keys(data)) {
+      for (const key of Object.keys(data)) {
         if (data[key] && data[key].length !== 0) {
           params[key] = data[key];
         }

@@ -51,7 +51,6 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     });
     this.tablesService.getAllOrganisms().subscribe(
       data => {
-        console.log(data[0]);
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -70,7 +69,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     this.optionsCsv.headers = this.displayedColumns;
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
-      for (const key in Object.keys(data)) {
+      for (const key of Object.keys(data)) {
         if (data[key] && data[key].length !== 0) {
           params[key] = data[key];
         }
