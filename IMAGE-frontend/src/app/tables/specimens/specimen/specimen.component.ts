@@ -72,9 +72,9 @@ export class SpecimenComponent implements OnInit {
   checkExistence(key: string, organism = false) {
     if (organism) {
       return typeof this.data !== 'undefined' && this.data['specimens'][0][key] !== '' &&
-        this.data['specimens'][0][key] !== null;
+        this.data['specimens'][0][key] !== null && this.data['specimens'][0][key].length !== 0;
     } else {
-      return typeof this.data !== 'undefined' && this.data[key] !== '';
+      return typeof this.data !== 'undefined' && this.data[key] !== '' && this.data[key].length !== 0;
     }
   }
 
