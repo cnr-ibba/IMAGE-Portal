@@ -114,10 +114,12 @@
         </p>
 
         <p *ngIf="checkExistence('birth_location_longitude', true)">
-          <b>Birth location longitude: </b> {{ data['organisms'][0]['birth_location_longitude'] }} {{ data['organisms'][0]['birth_location_longitude_unit'] }}
+          <b>Birth location longitude: </b> {{ data['organisms'][0]['birth_location_longitude'] }}
+          {{ data['organisms'][0]['birth_location_longitude_unit'] }}
         </p>
         <p *ngIf="checkExistence('birth_location_latitude', true)">
-          <b>Birth location latitude: </b> {{ data['organisms'][0]['birth_location_latitude'] }} {{ data['organisms'][0]['birth_location_latitude_unit'] }}
+          <b>Birth location latitude: </b> {{ data['organisms'][0]['birth_location_latitude'] }}
+          {{ data['organisms'][0]['birth_location_latitude_unit'] }}
         </p>
         <div id="map" class="map"></div>
         <p></p>
