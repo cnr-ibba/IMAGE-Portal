@@ -65,6 +65,12 @@ export class SummaryComponent implements OnInit {
     }
   };
 
+  maleOrganisms = 0;
+  femaleOrganisms = 0;
+  totalOrganisms = 0;
+  otherOrganisms = 0;
+  totalSpecimens = 0;
+
   constructor(private tableService: TablesService) { }
 
   ngOnInit() {
@@ -72,6 +78,7 @@ export class SummaryComponent implements OnInit {
       const species = {};
       const breed = {};
       const country = {};
+      this.totalOrganisms = data.length;
       for (const point in data) {
         if (data[point]['birthLocationLatitude'] !== null && data[point]['birthLocationLongitude'] !== null) {
           const latitude = +data[point]['birthLocationLatitude'];
@@ -90,6 +97,13 @@ export class SummaryComponent implements OnInit {
         breed.hasOwnProperty(data[point]['breed']) ? breed[data[point]['breed']] += 1 : breed[data[point]['breed']] = 1;
         country.hasOwnProperty(data[point]['geneBankCountry']) ? country[data[point]['geneBankCountry']] += 1 :
           country[data[point]['geneBankCountry']] = 1;
+        if (data[point]['sex'] === 'male') {
+          this.maleOrganisms += 1;
+        } else if (data[point]['sex'] === 'female') {
+          this.femaleOrganisms += 1;
+        } else {
+          this.otherOrganisms += 1;
+        }
       }
 
       this.organismSpeciesLabels = Object.keys(species);
@@ -123,6 +137,7 @@ export class SummaryComponent implements OnInit {
       const species = {};
       const part = {};
       const country = {};
+      this.totalSpecimens = data.length;
       for (const point in data) {
         if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
           const latitude = +data[point]['collectionPlaceLatitude'];

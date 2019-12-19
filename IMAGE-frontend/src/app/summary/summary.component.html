@@ -70,13 +70,13 @@
                       *ngIf="organismCountryData.length !== 0"></canvas>
             </div>
             <p>
-              <b>Male samples: </b>36
+              <b>Male samples: </b>{{maleOrganisms}}
             </p>
             <p>
-              <b>Female samples: </b>18
+              <b>Female samples: </b>{{femaleOrganisms}}
             </p>
             <p>
-              <b>Total number of organisms: </b>123
+              <b>Total number of organisms: </b>{{totalOrganisms}}
             </p>
           </mat-card-content>
         </mat-card>
@@ -158,7 +158,7 @@
                       *ngIf="specimenCountryData.length !== 0"></canvas>
             </div>
             <p>
-              <b>Total specimens: </b>123
+              <b>Total specimens: </b>{{totalSpecimens}}
             </p>
           </mat-card-content>
         </mat-card>
