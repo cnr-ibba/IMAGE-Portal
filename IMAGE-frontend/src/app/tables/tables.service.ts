@@ -59,41 +59,55 @@ export interface Specimens {
   project: string;
   submissionTitle: string;
   material: string;
+  materialOntology: string;
   personLastName: string;
   personEmail: string;
   personAffiliation: string;
   personRole: string;
+  personRoleOntology: string;
   organizationName: string;
   organizationRole: string;
+  organizationRoleOntology: string;
   geneBankName: string;
   geneBankCountry: string;
+  geneBankCountryOntology: string;
   dataSourceType: string;
   dataSourceVersion: string;
   species: string;
+  speciesOntology: string;
+  etag: string;
   submissionDescription: string;
   personFirstName: string;
   organizationAddress: string;
   organizationCountry: string;
+  organizationCountryOntology: string;
   description: string;
   personInitial: string;
   organizationUri: string;
   publicationDoi: string;
   derivedFrom: string;
-  collectionDate: string;
-  collectionPlace: string;
   collectionPlaceAccuracy: string;
   organismPart: string;
+  organismPartOntology: string;
   specimenCollectionProtocol: string;
+  collectionDate: string;
+  collectionDateUnit: string;
   collectionPlaceLatitude: string;
+  collectionPlaceLatitudeUnit: string;
   collectionPlaceLongitude: string;
+  collectionPlaceLongitudeUnit: string;
+  collectionPlace: string;
   developmentalStage: string;
+  developmentalStageOntology: string;
   physiologicalStage: string;
+  physiologicalStageOntology: string;
   availabiity: string;
   sampleStorage: string;
   sampleStorageProcessing: string;
   animalAgeAtCollection: string;
+  animalAgeAtCollectionUnit: string;
   samplingToPreparationInterval: string;
-  sample: string;
+  samplingToPreparationIntervalUnit: string;
 }
 
 
@@ -195,41 +209,54 @@ export class TablesService {
           project: entry['project'],
           submissionTitle: entry['submission_title'],
           material: entry['material'],
+          materialOntology: entry['material_ontology'],
           personLastName: entry['person_last_name'],
           personEmail: entry['person_email'],
           personAffiliation: entry['person_affiliation'],
           personRole: entry['person_role'],
+          personRoleOntology: entry['person_role_ontology'],
           organizationName: entry['organization_name'],
           organizationRole: entry['organization_role'],
           geneBankName: entry['gene_bank_name'],
           geneBankCountry: entry['gene_bank_country'],
+          geneBankCountryOntology: entry['gene_bank_country_ontology'],
           dataSourceType: entry['data_source_type'],
           dataSourceVersion: entry['data_source_version'],
           species: entry['species'],
+          speciesOntology: entry['species_ontology'],
+          etag: entry['etag'],
           submissionDescription: entry['submission_description'],
           personFirstName: entry['person_first_name'],
           organizationAddress: entry['organization_address'],
           organizationCountry: entry['organization_country'],
+          organizationCountryOntology: entry['organization_country_ontology'],
           description: entry['description'],
           personInitial: entry['person_initial'],
           organizationUri: entry['organization_uri'],
           publicationDoi: entry['publication_doi'],
           derivedFrom: entry['specimens'][0]['derived_from'],
-          collectionDate: entry['specimens'][0]['collection_date'],
-          collectionPlace: entry['specimens'][0]['collection_place'],
           collectionPlaceAccuracy: entry['specimens'][0]['collection_place_accuracy'],
           organismPart: entry['specimens'][0]['organism_part'],
+          organismPartOntology: entry['specimens'][0]['organism_part_ontology'],
           specimenCollectionProtocol: entry['specimens'][0]['specimen_collection_protocol'],
+          collectionDate: entry['specimens'][0]['collection_date'],
+          collectionDateUnit: entry['specimens'][0]['collection_date_unit'],
           collectionPlaceLatitude: entry['specimens'][0]['collection_place_latitude'],
+          collectionPlaceLatitudeUnit: entry['specimens'][0]['collection_place_latitude_unit'],
           collectionPlaceLongitude: entry['specimens'][0]['collection_place_longitude'],
+          collectionPlaceLongitudeUnit: entry['specimens'][0]['collection_place_longitude_unit'],
+          collectionPlace: entry['specimens'][0]['collection_place'],
           developmentalStage: entry['specimens'][0]['developmental_stage'],
+          developmentalStageOntology: entry['specimens'][0]['developmental_stage_ontology'],
           physiologicalStage: entry['specimens'][0]['physiological_stage'],
+          physiologicalStageOntology: entry['specimens'][0]['physiological_stage_ontology'],
           availabiity: entry['specimens'][0]['availability'],
           sampleStorage: entry['specimens'][0]['sample_storage'],
           sampleStorageProcessing: entry['specimens'][0]['sample_storage_processing'],
           animalAgeAtCollection: entry['specimens'][0]['animal_age_at_collection'],
+          animalAgeAtCollectionUnit: entry['specimens'][0]['animal_age_at_collection_unit'],
           samplingToPreparationInterval: entry['specimens'][0]['sampling_to_preparation_interval'],
-          sample: entry['specimens'][0]['sample'],
+          samplingToPreparationIntervalUnit: entry['specimens'][0]['sampling_to_preparation_interval_unit']
           } as Specimens)
         );
       }),
