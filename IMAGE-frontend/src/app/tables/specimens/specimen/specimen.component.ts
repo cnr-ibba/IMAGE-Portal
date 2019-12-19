@@ -82,4 +82,25 @@ export class SpecimenComponent implements OnInit {
     return typeof this.error !== 'undefined';
   }
 
+  convertArrayToStr(arrayToConvert) {
+    return arrayToConvert.join(', ');
+  }
+
+  formatEmailStr(emailStr) {
+    return emailStr.split('mailto:')[1];
+  }
+
+  getOntologyField(fieldName) {
+    const dataToReturn = [];
+    for (let i = 0; i < this.data[fieldName].length; i++) {
+      dataToReturn.push(
+        {
+          'text': this.data[fieldName][i],
+          'ontology': this.data[fieldName + '_ontology'][i]
+        }
+      );
+    }
+    return dataToReturn;
+  }
+
 }

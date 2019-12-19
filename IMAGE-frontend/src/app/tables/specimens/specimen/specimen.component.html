@@ -12,31 +12,38 @@
           <b>Submission title: </b> {{ data['submission_title'] }}
         </p>
         <p *ngIf="checkExistence('material')">
-          <b>Material: </b> <a href="http://purl.obolibrary.org/obo/OBI_0001479">{{ data['material'] }}</a>
+          <b>Material: </b> <a href="{{data['material_ontology']}}">{{ data['material'] }}</a>
         </p>
         <p *ngIf="checkExistence('person_last_name')">
-          <b>Person last name: </b> {{ data['person_last_name'] }}
+          <b>Person last name: </b> {{ convertArrayToStr(data['person_last_name']) }}
         </p>
         <p *ngIf="checkExistence('person_email')">
-          <b>Person email: </b> {{ data['person_email'] }}
+          <b>Person email: </b>
+          <a href="{{email}}" *ngFor="let email of data['person_email']">
+            {{formatEmailStr(email)}}
+          </a>
         </p>
         <p *ngIf="checkExistence('person_affiliation')">
-          <b>Person affiliation: </b> {{ data['person_affiliation'] }}
+          <b>Person affiliation: </b> {{ convertArrayToStr(data['person_affiliation']) }}
         </p>
         <p *ngIf="checkExistence('person_role')">
-          <b>Person role: </b> {{ data['person_role'] }}
+          <b>Person role: </b>
+          <a href="{{role['ontology']}}" *ngFor="let role of getOntologyField('person_role')">
+            {{ role['text'] }}</a>
         </p>
         <p *ngIf="checkExistence('organization_name')">
-          <b>Organization name: </b> {{ data['organization_name'] }}
+          <b>Organization name: </b> {{ convertArrayToStr(data['organization_name']) }}
         </p>
         <p *ngIf="checkExistence('organization_role')">
-          <b>Organization role: </b> {{ data['organization_role'] }}
+          <b>Organization role: </b>
+          <a href="{{role['ontology']}}" *ngFor="let role of getOntologyField('organization_role')">
+            {{ role['text'] }}</a>
         </p>
         <p *ngIf="checkExistence('gene_bank_name')">
           <b>Gene bank country: </b> {{ data['gene_bank_name'] }}
         </p>
         <p *ngIf="checkExistence('gene_bank_country')">
-          <b>Gene bank country: </b> {{ data['gene_bank_country'] }}
+          <b>Gene bank country: </b> <a href="{{data['gene_bank_country_ontology']}}">{{ data['gene_bank_country'] }}</a>
         </p>
         <p *ngIf="checkExistence('data_source_type')">
           <b>Data source type: </b> {{ data['data_source_type'] }}
@@ -45,7 +52,7 @@
           <b>Data source version: </b> {{ data['data_source_version'] }}
         </p>
         <p *ngIf="checkExistence('species')">
-          <b>Species: </b> {{ data['species'] }}
+          <b>Species: </b>  <a href="{{data['species_ontology']}}">{{ data['species'] }}</a>
         </p>
         <mat-divider [inset]="true"></mat-divider>
 
@@ -54,72 +61,77 @@
           <b>Submission description: </b> {{ data['submission_description'] }}
         </p>
         <p *ngIf="checkExistence('person_first_name')">
-          <b>Person first name: </b> {{ data['person_first_name'] }}
+          <b>Person first name: </b> {{ convertArrayToStr(data['person_first_name']) }}
         </p>
         <p *ngIf="checkExistence('organization_address')">
-          <b>Organization address: </b> {{ data['organization_address'] }}
+          <b>Organization address: </b> {{ convertArrayToStr(data['organization_address']) }}
         </p>
         <p *ngIf="checkExistence('organization_country')">
-          <b>Organization country: </b> {{ data['organization_country'] }}
+          <b>Organization country: </b>
+          <a href="{{country['ontology']}}" *ngFor="let country of getOntologyField('organization_country')">
+            {{ country['text'] }}</a>
         </p>
-        <mat-divider [inset]="true" *ngIf="checkExistence('submission_description') ||
-        checkExistence('person_first_name') || checkExistence('organization_address') ||
-        checkExistence('organization_country')"></mat-divider>
-
 
         <p *ngIf="checkExistence('description')">
           <b>Description: </b> {{ data['description'] }}
         </p>
         <p *ngIf="checkExistence('person_initial')">
-          <b>Person initial: </b> {{ data['person_initial'] }}
+          <b>Person initial: </b> {{ convertArrayToStr(data['person_initial']) }}
         </p>
         <p *ngIf="checkExistence('organization_uri')">
-          <b>Organization uri: </b> {{ data['organization_uri'] }}
+          <b>Organization uri: </b> {{ convertArrayToStr(data['organization_uri']) }}
         </p>
         <p *ngIf="checkExistence('publication_doi')">
           <b>Publication DOI: </b> {{ data['publication_doi'] }}
         </p>
-        <mat-divider [inset]="true" *ngIf="checkExistence('description') || checkExistence('person_initial') ||
-        checkExistence('organization_uri') || checkExistence('publication_doi')"></mat-divider>
+
+        <mat-divider [inset]="true"></mat-divider>
 
 
         <p *ngIf="checkExistence('derived_from', true)">
-          <b>Derived from: </b> {{ data['specimens'][0]['derived_from'] }}
+          <b>Derived from: </b> <a [routerLink]="['/tables/organism', data['specimens'][0]['derived_from']]">
+          {{ data['specimens'][0]['derived_from'] }}
+        </a>
         </p>
-        <p *ngIf="checkExistence('collection_date', true)">
-          <b>Collection date: </b> {{ data['specimens'][0]['collection_date'] }}
-        </p>
-        <p *ngIf="checkExistence('collection_place', true)">
-          <b>Collection place: </b> {{ data['specimens'][0]['collection_place'] }}
-        </p>
+
         <p *ngIf="checkExistence('collection_place_accuracy', true)">
           <b>Collection place accuracy: </b> {{ data['specimens'][0]['collection_place_accuracy'] }}
         </p>
-        <p *ngIf="checkExistence('organism_part', true)">
-          <b>Organism part: </b> {{ data['specimens'][0]['organism_part'] }}
-        </p>
-        <mat-divider [inset]="true" *ngIf="checkExistence('derived_from', true) ||
-        checkExistence('collection_date', true) || checkExistence('collection_place', true) ||
-        checkExistence('collection_place_accuracy', true) || checkExistence('organism_part', true)"></mat-divider>
 
+        <p *ngIf="checkExistence('organism_part', true)">
+          <b>Organism part: </b>
+          <a href="{{ data['specimens'][0]['organism_part_ontology'] }}">{{ data['specimens'][0]['organism_part'] }}</a>
+        </p>
 
         <p *ngIf="checkExistence('specimen_collection_protocol', true)">
           <b>Specimen collection protocol: </b> {{ data['specimens'][0]['specimen_collection_protocol'] }}
         </p>
 
+        <p *ngIf="checkExistence('collection_date', true)">
+          <b>Collection date: </b> {{ data['specimens'][0]['collection_date'] }}
+          {{ data['specimens'][0]['collection_date_unit'] }}
+        </p>
         <p *ngIf="checkExistence('collection_place_latitude', true)">
           <b>Collection place latitude: </b> {{ data['specimens'][0]['collection_place_latitude'] }}
+          {{ data['specimens'][0]['collection_place_latitude_unit'] }}
         </p>
         <p *ngIf="checkExistence('collection_place_longitude', true)">
           <b>Collection place longitude: </b> {{ data['specimens'][0]['collection_place_longitude'] }}
+          {{ data['specimens'][0]['collection_place_longitude_unit'] }}
         </p>
+        <p *ngIf="checkExistence('collection_place', true)">
+          <b>Collection place: </b> {{ data['specimens'][0]['collection_place'] }}
+        </p>
+
         <div id="map" class="map"></div>
         <p></p>
         <p *ngIf="checkExistence('developmental_stage', true)">
-          <b>Developmental stage: </b> {{ data['specimens'][0]['developmental_stage'] }}
+          <b>Developmental stage: </b>
+          <a href="{{ data['specimens'][0]['developmental_stage_ontology'] }}">{{ data['specimens'][0]['developmental_stage'] }}</a>
         </p>
         <p *ngIf="checkExistence('physiological_stage', true)">
-          <b>Physiological stage: </b> {{ data['specimens'][0]['physiological_stage'] }}
+          <b>Physiological stage: </b>
+          <a href="{{ data['specimens'][0]['physiological_stage_ontology'] }}">{{ data['specimens'][0]['physiological_stage'] }}</a>
         </p>
         <p *ngIf="checkExistence('availability', true)">
           <b>Availability: </b> {{ data['specimens'][0]['availability'] }}
@@ -130,18 +142,13 @@
         <p *ngIf="checkExistence('sample_storage_processing', true)">
           <b>Sample storage processing: </b> {{ data['specimens'][0]['sample_storage_processing'] }}
         </p>
-        <mat-divider [inset]="true" *ngIf="checkExistence('specimen_collection_protocol', true) ||
-        checkExistence('collection_place_latitude', true) || checkExistence('collection_place_longitude', true) ||
-        checkExistence('developmental_stage', true) || checkExistence('physiological_stage', true) ||
-        checkExistence('availability', true) || checkExistence('sample_storage', true) ||
-        checkExistence('sample_storage_processing', true)"></mat-divider>
-
-
         <p *ngIf="checkExistence('animal_age_at_collection', true)">
           <b>Animal age at collection: </b> {{ data['specimens'][0]['animal_age_at_collection'] }}
+          {{ data['specimens'][0]['animal_age_at_collection_unit'] }}
         </p>
         <p *ngIf="checkExistence('sampling_to_preparation_interval', true)">
           <b>Sampling to preparation interval: </b> {{ data['specimens'][0]['sampling_to_preparation_interval'] }}
+          {{ data['specimens'][0]['sampling_to_preparation_interval_unit'] }}
         </p>
       </mat-card-content>
     </mat-card>
