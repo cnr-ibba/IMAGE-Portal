@@ -53,6 +53,15 @@ export interface Organisms {
   childOf: string;
 }
 
+export interface OrganismsShort {
+  id: string;
+  species: string;
+  speciesOntology: string;
+  breed: string;
+  sex: string;
+  sexOntology: string;
+}
+
 export interface Specimens {
   id: string;
   alternativeId: string;
@@ -108,6 +117,15 @@ export interface Specimens {
   animalAgeAtCollectionUnit: string;
   samplingToPreparationInterval: string;
   samplingToPreparationIntervalUnit: string;
+}
+
+export interface SpecimensShort {
+  id: string;
+  species: string;
+  speciesOntology: string;
+  derivedFrom: string;
+  organismPart: string;
+  organismPartOntology: string;
 }
 
 
@@ -199,6 +217,25 @@ export class TablesService {
     );
   }
 
+  getAllOrganismsShort() {
+    const url = this.hostSetting.host + 'organism/';
+    return this.http.get(url).pipe(
+      map((data: any) => {
+        return data.map(entry => ({
+          id: entry['data_source_id'],
+          species: entry['species'],
+          speciesOntology: entry['species_ontology'],
+          breed: entry['organisms'][0]['supplied_breed'],
+          sex: entry['organisms'][0]['sex'],
+          sexOntology: entry['organisms'][0]['sex_ontology']
+          } as OrganismsShort)
+        );
+      }),
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
   getAllSpecimens() {
     const url = this.hostSetting.host + 'specimen/';
     return this.http.get(url).pipe(
@@ -258,6 +295,25 @@ export class TablesService {
           samplingToPreparationInterval: entry['specimens'][0]['sampling_to_preparation_interval'],
           samplingToPreparationIntervalUnit: entry['specimens'][0]['sampling_to_preparation_interval_unit']
           } as Specimens)
+        );
+      }),
+      retry(3),
+      catchError(this.handleError)
+    );
+  }
+
+  getAllSpecimensShort() {
+    const url = this.hostSetting.host + 'specimen/';
+    return this.http.get(url).pipe(
+      map((data: any) => {
+        return data.map(entry => ({
+          id: entry['data_source_id'],
+          species: entry['species'],
+          speciesOntology: entry['species_ontology'],
+          derivedFrom: entry['specimens'][0]['derived_from'],
+          organismPart: entry['specimens'][0]['organism_part'],
+          organismPartOntology: entry['specimens'][0]['organism_part_ontology']
+          } as SpecimensShort)
         );
       }),
       retry(3),

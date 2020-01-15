@@ -12,6 +12,7 @@ import {ActivatedRoute, Params, Router} from '@angular/router';
 })
 export class SpecimensComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'species', 'derivedFrom', 'organismPart'];
+  headers = ['BioSample ID', 'Species', 'Species ontology', 'Derived from', 'Organism part', 'Organism part ontology'];
   activeFilters;
   activeFiltersSubscription: Subscription;
   dataSource: any;
@@ -49,7 +50,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
       this.tablesService.activeFilters = filters;
       this.doFilter();
     });
-    this.tablesService.getAllSpecimens().subscribe(
+    this.tablesService.getAllSpecimensShort().subscribe(
       data => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
@@ -67,7 +68,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
       }
     );
     this.optionsCsv = this.tablesService.optionsCsv;
-    this.optionsCsv.headers = this.displayedColumns;
+    this.optionsCsv.headers = this.headers;
     this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
       for (const key of Object.keys(data)) {
