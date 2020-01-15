@@ -21,6 +21,8 @@ import { NotExistsPathComponent } from './not-exists-path/not-exists-path.compon
 import { SummaryComponent } from './summary/summary.component';
 import {ChartsModule} from 'ng2-charts';
 import {CookieLawModule} from 'angular2-cookie-law';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import {CookieLawModule} from 'angular2-cookie-law';
     Angular2CsvModule,
     HttpClientModule,
     ChartsModule,
-    CookieLawModule
+    CookieLawModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [TablesService],
   bootstrap: [AppComponent]
