@@ -3,6 +3,7 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {TablesService} from '../../tables.service';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material';
+import {countries} from "../../countries";
 
 declare var ol: any;
 @Component({
@@ -21,6 +22,7 @@ export class SpecimenComponent implements OnInit {
   marker: any;
   vectorSource: any;
   markerVercotLayer: any;
+  countries = countries;
 
   constructor(private route: ActivatedRoute, private tablesService: TablesService,
               private titleService: Title, public snackBar: MatSnackBar) { }
@@ -101,6 +103,10 @@ export class SpecimenComponent implements OnInit {
       );
     }
     return dataToReturn;
+  }
+
+  countryInEugena(countryName: string) {
+    return this.countries.hasOwnProperty(countryName);
   }
 
 }

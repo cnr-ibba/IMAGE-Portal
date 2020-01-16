@@ -43,7 +43,12 @@
           <b>Gene bank name: </b> {{ data['gene_bank_name'] }}
         </p>
         <p *ngIf="checkExistence('gene_bank_country')">
-          <b>Gene bank country: </b> <a href="{{data['gene_bank_country_ontology']}}">{{ data['gene_bank_country'] }}</a>
+          <ng-container *ngIf="countryInEugena(data['gene_bank_country'])">
+            <b>Gene bank country: </b> <a href="{{countries[data['gene_bank_country']]}}">{{ data['gene_bank_country'] }}</a>
+          </ng-container>
+          <ng-container *ngIf="!countryInEugena(data['gene_bank_country'])">
+            <b>Gene bank country: </b> <a href="{{data['gene_bank_country_ontology']}}">{{ data['gene_bank_country'] }}</a>
+          </ng-container>
         </p>
         <p *ngIf="checkExistence('data_source_type')">
           <b>Data source version: </b> {{ data['data_source_type'] }}
