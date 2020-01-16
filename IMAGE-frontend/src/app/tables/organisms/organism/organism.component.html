@@ -88,7 +88,15 @@
         <mat-divider [inset]="true"></mat-divider>
 
         <p *ngIf="checkExistence('supplied_breed', true)">
-          <b>Supplied breed: </b> {{ data['organisms'][0]['supplied_breed'] }}
+          <ng-container *ngIf="speciesIsKnown(data['organisms'][0]['supplied_breed'], data['species'])">
+            <b>Supplied breed: </b>
+            <a href="{{getBreedLink(data['organisms'][0]['supplied_breed'], data['species'])}}">
+              {{ data['organisms'][0]['supplied_breed'] }}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="!speciesIsKnown(data['organisms'][0]['supplied_breed'], data['species'])">
+            <b>Supplied breed: </b> {{ data['organisms'][0]['supplied_breed'] }}
+          </ng-container>
         </p>
         <p *ngIf="checkExistence('efabis_breed_country', true)">
           <b>EFABIS Breed country: </b> {{ data['organisms'][0]['efabis_breed_country'] }}

@@ -4,6 +4,7 @@ import {TablesService} from '../tables.service';
 import {Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Params, Router} from '@angular/router';
+import {breedsNames, specialBreedCases, speciesNames} from "./species";
 
 @Component({
   selector: 'app-organisms',
@@ -163,6 +164,26 @@ export class OrganismsComponent implements OnInit, OnDestroy {
 
   hasErrors() {
     return typeof this.error !== 'undefined';
+  }
+
+  getBreedLink(breedName: string, species: string) {
+    if (breedsNames[species].indexOf(breedName) !== -1) {
+      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
+        speciesNames[species] + '&breed=' + breedName + '&callback=allbreeds';
+    } else if (specialBreedCases.hasOwnProperty(breedName)) {
+      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
+        speciesNames[species] + '&breed=' + specialBreedCases[breedName] + '&callback=allbreeds';
+    }
+  }
+
+  speciesIsKnown(breedName: string, species: string) {
+    if (speciesNames.hasOwnProperty(species)) {
+      if (breedsNames[species].indexOf(breedName) !== -1 || specialBreedCases.hasOwnProperty(breedName)) {
+        return true;
+      }
+      return false;
+    }
+    return false;
   }
 
   ngOnDestroy() {
