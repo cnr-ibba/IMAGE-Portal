@@ -1,0 +1,29 @@
+<ng-container>
+  <section class="gis-search" fxLayout fxLayoutAlign="center">
+    <mat-card fxFlex.xs="100%" fxFlex="1100px">
+      <mat-card-title fxLayoutAlign="center">GIS-based search</mat-card-title>
+      <mat-card-content fxLayoutAlign="center">
+        <div id="map" class="map"></div>
+        <div class="example-container">
+          <mat-form-field>
+            <input matInput placeholder="Latitude">
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput placeholder="Longitude">
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Choose radius">
+              <mat-option value="option">within 10 miles</mat-option>
+              <mat-option value="option">within 15 miles</mat-option>
+              <mat-option value="option">within 50 miles</mat-option>
+              <mat-option value="option">within 100 miles</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button color="primary">Search</button>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </section>
+</ng-container>

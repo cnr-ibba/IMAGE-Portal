@@ -23,6 +23,7 @@ import {ChartsModule} from 'ng2-charts';
 import {CookieLawModule} from 'angular2-cookie-law';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { GisSearchComponent } from './gis-search/gis-search.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { environment } from '../environments/environment';
     ApiComponent,
     NotExistsPathComponent,
     SummaryComponent,
+    GisSearchComponent,
   ],
   imports: [
     BrowserModule,

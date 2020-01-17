@@ -1,0 +1,16 @@
+.gis-search {
+  margin-top: 15px;
+}
+
+.example-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.example-container > * {
+  width: 100%;
+}
+
+.map {
+  margin-right: 10px;
+}

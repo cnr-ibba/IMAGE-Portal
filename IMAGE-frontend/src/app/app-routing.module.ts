@@ -7,10 +7,12 @@ import {HelpComponent} from './help/help.component';
 import {ApiComponent} from './help/api/api.component';
 import {NotExistsPathComponent} from './not-exists-path/not-exists-path.component';
 import {SummaryComponent} from './summary/summary.component';
+import {GisSearchComponent} from "./gis-search/gis-search.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'search', component: SearchComponent},
+  { path: 'gis-search', component: GisSearchComponent},
   { path: 'tables', loadChildren: './tables/tables.module#TablesModule' },
   { path: 'summary', component: SummaryComponent},
   { path: 'about', component: AboutComponent },

@@ -8,6 +8,8 @@ import {
   MatSidenavModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule,
   MatToolbarModule,
 } from '@angular/material';
+import {MatOptionModule} from "@angular/material/core";
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   imports: [
@@ -27,7 +29,10 @@ import {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [
     MatSidenavModule,
@@ -46,7 +51,10 @@ import {
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class MaterialModule {}
