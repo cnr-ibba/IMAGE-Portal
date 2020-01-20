@@ -24,6 +24,7 @@ import {CookieLawModule} from 'angular2-cookie-law';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GisSearchComponent } from './gis-search/gis-search.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { GisSearchComponent } from './gis-search/gis-search.component';
     ApiComponent,
     NotExistsPathComponent,
     SummaryComponent,
-    GisSearchComponent,
+    GisSearchComponent
   ],
   imports: [
     BrowserModule,
@@ -49,6 +50,8 @@ import { GisSearchComponent } from './gis-search/gis-search.component';
     HttpClientModule,
     ChartsModule,
     CookieLawModule,
+    FormsModule,
+    ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [TablesService],

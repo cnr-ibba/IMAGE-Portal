@@ -1,5 +1,7 @@
 .gis-search {
   margin-top: 15px;
+  height: 100%;
+  width: 100%;
 }
 
 .example-container {
@@ -12,5 +14,25 @@
 }
 
 .map {
-  margin-right: 10px;
+  margin-right: 15px;
+  height: 50%;
+  width: 50%;
+}
+
+a {
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+a:hover, a:active {
+  color: lightgrey;
+}
+
+table {
+  width: 100%;
+}
+
+.sticky-header {
+  height: 400px;
+  overflow: auto;
 }

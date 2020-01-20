@@ -1,29 +1,88 @@
 <ng-container>
   <section class="gis-search" fxLayout fxLayoutAlign="center">
-    <mat-card fxFlex.xs="100%" fxFlex="1100px">
+    <div id="map" class="map"></div>
+    <mat-card fxFlex.xs="100%">
       <mat-card-title fxLayoutAlign="center">GIS-based search</mat-card-title>
       <mat-card-content fxLayoutAlign="center">
-        <div id="map" class="map"></div>
-        <div class="example-container">
+        <form class="example-container" [formGroup]="options">
           <mat-form-field>
-            <input matInput placeholder="Latitude">
+            <input matInput placeholder="Latitude" formControlName="latitude">
           </mat-form-field>
 
           <mat-form-field>
-            <input matInput placeholder="Longitude">
+            <input matInput placeholder="Longitude" formControlName="longitude">
           </mat-form-field>
 
           <mat-form-field>
-            <mat-select placeholder="Choose radius">
-              <mat-option value="option">within 10 miles</mat-option>
-              <mat-option value="option">within 15 miles</mat-option>
-              <mat-option value="option">within 50 miles</mat-option>
-              <mat-option value="option">within 100 miles</mat-option>
+            <mat-select placeholder="Choose radius" formControlName="radius">
+              <mat-option value="10">Within 10 kilometers</mat-option>
+              <mat-option value="20">Within 20 kilometers</mat-option>
+              <mat-option value="30">Within 30 kilometers</mat-option>
+              <mat-option value="40">Within 40 kilometers</mat-option>
+              <mat-option value="50">Within 50 kilometers</mat-option>
+              <mat-option value="100">Within 100 kilometers</mat-option>
             </mat-select>
           </mat-form-field>
-          <button mat-raised-button color="primary">Search</button>
-        </div>
+          <button mat-raised-button color="primary" (click)="startSearch()">Search</button>
+        </form>
       </mat-card-content>
     </mat-card>
   </section>
 </ng-container>
+
+<div *ngIf="showResults===true">
+  <h3 fxLayoutAlign="center center">Organisms:</h3>
+  <div class="sticky-header">
+    <table mat-table [dataSource]="dataSourceOrganism">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Data source ID</th>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'organism', element.id]">{{ element.id }}</a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="species">
+        <th mat-header-cell *matHeaderCellDef>Species</th>
+        <td mat-cell *matCellDef="let element">{{ element.species }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="breed">
+        <th mat-header-cell *matHeaderCellDef>Supplied breed</th>
+        <td mat-cell *matCellDef="let element">{{ element.breed }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="sex">
+        <th mat-header-cell *matHeaderCellDef>Sex</th>
+        <td mat-cell *matCellDef="let element">{{ element.sex }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsOrganisms; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsOrganisms"></tr>
+    </table>
+  </div>
+  <h3 fxLayoutAlign="center center">Specimens:</h3>
+  <div class="sticky-header">
+    <table mat-table [dataSource]="dataSourceSpecimen">
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Data source ID</th>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'specimen', element.id]">{{ element.id }}</a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="species">
+        <th mat-header-cell *matHeaderCellDef>Species</th>
+        <td mat-cell *matCellDef="let element">{{ element.species }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="derived">
+        <th mat-header-cell *matHeaderCellDef>Derived from</th>
+        <td mat-cell *matCellDef="let element">{{ element.derivedFrom }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="organism">
+        <th mat-header-cell *matHeaderCellDef>Organism part</th>
+        <td mat-cell *matCellDef="let element">{{ element.organismPart }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumnsSpecimens; sticky: true"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsSpecimens"></tr>
+    </table>
+  </div>
+</div>
