@@ -13,7 +13,7 @@ import {breedsNames, specialBreedCases, speciesNames} from "./species";
 })
 export class OrganismsComponent implements OnInit, OnDestroy {
   displayedColumns = ['id', 'species', 'breed', 'sex'];
-  headers = ['BioSample ID', 'Species', 'Species ontology', 'Breed', 'Sex', 'Sex ontology']
+  headers = ['BioSample ID', 'Species', 'Species ontology', 'Breed', 'Sex', 'Sex ontology', 'Country'];
   activeFilters;
   activeFiltersSubscription: Subscription;
   dataSource: any;
@@ -166,12 +166,12 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     return typeof this.error !== 'undefined';
   }
 
-  getBreedLink(breedName: string, species: string) {
+  getBreedLink(breedName: string, species: string, country: string) {
     if (breedsNames[species].indexOf(breedName) !== -1) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
+      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=' + country + '&specie=' +
         speciesNames[species] + '&breed=' + breedName + '&callback=allbreeds';
     } else if (specialBreedCases.hasOwnProperty(breedName)) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
+      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=' + country + '&specie=' +
         speciesNames[species] + '&breed=' + specialBreedCases[breedName] + '&callback=allbreeds';
     }
   }

@@ -60,6 +60,7 @@ export interface OrganismsShort {
   breed: string;
   sex: string;
   sexOntology: string;
+  efabisBreedCountry: string;
 }
 
 export interface Specimens {
@@ -227,7 +228,8 @@ export class TablesService {
           speciesOntology: entry['species_ontology'],
           breed: entry['organisms'][0]['supplied_breed'],
           sex: entry['organisms'][0]['sex'],
-          sexOntology: entry['organisms'][0]['sex_ontology']
+          sexOntology: entry['organisms'][0]['sex_ontology'],
+          efabisBreedCountry: entry['organisms'][0]['efabis_breed_country'],
           } as OrganismsShort)
         );
       }),

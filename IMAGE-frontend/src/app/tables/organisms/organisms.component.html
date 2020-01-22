@@ -57,7 +57,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</th>
         <td mat-cell *matCellDef="let element">
           <ng-container *ngIf="speciesIsKnown(element.breed, element.species)">
-            <a href="{{getBreedLink(element.breed, element.species)}}">{{ element.breed }}</a>
+            <a href="{{getBreedLink(element.breed, element.species, element.efabisBreedCountry)}}">{{ element.breed }}</a>
           </ng-container>
           <ng-container *ngIf="!speciesIsKnown(element.breed, element.species)">
             {{ element.breed }}
