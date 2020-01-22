@@ -31,7 +31,11 @@
       </ng-container>
     </mat-chip-list>
   </div>
-  <div class="download-button">
+  <div *ngIf="!dataSource">
+    <h3>Loading...</h3>
+    <mat-spinner></mat-spinner>
+  </div>
+  <div class="download-button" *ngIf="dataSource">
     <app-export [data]="exportData" [filename]="'image_data'" [options]="optionsCsv">
       Download data
       <mat-icon>save</mat-icon>
