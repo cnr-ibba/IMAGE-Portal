@@ -1,170 +1,64 @@
-<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
-  <div fxLayout="column">
-    <h2>Organisms summary</h2>
+<section fxLayout fxLayoutAlign="center">
+  <div *ngIf="!showOrganismsSummary">
+    <h3>Calculating organisms summary...</h3>
+    <mat-spinner></mat-spinner>
   </div>
-</div>
+</section>
+<section fxLayout fxLayoutAlign="center">
+  <h1 *ngIf="showOrganismsSummary">Organisms summary</h1>
+</section>
+<mat-grid-list cols="2" rowHeight="4:2">
+  <mat-grid-tile>
+    <div id="birthMap" class="map"></div>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="showOrganismsSummary">
+    <canvas baseChart
+            [data]="organismSpeciesData"
+            [labels]="organismSpeciesLabels"
+            [chartType]="'bar'"
+            [options]="organismSpeciesOptions"
+            [legend]="false"
+            [plugins]="barChartPlugins"></canvas>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="showOrganismsSummary">
+<!--    <canvas baseChart-->
+<!--            [data]="organismBreedData"-->
+<!--            [labels]="organismBreedLabels"-->
+<!--            [chartType]="'bar'"-->
+<!--            [options]="organismBreedOptions"-->
+<!--            [legend]="false"></canvas>-->
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="showOrganismsSummary">
+    <canvas baseChart
+            [data]="organismCountryData"
+            [labels]="organismCountryLabels"
+            [chartType]="'pie'"
+            [options]="organismCountryOptions">
+    </canvas>
+  </mat-grid-tile>
+</mat-grid-list>
 
-<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
-  <div fxLayout="column">
-    <section>
-      <div class="inner-card">
-        <mat-card class="map">
-          <mat-card-header>
-            <mat-card-title><b>Summary map</b></mat-card-title>
-            <mat-card-subtitle>Birth location coordinates for organisms</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div id="birthMap" class="map"></div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
+<mat-divider></mat-divider>
+<section fxLayout fxLayoutAlign="center">
+  <div *ngIf="!showSpecimensSummary">
+    <h3>Calculating specimens summary...</h3>
+    <mat-spinner></mat-spinner>
   </div>
-  <div fxLayout="column">
-    <section>
-      <div class="inner-card">
-        <mat-card class="charts">
-          <mat-card-header>
-            <mat-card-title><b>Summary of species and breed distributions</b></mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="display: block">
-              <canvas baseChart
-                      [data]="organismSpeciesData"
-                      [labels]="organismSpeciesLabels"
-                      [chartType]="doughnutChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"
-                      [options]="organismSpeciesOptions"
-                      *ngIf="organismSpeciesData.length !== 0"></canvas>
-              <canvas baseChart
-                      [data]="organismBreedData"
-                      [labels]="organismBreedLabels"
-                      [chartType]="doughnutChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"
-                      [options]="organismBreedOptions"
-                      *ngIf="organismBreedData.length !== 0"></canvas>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
-  </div>
-  <div fxLayout="column">
-    <section>
-      <div class="inner-card">
-        <mat-card class="charts">
-          <mat-card-header>
-            <mat-card-title><b>Summary of sex and country distributions</b></mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="display: block">
-              <canvas baseChart
-                      [data]="organismCountryData"
-                      [labels]="organismCountryLabels"
-                      [chartType]="'pie'"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"
-                      [options]="organismCountryOptions"
-                      *ngIf="organismCountryData.length !== 0"></canvas>
-            </div>
-            <p>
-              <b>Male samples: </b>{{maleOrganisms}}
-            </p>
-            <p>
-              <b>Female samples: </b>{{femaleOrganisms}}
-            </p>
-            <p>
-              <b>Total number of organisms: </b>{{totalOrganisms}}
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
-  </div>
-</div>
-
-
-<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
-  <div fxLayout="column">
-    <h2>Specimens summary</h2>
-  </div>
-</div>
-
-<div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap.gt-md="20px" fxLayoutAlign="center center">
-  <div fxLayout="column">
-    <section>
-      <div class="inner-card">
-        <mat-card class="map">
-          <mat-card-header>
-            <mat-card-title><b>Summary map</b></mat-card-title>
-            <mat-card-subtitle>Collection location coordinates for specimens</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-            <div id="collectionMap" class="map"></div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
-  </div>
-  <div fxLayout="column">
-    <section>
-      <div class="inner-card">
-        <mat-card class="charts">
-          <mat-card-header>
-            <mat-card-title><b>Summary of species and organism part distributions</b></mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="display: block">
-              <canvas baseChart
-                      [data]="specimenSpeciesData"
-                      [labels]="specimenSpeciesLabels"
-                      [chartType]="doughnutChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"
-                      [options]="organismSpeciesOptions"
-                      *ngIf="specimenSpeciesData.length !== 0"></canvas>
-              <canvas baseChart
-                      [data]="specimenPartData"
-                      [labels]="specimenPartLabels"
-                      [chartType]="doughnutChartType"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"
-                      [options]="specimenPartOptions"
-                      *ngIf="specimenPartData.length !== 0"></canvas>
-            </div>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
-  </div>
-  <div fxLayout="column">
-    <section>
-      <div class="inner-card">
-        <mat-card class="charts">
-          <mat-card-header>
-            <mat-card-title><b>Summary of sex and country distributions</b></mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-            <div style="display: block">
-              <canvas baseChart
-                      [data]="specimenCountryData"
-                      [labels]="specimenCountryLabels"
-                      [chartType]="'pie'"
-                      (chartHover)="chartHovered($event)"
-                      (chartClick)="chartClicked($event)"
-                      [options]="organismCountryOptions"
-                      *ngIf="specimenCountryData.length !== 0"></canvas>
-            </div>
-            <p>
-              <b>Total specimens: </b>{{totalSpecimens}}
-            </p>
-          </mat-card-content>
-        </mat-card>
-      </div>
-    </section>
-  </div>
-</div>
+</section>
+<section fxLayout fxLayoutAlign="center">
+  <h1 *ngIf="showSpecimensSummary">Specimens summary</h1>
+</section>
+<mat-grid-list cols="2" rowHeight="4:2">
+  <mat-grid-tile>
+    <div id="collectionMap" class="map"></div>
+  </mat-grid-tile>
+  <mat-grid-tile *ngIf="showSpecimensSummary">
+    <canvas baseChart
+            [data]="specimenPartData"
+            [labels]="specimenPartLabels"
+            [chartType]="'pie'"
+            [options]="specimenPartOptions"></canvas>
+  </mat-grid-tile>
+</mat-grid-list>
 
 

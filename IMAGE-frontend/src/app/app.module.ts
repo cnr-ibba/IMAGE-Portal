@@ -24,7 +24,7 @@ import {CookieLawModule} from 'angular2-cookie-law';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GisSearchComponent } from './gis-search/gis-search.component';
-import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [

@@ -56,10 +56,8 @@ export interface Organisms {
 export interface OrganismsShort {
   id: string;
   species: string;
-  speciesOntology: string;
   breed: string;
   sex: string;
-  sexOntology: string;
   efabisBreedCountry: string;
 }
 
@@ -123,10 +121,8 @@ export interface Specimens {
 export interface SpecimensShort {
   id: string;
   species: string;
-  speciesOntology: string;
   derivedFrom: string;
   organismPart: string;
-  organismPartOntology: string;
 }
 
 
@@ -219,16 +215,14 @@ export class TablesService {
   }
 
   getAllOrganismsShort() {
-    const url = this.hostSetting.host + 'organism/';
+    const url = this.hostSetting.host + 'organism_short/';
     return this.http.get(url).pipe(
       map((data: any) => {
         return data.map(entry => ({
           id: entry['data_source_id'],
           species: entry['species'],
-          speciesOntology: entry['species_ontology'],
           breed: entry['organisms'][0]['supplied_breed'],
           sex: entry['organisms'][0]['sex'],
-          sexOntology: entry['organisms'][0]['sex_ontology'],
           efabisBreedCountry: entry['organisms'][0]['efabis_breed_country'],
           } as OrganismsShort)
         );
@@ -305,16 +299,14 @@ export class TablesService {
   }
 
   getAllSpecimensShort() {
-    const url = this.hostSetting.host + 'specimen/';
+    const url = this.hostSetting.host + 'specimen_short/';
     return this.http.get(url).pipe(
       map((data: any) => {
         return data.map(entry => ({
           id: entry['data_source_id'],
           species: entry['species'],
-          speciesOntology: entry['species_ontology'],
           derivedFrom: entry['specimens'][0]['derived_from'],
           organismPart: entry['specimens'][0]['organism_part'],
-          organismPartOntology: entry['specimens'][0]['organism_part_ontology']
           } as SpecimensShort)
         );
       }),

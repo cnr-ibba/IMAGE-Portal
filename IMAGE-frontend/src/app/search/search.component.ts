@@ -12,31 +12,39 @@ export class SearchComponent implements OnInit {
   showResults = false;
   dataSourceOrganism: any;
   dataSourceSpecimen: any;
+  organismsUploaded = false;
+  specimensUploaded = false;
   error: any;
   displayedColumnsOrganisms = ['id', 'species', 'breed', 'sex'];
   displayedColumnsSpecimens = ['id', 'species', 'derived', 'organism'];
 
   constructor(private tablesService: TablesService, private titleService: Title) {
-    this.tablesService.getAllOrganisms().subscribe(
-      data => {
-        this.dataSourceOrganism = new MatTableDataSource(data);
-      },
-      error => {
-        this.error = error;
-      }
-    );
-    this.tablesService.getAllSpecimens().subscribe(
-      data => {
-        this.dataSourceSpecimen = new MatTableDataSource(data);
-      },
-      error => {
-        this.error = error;
-      }
-    );
   }
 
   ngOnInit() {
     this.titleService.setTitle('IMAGE|Search');
+    this.tablesService.getAllOrganismsShort().subscribe(
+      data => {
+        this.dataSourceOrganism = new MatTableDataSource(data);
+        if (this.dataSourceOrganism) {
+          this.organismsUploaded = true;
+        }
+      },
+      error => {
+        this.error = error;
+      }
+    );
+    this.tablesService.getAllSpecimensShort().subscribe(
+      data => {
+        this.dataSourceSpecimen = new MatTableDataSource(data);
+        if (this.dataSourceSpecimen) {
+          this.specimensUploaded = true;
+        }
+      },
+      error => {
+        this.error = error;
+      }
+    );
   }
 
   applyFilter(filterValue: string) {

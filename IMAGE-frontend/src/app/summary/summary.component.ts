@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {TablesService} from '../tables/tables.service';
+import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 
 declare var ol: any;
 @Component({
@@ -8,6 +10,10 @@ declare var ol: any;
   styleUrls: ['./summary.component.css']
 })
 export class SummaryComponent implements OnInit {
+  public barChartPlugins = [pluginDataLabels];
+
+  showOrganismsSummary = false;
+  showSpecimensSummary = false;
   birthMap: any;
   birthBaseMapLayer: any;
   birthVectorSource: any;
@@ -40,10 +46,23 @@ export class SummaryComponent implements OnInit {
   specimenCountryLabels = [];
   specimenCountryData = [];
 
-  organismSpeciesOptions = {
+  organismSpeciesOptions: ChartOptions = {
     title: {
       text: 'Species',
       display: true
+    },
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: { xAxes: [{
+        display: false
+      }], yAxes: [{
+        ticks: {
+          beginAtZero: true,
+        }
+      }] },
+    tooltips: {
+      enabled: true,
+      mode: 'label',
     }
   };
   organismBreedOptions = {
@@ -74,7 +93,7 @@ export class SummaryComponent implements OnInit {
   constructor(private tableService: TablesService) { }
 
   ngOnInit() {
-    this.tableService.getAllOrganisms().subscribe(data => {
+    this.tableService.getAllOrganismsShort().subscribe(data => {
       const species = {};
       const breed = {};
       const country = {};
@@ -95,8 +114,8 @@ export class SummaryComponent implements OnInit {
         species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
           species[data[point]['species']] = 1;
         breed.hasOwnProperty(data[point]['breed']) ? breed[data[point]['breed']] += 1 : breed[data[point]['breed']] = 1;
-        country.hasOwnProperty(data[point]['geneBankCountry']) ? country[data[point]['geneBankCountry']] += 1 :
-          country[data[point]['geneBankCountry']] = 1;
+        country.hasOwnProperty(data[point]['efabisBreedCountry']) ? country[data[point]['efabisBreedCountry']] += 1 :
+          country[data[point]['efabisBreedCountry']] = 1;
         if (data[point]['sex'] === 'male') {
           this.maleOrganisms += 1;
         } else if (data[point]['sex'] === 'female') {
@@ -108,6 +127,8 @@ export class SummaryComponent implements OnInit {
 
       this.organismSpeciesLabels = Object.keys(species);
       this.organismSpeciesData = Object.values(species);
+      console.log(this.organismSpeciesData);
+      console.log(this.organismSpeciesLabels);
       this.organismBreedLabels = Object.keys(breed);
       this.organismBreedData = Object.values(breed);
       this.organismCountryLabels = Object.keys(country);
@@ -131,9 +152,10 @@ export class SummaryComponent implements OnInit {
       });
       this.birthMap.addLayer(this.birthMarkerVectorLayer);
       this.birthMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
+      this.showOrganismsSummary = true;
     });
 
-    this.tableService.getAllSpecimens().subscribe(data => {
+    this.tableService.getAllSpecimensShort().subscribe(data => {
       const species = {};
       const part = {};
       const country = {};
@@ -184,6 +206,7 @@ export class SummaryComponent implements OnInit {
       });
       this.collectionMap.addLayer(this.collectionMarkerVectorLayer);
       this.collectionMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
+      this.showSpecimensSummary = true;
     });
     this.doughnutChartType = 'doughnut';
 
