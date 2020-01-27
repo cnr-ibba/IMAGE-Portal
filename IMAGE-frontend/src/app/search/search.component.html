@@ -3,7 +3,7 @@
     <input type="text" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
   </mat-form-field>
   <div *ngIf="organismsUploaded === false && specimensUploaded === false">
-    <h3>Loading...</h3>
+    <h3>Building search indices...</h3>
     <mat-spinner></mat-spinner>
   </div>
 </div>
