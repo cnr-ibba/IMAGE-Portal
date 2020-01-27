@@ -1,7 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {TablesService} from '../tables/tables.service';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import {Subject} from "rxjs";
+
+export interface DialogData {
+  species: any;
+  active_specie: string;
+}
 
 declare var ol: any;
 @Component({
@@ -34,6 +41,9 @@ export class SummaryComponent implements OnInit {
 
   organismSpeciesLabels = [];
   organismSpeciesData = [];
+  activeSpecie: any;
+  changedSpecie = new Subject();
+  breed = {};
   organismBreedLabels = [];
   organismBreedData = [];
   organismCountryLabels = [];
@@ -65,10 +75,23 @@ export class SummaryComponent implements OnInit {
       mode: 'label',
     }
   };
-  organismBreedOptions = {
+  organismBreedOptions: ChartOptions = {
     title: {
       text: 'Supplied breed',
       display: true
+    },
+    responsive: true,
+    // We use these empty structures as placeholders for dynamic theming.
+    scales: { xAxes: [{
+        display: false
+      }], yAxes: [{
+        ticks: {
+          beginAtZero: true,
+        }
+      }] },
+    tooltips: {
+      enabled: true,
+      mode: 'label',
     }
   };
   specimenPartOptions = {
@@ -90,12 +113,17 @@ export class SummaryComponent implements OnInit {
   otherOrganisms = 0;
   totalSpecimens = 0;
 
-  constructor(private tableService: TablesService) { }
+  constructor(private tableService: TablesService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.changedSpecie.subscribe(data => {
+      this.activeSpecie = data;
+      console.log(this.activeSpecie);
+      this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
+      console.log(this.organismBreedOptions['title']['text']);
+    });
     this.tableService.getAllOrganismsShort().subscribe(data => {
       const species = {};
-      const breed = {};
       const country = {};
       this.totalOrganisms = data.length;
       for (const point in data) {
@@ -113,7 +141,14 @@ export class SummaryComponent implements OnInit {
         }
         species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
           species[data[point]['species']] = 1;
-        breed.hasOwnProperty(data[point]['breed']) ? breed[data[point]['breed']] += 1 : breed[data[point]['breed']] = 1;
+        if (this.breed.hasOwnProperty(data[point]['species'])) {
+          this.breed[data[point]['species']].hasOwnProperty(data[point]['breed']) ?
+            this.breed[data[point]['species']][data[point]['breed']] += 1 :
+            this.breed[data[point]['species']][data[point]['breed']] = 1;
+        } else {
+          this.breed[data[point]['species']] = {};
+          this.breed[data[point]['species']][data[point]['breed']] = 1;
+        }
         country.hasOwnProperty(data[point]['efabisBreedCountry']) ? country[data[point]['efabisBreedCountry']] += 1 :
           country[data[point]['efabisBreedCountry']] = 1;
         if (data[point]['sex'] === 'male') {
@@ -127,10 +162,10 @@ export class SummaryComponent implements OnInit {
 
       this.organismSpeciesLabels = Object.keys(species);
       this.organismSpeciesData = Object.values(species);
-      console.log(this.organismSpeciesData);
-      console.log(this.organismSpeciesLabels);
-      this.organismBreedLabels = Object.keys(breed);
-      this.organismBreedData = Object.values(breed);
+      this.activeSpecie = Object.keys(this.breed)[0];
+      this.organismBreedLabels = Object.keys(this.breed[this.activeSpecie]);
+      this.organismBreedData = Object.values(this.breed[this.activeSpecie]);
+      this.changedSpecie.next(this.activeSpecie);
       this.organismCountryLabels = Object.keys(country);
       this.organismCountryData = Object.values(country);
 
@@ -217,7 +252,48 @@ export class SummaryComponent implements OnInit {
   }
 
   chartClicked(event: any) {
+    const dialogRef = this.dialog.open(ChooseSpeciesComponent, {
+      width: '250px',
+      data: {species: this.organismSpeciesLabels, active_specie: this.activeSpecie}
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.activeSpecie = result.active_specie;
+        this.organismBreedLabels = Object.keys(this.breed[this.activeSpecie]);
+        this.organismBreedData = Object.values(this.breed[this.activeSpecie]);
+        this.changedSpecie.next(this.activeSpecie);
+      }
+    });
+
+  }
+
+}
+
+@Component({
+  selector: 'app-choose-species',
+  templateUrl: 'choose-species.html',
+  styleUrls: ['./choose-species.css']
+})
+export class ChooseSpeciesComponent {
+
+  constructor(
+    public dialogRef: MatDialogRef<ChooseSpeciesComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onSpecieClick(data: DialogData, specie: string) {
+    data.active_specie = specie;
+  }
+
+  chooseClass(data: DialogData, specie: string) {
+    if (data.active_specie === specie) {
+      return 'active-specie';
+    }
   }
 
 }

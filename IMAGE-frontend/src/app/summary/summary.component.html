@@ -21,12 +21,14 @@
             [plugins]="barChartPlugins"></canvas>
   </mat-grid-tile>
   <mat-grid-tile *ngIf="showOrganismsSummary">
-<!--    <canvas baseChart-->
-<!--            [data]="organismBreedData"-->
-<!--            [labels]="organismBreedLabels"-->
-<!--            [chartType]="'bar'"-->
-<!--            [options]="organismBreedOptions"-->
-<!--            [legend]="false"></canvas>-->
+    <canvas baseChart
+            [data]="organismBreedData"
+            [labels]="organismBreedLabels"
+            [chartType]="'bar'"
+            [options]="organismBreedOptions"
+            [legend]="false"
+            [plugins]="barChartPlugins"
+            (chartClick)="chartClicked($event)"></canvas>
   </mat-grid-tile>
   <mat-grid-tile *ngIf="showOrganismsSummary">
     <canvas baseChart

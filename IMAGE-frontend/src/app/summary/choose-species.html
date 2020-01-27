@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Please choose species from list:</h1>
+<div mat-dialog-content>
+  <mat-list role="list">
+    <mat-list-item role="listitem" *ngFor="let specie of data.species" (click)="onSpecieClick(data, specie)"
+                   style="cursor: pointer; margin-bottom: 5px" [ngClass]="chooseClass(data, specie)">
+      {{specie}}</mat-list-item>
+  </mat-list>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button color="warn" (click)="onNoClick()" style="margin-right: 5px">Cancel</button>
+  <button mat-flat-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>
