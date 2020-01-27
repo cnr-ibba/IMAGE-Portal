@@ -59,6 +59,8 @@ export interface OrganismsShort {
   breed: string;
   sex: string;
   efabisBreedCountry: string;
+  birthLocationLongitude: string;
+  birthLocationLatitude: string;
 }
 
 export interface Specimens {
@@ -123,6 +125,8 @@ export interface SpecimensShort {
   species: string;
   derivedFrom: string;
   organismPart: string;
+  collectionPlaceLatitude: string;
+  collectionPlaceLongitude: string;
 }
 
 
@@ -224,6 +228,8 @@ export class TablesService {
           breed: entry['organisms'][0]['supplied_breed'],
           sex: entry['organisms'][0]['sex'],
           efabisBreedCountry: entry['organisms'][0]['efabis_breed_country'],
+          birthLocationLongitude: entry['organisms'][0]['birth_location_longitude'],
+          birthLocationLatitude: entry['organisms'][0]['birth_location_latitude'],
           } as OrganismsShort)
         );
       }),
@@ -307,6 +313,8 @@ export class TablesService {
           species: entry['species'],
           derivedFrom: entry['specimens'][0]['derived_from'],
           organismPart: entry['specimens'][0]['organism_part'],
+          collectionPlaceLatitude: entry['specimens'][0]['collection_place_latitude'],
+          collectionPlaceLongitude: entry['specimens'][0]['collection_place_longitude']
           } as SpecimensShort)
         );
       }),

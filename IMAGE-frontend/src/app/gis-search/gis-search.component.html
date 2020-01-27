@@ -1,7 +1,7 @@
 <ng-container>
   <section class="gis-search" fxLayout fxLayoutAlign="center">
     <div id="map" class="map"></div>
-    <mat-card fxFlex.xs="100%">
+    <mat-card fxFlex.xs="100%" *ngIf="dataSourceSpecimen">
       <mat-card-title fxLayoutAlign="center">GIS-based search</mat-card-title>
       <mat-card-content fxLayoutAlign="center">
         <form class="example-container" [formGroup]="options">
@@ -26,6 +26,10 @@
           <button mat-raised-button color="primary" (click)="startSearch()">Search</button>
         </form>
       </mat-card-content>
+    </mat-card>
+    <mat-card fxFlex.xs="100%" *ngIf="!dataSourceSpecimen">
+      <h3>Building search indices...</h3>
+      <mat-spinner></mat-spinner>
     </mat-card>
   </section>
 </ng-container>
