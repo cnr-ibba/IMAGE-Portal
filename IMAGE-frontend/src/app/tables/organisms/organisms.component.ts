@@ -4,7 +4,7 @@ import {TablesService} from '../tables.service';
 import {Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {breedsNames, specialBreedCases, speciesNames} from "./species";
+import {breedsNames, specialBreedCases, speciesNames} from './species';
 
 @Component({
   selector: 'app-organisms',
@@ -51,7 +51,7 @@ export class OrganismsComponent implements OnInit, OnDestroy {
       this.tablesService.activeFilters = filters;
       this.doFilter();
     });
-    this.tablesService.getAllOrganismsShort().subscribe(
+    this.tablesService.getAllOrganismsShort('?page_size=100000').subscribe(
       data => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;

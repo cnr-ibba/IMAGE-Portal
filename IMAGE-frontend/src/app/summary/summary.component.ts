@@ -122,7 +122,7 @@ export class SummaryComponent implements OnInit {
       this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
       console.log(this.organismBreedOptions['title']['text']);
     });
-    this.tableService.getAllOrganismsShort().subscribe(data => {
+    this.tableService.getAllOrganismsShort('?page_size=100000').subscribe(data => {
       const species = {};
       const country = {};
       this.totalOrganisms = data.length;
@@ -190,7 +190,7 @@ export class SummaryComponent implements OnInit {
       this.showOrganismsSummary = true;
     });
 
-    this.tableService.getAllSpecimensShort().subscribe(data => {
+    this.tableService.getAllSpecimensShort('?page_size=100000').subscribe(data => {
       const species = {};
       const part = {};
       const country = {};

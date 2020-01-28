@@ -32,7 +32,7 @@ export class GisSearchComponent implements OnInit {
       longitude: this.longitude,
       radius: undefined
     });
-    this.tablesService.getAllOrganismsShort().subscribe(
+    this.tablesService.getAllOrganismsShort('?page_size=100000').subscribe(
       data => {
         this.dataSourceOrganism = new MatTableDataSource(data);
         this.setFilterOrganism();
@@ -41,7 +41,7 @@ export class GisSearchComponent implements OnInit {
         this.error = error;
       }
     );
-    this.tablesService.getAllSpecimensShort().subscribe(
+    this.tablesService.getAllSpecimensShort('?page_size=100000').subscribe(
       data => {
         this.dataSourceSpecimen = new MatTableDataSource(data);
         this.setFilterSpecimen();

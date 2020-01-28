@@ -50,7 +50,7 @@ export class SpecimensComponent implements OnInit, OnDestroy {
       this.tablesService.activeFilters = filters;
       this.doFilter();
     });
-    this.tablesService.getAllSpecimensShort().subscribe(
+    this.tablesService.getAllSpecimensShort('?page_size=100000').subscribe(
       data => {
         this.dataSource = new MatTableDataSource(data);
         this.dataSource.sort = this.sort;
