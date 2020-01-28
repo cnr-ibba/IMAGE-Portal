@@ -213,7 +213,7 @@ export class TablesService {
         } as Organisms)
         );
       }),
-      retry(3),
+      retry(0),
       catchError(this.handleError)
     );
   }
@@ -233,7 +233,7 @@ export class TablesService {
           } as OrganismsShort)
         );
       }),
-      retry(3),
+      retry(0),
       catchError(this.handleError)
     );
   }
@@ -299,7 +299,7 @@ export class TablesService {
           } as Specimens)
         );
       }),
-      retry(3),
+      retry(0),
       catchError(this.handleError)
     );
   }
@@ -318,7 +318,7 @@ export class TablesService {
           } as SpecimensShort)
         );
       }),
-      retry(3),
+      retry(0),
       catchError(this.handleError)
     );
   }
