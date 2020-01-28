@@ -14,3 +14,12 @@
 .bottom-card {
   margin-bottom: 20px;
 }
+
+a {
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+a:hover, a:active {
+  color: lightgrey;
+}

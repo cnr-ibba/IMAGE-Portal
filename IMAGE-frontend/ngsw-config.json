@@ -29,7 +29,7 @@
   "dataGroups": [
     {
       "name": "organism",
-      "urls": ["https://www.image2020genebank.eu/data_portal/backend/organism_short/*"],
+      "urls": ["https://www.image2020genebank.eu/data_portal/backend/organism_short/**"],
       "cacheConfig": {
         "maxSize": 10,
         "maxAge": "1d",
@@ -38,7 +38,7 @@
     },
     {
       "name": "specimen",
-      "urls": ["https://www.image2020genebank.eu/data_portal/backend/specimen_short/*"],
+      "urls": ["https://www.image2020genebank.eu/data_portal/backend/specimen_short/**"],
       "cacheConfig": {
         "maxSize": 10,
         "maxAge": "1d",
