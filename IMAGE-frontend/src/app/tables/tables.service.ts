@@ -218,11 +218,11 @@ export class TablesService {
     );
   }
 
-  getAllOrganismsShort() {
-    const url = this.hostSetting.host + 'organism_short/';
+  getAllOrganismsShort(query) {
+    const url = this.hostSetting.host + 'organism_short/' + query;
     return this.http.get(url).pipe(
       map((data: any) => {
-        return data.map(entry => ({
+        return data['results'].map(entry => ({
           id: entry['data_source_id'],
           species: entry['species'],
           breed: entry['organisms'][0]['supplied_breed'],
@@ -304,11 +304,11 @@ export class TablesService {
     );
   }
 
-  getAllSpecimensShort() {
-    const url = this.hostSetting.host + 'specimen_short/';
+  getAllSpecimensShort(query) {
+    const url = this.hostSetting.host + 'specimen_short/' + query;
     return this.http.get(url).pipe(
       map((data: any) => {
-        return data.map(entry => ({
+        return data['results'].map(entry => ({
           id: entry['data_source_id'],
           species: entry['species'],
           derivedFrom: entry['specimens'][0]['derived_from'],
