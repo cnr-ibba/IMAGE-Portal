@@ -15,3 +15,11 @@ a {
 a:hover, a:active {
   color: lightgrey;
 }
+
+table {
+  width: 100%;
+}
+
+button {
+  margin-right: 5px;
+}

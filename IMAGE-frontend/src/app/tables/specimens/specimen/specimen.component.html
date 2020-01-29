@@ -139,7 +139,8 @@
           <a href="{{ data['specimens'][0]['physiological_stage_ontology'] }}">{{ data['specimens'][0]['physiological_stage'] }}</a>
         </p>
         <p *ngIf="checkExistence('availability', true)">
-          <b>Availability: </b> {{ data['specimens'][0]['availability'] }}
+          <b>Availability: </b>
+          <a href="{{ data['specimens'][0]['availability'] }}">{{ data['specimens'][0]['availability'] }}</a>
         </p>
         <p *ngIf="checkExistence('sample_storage', true)">
           <b>Sample storage: </b> {{ data['specimens'][0]['sample_storage'] }}
@@ -155,6 +156,61 @@
           <b>Sampling to preparation interval: </b> {{ data['specimens'][0]['sampling_to_preparation_interval'] }}
           {{ data['specimens'][0]['sampling_to_preparation_interval_unit'] }}
         </p>
+
+        <mat-divider [inset]="true"></mat-divider>
+
+        <p>
+          <button mat-raised-button color="primary" (click)="downloadData()">
+            Download data
+            <mat-icon>save</mat-icon>
+          </button>
+          <a mat-raised-button
+             href="https://github.com/cnr-ibba/IMAGE-DiversityBrowser"
+             color="accent">Diversity browser tool</a>
+        </p>
+
+        <h3>Related files</h3>
+        <div class="sticky-header">
+          <table mat-table [dataSource]="files">
+            <ng-container matColumnDef="filename">
+              <th mat-header-cell *matHeaderCellDef>File name</th>
+            </ng-container>
+
+            <ng-container matColumnDef="file_size">
+              <th mat-header-cell *matHeaderCellDef>File size</th>
+            </ng-container>
+
+            <ng-container matColumnDef="file_checksum">
+              <th mat-header-cell *matHeaderCellDef>File checksum</th>
+            </ng-container>
+
+            <ng-container matColumnDef="file_checksum_method">
+              <th mat-header-cell *matHeaderCellDef>File checksum method</th>
+            </ng-container>
+
+            <ng-container matColumnDef="index">
+              <th mat-header-cell *matHeaderCellDef>File index</th>
+            </ng-container>
+
+            <ng-container matColumnDef="index_size">
+              <th mat-header-cell *matHeaderCellDef>File index size</th>
+            </ng-container>
+
+            <ng-container matColumnDef="index_checksum">
+              <th mat-header-cell *matHeaderCellDef>File index checksum</th>
+            </ng-container>
+
+            <ng-container matColumnDef="index_checksum_method">
+              <th mat-header-cell *matHeaderCellDef>File index checksum method</th>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+          <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20, 50, 100]" showFirstLastButtons>
+          </mat-paginator>
+        </div>
+
       </mat-card-content>
     </mat-card>
   </section>

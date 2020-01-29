@@ -3,7 +3,9 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {TablesService} from '../../tables.service';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material';
-import {countries} from "../../countries";
+import * as FileSaver from 'file-saver';
+import {countries} from '../../countries';
+
 
 declare var ol: any;
 @Component({
@@ -12,8 +14,12 @@ declare var ol: any;
   styleUrls: ['./specimen.component.css']
 })
 export class SpecimenComponent implements OnInit {
+  displayedColumns = ['filename', 'file_size', 'file_checksum', 'file_checksum_method',
+    'index', 'index_size', 'index_checksum', 'index_checksum_method'];
   id: string;
   data;
+  files: any;
+  urls = [];
   error: any;
   map: any;
   longitude = 39.855115;
@@ -107,6 +113,10 @@ export class SpecimenComponent implements OnInit {
 
   countryInEugena(countryName: string) {
     return this.countries.hasOwnProperty(countryName);
+  }
+
+  downloadData() {
+    this.urls.forEach(url => FileSaver.saveAs(url));
   }
 
 }
