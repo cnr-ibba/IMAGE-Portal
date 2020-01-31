@@ -7,4 +7,7 @@
       {{ filter[0] }}:  <b>{{ filter[1] }}</b>
     </mat-chip>
   </mat-chip-list>
+  <mat-chip-list *ngIf="!filters" [multiple]="true">
+    <mat-chip color="accent">Loading filters...</mat-chip>
+  </mat-chip-list>
 </mat-expansion-panel>

@@ -1,31 +1,32 @@
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator, MatSnackBar, MatSort, MatTableDataSource} from '@angular/material';
-import {TablesService} from '../tables.service';
-import {Subscription} from 'rxjs';
+import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {OrganismsApi, TablesService} from '../tables.service';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {breedsNames, specialBreedCases, speciesNames} from './species';
+import {merge, Observable, of as observableOf} from 'rxjs';
+import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-organisms',
   templateUrl: './organisms.component.html',
   styleUrls: ['./organisms.component.css']
 })
-export class OrganismsComponent implements OnInit, OnDestroy {
-  displayedColumns = ['id', 'species', 'breed', 'sex'];
-  headers = ['BioSample ID', 'Species', 'Species ontology', 'Breed', 'Sex', 'Sex ontology', 'Country'];
-  activeFilters;
-  activeFiltersSubscription: Subscription;
-  dataSource: any;
-  optionsCsv;
-  exportData;
-  error: any;
+export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
+  displayedColumns: string[] = ['data_source_id', 'species', 'supplied_breed', 'sex'];
+  data: OrganismsApi[] = [];
+  activeFilters = {};
+  activeFiltersNames = [];
+  filtersChange = new EventEmitter();
+  aggregationsRequired = true;
+
+  resultsLength = 0;
+  isLoadingResults = true;
 
   @ViewChild(MatSort, {static: false}) sort: MatSort;
   @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   constructor(private tablesService: TablesService,
-              public snackBar: MatSnackBar,
               private titleService: Title,
               private router: Router,
               private activatedRoute: ActivatedRoute) {}
@@ -45,31 +46,15 @@ export class OrganismsComponent implements OnInit, OnDestroy {
           filters[key] = params[key];
         } else {
           filters[key] = [params[key]];
+          this.onRemoveActiveFilter(params[key], key);
         }
       }
-      this.activeFilters = Object.entries(filters);
-      this.tablesService.activeFilters = filters;
-      this.doFilter();
+      this.activeFilters = filters;
+      this.activeFiltersNames = Object.entries(this.activeFilters);
+      this.filtersChange.emit(null);
+      this.aggregationsRequired = true;
     });
-    this.tablesService.getAllOrganismsShort('?page_size=100000').subscribe(
-      data => {
-        this.dataSource = new MatTableDataSource(data);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.exportData = this.dataSource.data;
-        this.tablesService.generateOrganismFilters(this.dataSource.data);
-        this.setFilter();
-        this.doFilter();
-        },
-      error => {
-        this.error = error;
-        this.snackBar.open(this.error, 'close', {
-          duration: 5000,
-        });
-      });
-    this.optionsCsv = this.tablesService.optionsCsv;
-    this.optionsCsv.headers = this.headers;
-    this.activeFiltersSubscription = this.tablesService.filtersChanged.subscribe(data => {
+    this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
       for (const key of Object.keys(data)) {
         if (data[key] && data[key].length !== 0) {
@@ -80,115 +65,55 @@ export class OrganismsComponent implements OnInit, OnDestroy {
     });
   }
 
-  setFilter() {
-    this.dataSource.filterPredicate = (data, filter) => {
-      if (!this.hasActiveFilters()) {
-        return true;
+  getAggregations(filterData: any) {
+    this.tablesService.getOrganismsSummary(filterData).subscribe(data => {
+      this.tablesService.organismSubject.next(data);
+    });
+  }
+
+  ngAfterViewInit(): void {
+    // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+    merge(this.sort.sortChange, this.paginator.page, this.filtersChange)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.tablesService.getOrganisms(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex, this.activeFilters);
+        }),
+        map(data => {
+          this.isLoadingResults = false;
+          this.resultsLength = data.count;
+
+          return data.results;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          return observableOf([]);
+        })
+      ).subscribe(data => {
+      this.data = data;
+      if (this.aggregationsRequired) {
+        this.getAggregations(this.activeFilters);
+        this.aggregationsRequired = false;
       }
-      const willBeIn = [false, false, false];
-      for (const item of filter) {
-        switch (item[0]) {
-          case 'species': {
-            if (item[1].length === 0) {
-              willBeIn[0] = true;
-            } else {
-              for (const value of item[1]) {
-                if (this.checkValueIn(data.species, value) === true) {
-                  willBeIn[0] = true;
-                }
-              }
-            }
-            break;
-          }
-          case 'breed': {
-            if (item[1].length === 0) {
-              willBeIn[1] = true;
-            } else {
-              for (const value of item[1]) {
-                if (this.checkValueIn(data.breed, value) === true) {
-                  willBeIn[1] = true;
-                }
-              }
-            }
-            break;
-          }
-          case 'sex': {
-            if (item[1].length === 0) {
-              willBeIn[2] = true;
-            } else {
-              for (const value of item[1]) {
-                if (this.checkValueIn(data.sex, value) === true) {
-                  willBeIn[2] = true;
-                }
-              }
-            }
-            break;
-          }
-        }
-      }
-      return willBeIn[0] === true && willBeIn[1] === true && willBeIn[2] === true;
-    };
+    });
   }
 
   hasActiveFilters() {
-    if (typeof this.activeFilters === 'undefined') {
-      return false;
-    }
-    for (const item of this.activeFilters) {
-      if (item[1].length !== 0) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  onRemoveActiveFilter(filterItem: string, title: string) {
-    this.tablesService.addRemoveActiveFilters(filterItem, title);
-  }
-
-  doFilter() {
-    if (typeof  this.dataSource !== 'undefined') {
-      this.dataSource.filter = this.activeFilters;
-      this.exportData = this.dataSource.filteredData;
-      this.tablesService.generateOrganismFilters(this.dataSource.filteredData);
-    }
-  }
-
-  checkValueIn(field: any, value: string) {
-    return field === value;
+    return this.tablesService.checkFiltersEmpty(this.activeFilters) === false;
   }
 
   emptyActiveFilters() {
     this.tablesService.emptyActiveFilters();
   }
 
-  hasErrors() {
-    return typeof this.error !== 'undefined';
-  }
-
-  getBreedLink(breedName: string, species: string, country: string) {
-    if (breedsNames[species].indexOf(breedName) !== -1) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=' + country + '&specie=' +
-        speciesNames[species] + '&breed=' + breedName + '&callback=allbreeds';
-    } else if (specialBreedCases.hasOwnProperty(breedName)) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=' + country + '&specie=' +
-        speciesNames[species] + '&breed=' + specialBreedCases[breedName] + '&callback=allbreeds';
-    }
-  }
-
-  speciesIsKnown(breedName: string, species: string) {
-    if (speciesNames.hasOwnProperty(species)) {
-      if (breedsNames[species].indexOf(breedName) !== -1 || specialBreedCases.hasOwnProperty(breedName)) {
-        return true;
-      }
-      return false;
-    }
-    return false;
+  onRemoveActiveFilter(filterItem: string, title: string) {
+    this.tablesService.addRemoveActiveFilters(filterItem, title);
   }
 
   ngOnDestroy() {
-    this.emptyActiveFilters();
-    this.activeFiltersSubscription.unsubscribe();
   }
 
 }

@@ -6,7 +6,7 @@
     Specimens
   </a>
 </nav>
-<ng-container *ngIf="!hasErrors()">
+<ng-container>
   <mat-expansion-panel [expanded]="true">
     <mat-expansion-panel-header>
       <h3>Filters:</h3>
@@ -24,56 +24,52 @@
       </mat-chip>
     </mat-chip-list>
     <mat-chip-list>
-      <ng-container *ngFor="let filter of activeFilters">
+      <ng-container *ngFor="let filter of activeFiltersNames">
         <mat-chip *ngFor="let item of filter[1]" color="warn" selected>{{ item }}
           <mat-icon matChipRemove (click)="onRemoveActiveFilter(item, filter[0])">cancel</mat-icon>
         </mat-chip>
       </ng-container>
     </mat-chip-list>
   </div>
-  <div *ngIf="!dataSource">
-    <h3>Loading...</h3>
-    <mat-spinner></mat-spinner>
-  </div>
-  <div class="download-button" *ngIf="dataSource">
-    <app-export [data]="exportData" [filename]="'image_data'" [options]="optionsCsv">
-      Download data
-      <mat-icon>save</mat-icon>
-    </app-export>
-  </div>
+
+  <button mat-raised-button color="primary" class="download-button">
+    Download data
+    <mat-icon>save</mat-icon>
+  </button>
+
   <div class="sticky-header">
-    <table mat-table [dataSource]="dataSource" matSort matSortActive="id" matSortDirection="desc">
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="[element.id]">{{ element.id }}</a></td>
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+    <table mat-table [dataSource]="data" matSort matSortActive="data_source_id" matSortDisableClear matSortDirection="desc">
+
+      <ng-container matColumnDef="data_source_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Data source ID</th>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="[element['data_source_id']]">
+          {{ element['data_source_id'] }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Species</th>
-        <td mat-cell *matCellDef="let element">{{ element.species }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Species</th>
+        <td mat-cell *matCellDef="let element">{{ element['species'] }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="breed">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Supplied breed</th>
+      <ng-container matColumnDef="supplied_breed">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Supplied breed</th>
         <td mat-cell *matCellDef="let element">
-          <ng-container *ngIf="speciesIsKnown(element.breed, element.species)">
-            {{ element.breed }}
-          </ng-container>
-          <ng-container *ngIf="!speciesIsKnown(element.breed, element.species)">
-            {{ element.breed }}
-          </ng-container>
+          {{ element['organisms'][0]['supplied_breed'] }}
         </td>
       </ng-container>
 
       <ng-container matColumnDef="sex">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header>Sex</th>
-        <td mat-cell *matCellDef="let element">{{ element.sex }}</td>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Sex</th>
+        <td mat-cell *matCellDef="let element">{{ element['organisms'][0]['sex'] }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
     </table>
-    <mat-paginator [pageSize]="5" [pageSizeOptions]="[3, 10, 20, 50, 100]" showFirstLastButtons>
+    <mat-paginator [pageSize]="5" [length]="resultsLength" showFirstLastButtons>
     </mat-paginator>
   </div>
 </ng-container>

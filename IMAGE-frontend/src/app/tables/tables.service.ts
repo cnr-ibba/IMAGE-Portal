@@ -1,8 +1,23 @@
 import {Injectable} from '@angular/core';
-import {Subject, throwError} from 'rxjs';
+import {Observable, Subject, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {HostSetting} from './host-setting';
 import {catchError, map, retry} from 'rxjs/operators';
+
+export interface CDPOrganismsApi {
+  results: OrganismsApi[];
+  count: number;
+}
+
+export interface OrganismsApi {
+  id: string;
+  species: string;
+  breed: string;
+  sex: string;
+  efabisBreedCountry: string;
+  birthLocationLongitude: string;
+  birthLocationLatitude: string;
+}
 
 export interface Organisms {
   id: string;
@@ -236,6 +251,68 @@ export class TablesService {
       retry(0),
       catchError(this.handleError)
     );
+  }
+
+  getOrganisms(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CDPOrganismsApi> {
+    pageNumber = +pageNumber + 1;
+    if (sortColumn === 'supplied_breed' || sortColumn === 'sex') {
+      sortColumn = `organisms__${sortColumn}`;
+    }
+
+    if (sortDirection === 'asc') {
+      sortColumn = `-${sortColumn}`;
+    }
+    let url = this.hostSetting.host + `organism_short/?page=${pageNumber}&ordering=${sortColumn}`;
+    if (filterValue) {
+      for (let [key, values] of Object.entries(filterValue)) {
+        if (key === 'sex') {
+          key = `organisms__${key}`;
+        }
+        if (key === 'breed') {
+          key = `organisms__supplied_breed`;
+        }
+        for (const value of values) {
+          url = `${url}&${key}=${value}`;
+        }
+      }
+    }
+    return this.http.get<CDPOrganismsApi>(url);
+  }
+
+  getOrganismsSummary(filterValue?: {[key: string]: []}) {
+    let url = 'https://www.image2020genebank.eu/data_portal/backend/organism/summary/';
+
+    if (this.checkFiltersEmpty(filterValue) === false) {
+      for (let [key, values] of Object.entries(filterValue)) {
+        if (key === 'sex') {
+          key = `organisms__${key}`;
+        }
+        if (key === 'breed') {
+          key = `organisms__supplied_breed`;
+        }
+        for (const value of values) {
+          if (url.indexOf('?') !== -1) {
+            url = `${url}&${key}=${value}`;
+          } else {
+            url = `${url}?${key}=${value}`;
+          }
+        }
+      }
+    }
+    return this.http.get(url);
+  }
+
+  checkFiltersEmpty(filterValue?: {[key: string]: []}) {
+    if (Object.entries(filterValue).length === 0) {
+      return true;
+    } else {
+      for (const item of Object.entries(filterValue)) {
+        if (item[1].length !== 0) {
+          return false;
+        }
+      }
+      return true;
+    }
   }
 
   getAllSpecimens() {
