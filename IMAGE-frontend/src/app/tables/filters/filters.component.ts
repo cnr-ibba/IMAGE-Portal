@@ -53,7 +53,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.activeFilterSubscription.unsubscribe();
+    // this.activeFilterSubscription.unsubscribe();
     if (typeof this.filtersSubsctiption !== 'undefined') {
       this.filtersSubsctiption.unsubscribe();
     }

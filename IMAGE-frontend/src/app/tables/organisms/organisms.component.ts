@@ -114,6 +114,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    this.emptyActiveFilters();
   }
 
 }
