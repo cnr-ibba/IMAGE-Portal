@@ -19,6 +19,20 @@ export interface OrganismsApi {
   birthLocationLatitude: string;
 }
 
+export interface CPDSpecimensApi {
+  results: SpecimensApi[];
+  count: number;
+}
+
+export interface SpecimensApi {
+  id: string;
+  species: string;
+  derivedFrom: string;
+  organismPart: string;
+  collectionPlaceLatitude: string;
+  collectionPlaceLongitude: string;
+}
+
 export interface Organisms {
   id: string;
   alternativeId: string;
@@ -163,8 +177,7 @@ export class TablesService {
     species: [],
     breed: [],
     sex: [],
-    derivedFrom: [],
-    organismPart: [],
+    organism_part: [],
   };
   filtersChanged = new Subject();
   hostSetting = new HostSetting;
@@ -269,7 +282,7 @@ export class TablesService {
           key = `organisms__${key}`;
         }
         if (key === 'breed') {
-          key = `organisms__supplied_breed`;
+          key = 'organisms__supplied_breed';
         }
         for (const value of values) {
           url = `${url}&${key}=${value}`;
@@ -277,6 +290,29 @@ export class TablesService {
       }
     }
     return this.http.get<CDPOrganismsApi>(url);
+  }
+
+  getSpecimens(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CPDSpecimensApi> {
+    pageNumber = +pageNumber + 1;
+    if (sortColumn === 'derived_from' || sortColumn === 'organism_part') {
+      sortColumn = `specimens__${sortColumn}`;
+    }
+
+    if (sortDirection === 'asc') {
+      sortColumn = `-${sortColumn}`;
+    }
+    let url = this.hostSetting.host + `specimen_short/?page=${pageNumber}&ordering=${sortColumn}`;
+    if (filterValue) {
+      for (let [key, values] of Object.entries(filterValue)) {
+        if (key === 'organism_part') {
+          key = 'specimens__organism_part';
+        }
+        for (const value of values) {
+          url = `${url}&${key}=${value}`;
+        }
+      }
+    }
+    return this.http.get<CPDSpecimensApi>(url);
   }
 
   getOrganismsSummary(filterValue?: {[key: string]: []}) {
@@ -288,7 +324,27 @@ export class TablesService {
           key = `organisms__${key}`;
         }
         if (key === 'breed') {
-          key = `organisms__supplied_breed`;
+          key = 'organisms__supplied_breed';
+        }
+        for (const value of values) {
+          if (url.indexOf('?') !== -1) {
+            url = `${url}&${key}=${value}`;
+          } else {
+            url = `${url}?${key}=${value}`;
+          }
+        }
+      }
+    }
+    return this.http.get(url);
+  }
+
+  getSpecimensSummary(filterValue?: {[key: string]: []}) {
+    let url = 'https://www.image2020genebank.eu/data_portal/backend/specimen/summary/';
+
+    if (this.checkFiltersEmpty(filterValue) === false) {
+      for (let [key, values] of Object.entries(filterValue)) {
+        if (key === 'organism_part') {
+          key = 'specimens__organism_part';
         }
         for (const value of values) {
           if (url.indexOf('?') !== -1) {
@@ -484,7 +540,7 @@ export class TablesService {
         break;
       }
       case 'Organism part': {
-        key = 'organismPart';
+        key = 'organism_part';
         break;
       }
       default: {

@@ -33,9 +33,6 @@ export class FiltersComponent implements OnInit, OnDestroy {
         });
       });
     }
-    // this.activeFilterSubscription = this.tableService.filtersChanged.subscribe(data => {
-    //   this.activeFilters = data;
-    // });
   }
 
   onClick(filterItem: string, title: string) {
@@ -44,16 +41,10 @@ export class FiltersComponent implements OnInit, OnDestroy {
 
   isSelected(filterItem: string, title: string) {
     const key = this.tableService.convertTitleToKey(title);
-    // if (typeof this.activeFilters === 'undefined') {
-    //   return this.tableService.activeFilters[key].indexOf(filterItem) !== -1;
-    // } else {
-    //   return this.activeFilters[key].indexOf(filterItem) !== -1;
-    // }
     return this.tableService.activeFilters[key].indexOf(filterItem) !== -1;
   }
 
   ngOnDestroy() {
-    // this.activeFilterSubscription.unsubscribe();
     if (typeof this.filtersSubsctiption !== 'undefined') {
       this.filtersSubsctiption.unsubscribe();
     }
