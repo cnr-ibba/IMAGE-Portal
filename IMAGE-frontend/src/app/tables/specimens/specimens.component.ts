@@ -18,6 +18,8 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   activeFiltersNames = [];
   filtersChange = new EventEmitter();
   aggregationsRequired = true;
+  activatedRouteSubscription: Subscription;
+  filtersChangedSubscription: Subscription;
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -32,7 +34,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.titleService.setTitle('IMAGE Specimens');
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
+    this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe((params: Params) => {
       const filters = {
         species: [],
         breed: [],
@@ -53,7 +55,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filtersChange.emit(null);
       this.aggregationsRequired = true;
     });
-    this.tablesService.filtersChanged.subscribe(data => {
+    this.filtersChangedSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
       for (const key of Object.keys(data)) {
         if (data[key] && data[key].length !== 0) {
@@ -113,6 +115,8 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy(): void {
+    this.activatedRouteSubscription.unsubscribe();
+    this.filtersChangedSubscription.unsubscribe();
     this.emptyActiveFilters();
   }
 

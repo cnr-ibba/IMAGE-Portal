@@ -483,6 +483,16 @@ export class TablesService {
     this.organismSubject.next(results);
   }
 
+  searchOrganisms(query: string) {
+    const url = `https://www.image2020genebank.eu/data_portal/backend/organism/?search=${query}`;
+    return this.http.get(url);
+  }
+
+  searchSpecimens(query: string) {
+    const url = `https://www.image2020genebank.eu/data_portal/backend/specimen/?search=${query}`;
+    return this.http.get(url);
+  }
+
   generateSpecimenFilters(specimens: Specimens[]) {
     const species = {};
     const derivedFrom = {};

@@ -1,62 +1,70 @@
 <div fxLayoutAlign="center center">
-  <mat-form-field fxFlex="40%" *ngIf="organismsUploaded === true">
-    <input type="text" matInput (keyup)="applyFilter($event.target.value)" placeholder="Search">
+  <mat-form-field fxFlex="40%">
+    <input type="text" matInput (keyup)="applyFilter($event.target.value)"
+           placeholder="Search" (keydown)="hitEnter($event)">
   </mat-form-field>
-  <div *ngIf="organismsUploaded === false && specimensUploaded === false">
-    <h3>Building search indices...</h3>
-    <mat-spinner></mat-spinner>
-  </div>
+  <button mat-raised-button color="primary" class="search-button" (click)="startSearch()">
+    Search
+    <mat-icon>search</mat-icon>
+  </button>
 </div>
 
 <div *ngIf="showResults===true">
-  <h3 fxLayoutAlign="center center">Organisms:</h3>
+  <h3 fxLayoutAlign="center center">{{organismsFound}} matching Organisms:</h3>
   <div class="sticky-header">
-    <table mat-table [dataSource]="dataSourceOrganism">
-      <ng-container matColumnDef="id">
+    <table mat-table [dataSource]="organismsSearchResults">
+      <ng-container matColumnDef="data_source_id">
         <th mat-header-cell *matHeaderCellDef>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'organism', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'organism', element['data_source_id']]">
+          {{ [element['data_source_id']] }}
+        </a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
         <th mat-header-cell *matHeaderCellDef>Species</th>
-        <td mat-cell *matCellDef="let element">{{ element.species }}</td>
+        <td mat-cell *matCellDef="let element">{{ element['species'] }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="breed">
+      <ng-container matColumnDef="supplied_breed">
         <th mat-header-cell *matHeaderCellDef>Supplied breed</th>
-        <td mat-cell *matCellDef="let element">{{ element.breed }}</td>
+        <td mat-cell *matCellDef="let element">{{ element['organisms'][0]['supplied_breed'] }}</td>
       </ng-container>
 
       <ng-container matColumnDef="sex">
         <th mat-header-cell *matHeaderCellDef>Sex</th>
-        <td mat-cell *matCellDef="let element">{{ element.sex }}</td>
+        <td mat-cell *matCellDef="let element">{{ element['organisms'][0]['sex'] }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsOrganisms; sticky: true"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumnsOrganisms"></tr>
     </table>
   </div>
-  <h3 fxLayoutAlign="center center">Specimens:</h3>
+  <h3 fxLayoutAlign="center center">{{specimensFound}} matching Specimens:</h3>
   <div class="sticky-header">
-    <table mat-table [dataSource]="dataSourceSpecimen">
-      <ng-container matColumnDef="id">
+    <table mat-table [dataSource]="specimensSearchResults">
+      <ng-container matColumnDef="data_source_id">
         <th mat-header-cell *matHeaderCellDef>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'specimen', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'specimen', element['data_source_id']]">
+          {{ element['data_source_id'] }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
         <th mat-header-cell *matHeaderCellDef>Species</th>
-        <td mat-cell *matCellDef="let element">{{ element.species }}</td>
+        <td mat-cell *matCellDef="let element">{{ element['species'] }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="derived">
+      <ng-container matColumnDef="derived_from">
         <th mat-header-cell *matHeaderCellDef>Derived from</th>
-        <td mat-cell *matCellDef="let element">{{ element.derivedFrom }}</td>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="['../tables', 'organism', element['specimens'][0]['derived_from']]">
+          {{ element['specimens'][0]['derived_from'] }}
+          </a>
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="organism">
+      <ng-container matColumnDef="organism_part">
         <th mat-header-cell *matHeaderCellDef>Organism part</th>
-        <td mat-cell *matCellDef="let element">{{ element.organismPart }}</td>
+        <td mat-cell *matCellDef="let element">{{ element['specimens'][0]['organism_part'] }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsSpecimens; sticky: true"></tr>

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, EventEmitter, OnDestroy, OnInit, ViewChild} fr
 import {OrganismsApi, TablesService} from '../tables.service';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Params, Router} from '@angular/router';
-import {merge, Observable, of as observableOf} from 'rxjs';
+import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
@@ -19,6 +19,9 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   activeFiltersNames = [];
   filtersChange = new EventEmitter();
   aggregationsRequired = true;
+  activatedRouteSubscription: Subscription;
+  filtersChangedSubscription: Subscription;
+
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -33,7 +36,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngOnInit() {
     this.titleService.setTitle('IMAGE Organisms');
-    this.activatedRoute.queryParams.subscribe((params: Params) => {
+    this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe((params: Params) => {
       const filters = {
         species: [],
         breed: [],
@@ -54,7 +57,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filtersChange.emit(null);
       this.aggregationsRequired = true;
     });
-    this.tablesService.filtersChanged.subscribe(data => {
+    this.filtersChangedSubscription = this.tablesService.filtersChanged.subscribe(data => {
       const params = {};
       for (const key of Object.keys(data)) {
         if (data[key] && data[key].length !== 0) {
@@ -114,6 +117,8 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
+    this.activatedRouteSubscription.unsubscribe();
+    this.filtersChangedSubscription.unsubscribe();
     this.emptyActiveFilters();
   }
 

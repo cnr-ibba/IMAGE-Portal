@@ -15,3 +15,7 @@ table {
   height: 400px;
   overflow: auto;
 }
+
+.search-button {
+  margin-left: 5px;
+}
