@@ -338,6 +338,11 @@ export class TablesService {
     return this.http.get(url);
   }
 
+
+  getOrganismsGraphicalSummary() {
+    return this.http.get('https://www.image2020genebank.eu/data_portal/backend/organism/graphical_summary/');
+  }
+
   getSpecimensSummary(filterValue?: {[key: string]: []}) {
     let url = 'https://www.image2020genebank.eu/data_portal/backend/specimen/summary/';
 
@@ -356,6 +361,10 @@ export class TablesService {
       }
     }
     return this.http.get(url);
+  }
+
+  getSpecimensGraphicalSummary() {
+    return this.http.get('https://www.image2020genebank.eu/data_portal/backend/specimen/graphical_summary/');
   }
 
   checkFiltersEmpty(filterValue?: {[key: string]: []}) {

@@ -3,7 +3,7 @@ import {TablesService} from '../tables/tables.service';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import {Subject} from "rxjs";
+import {ObjectUnsubscribedError, Subject} from 'rxjs';
 
 export interface DialogData {
   species: any;
@@ -31,10 +31,8 @@ export class SummaryComponent implements OnInit {
   collectionVectorSource: any;
   collectionMarkerVectorLayer: any;
 
-  longitude = 39.855115;
-  latitude = 57.634874;
-
-  public doughnutChartType;
+  longitude = 11.518580;
+  latitude = 48.164689;
 
   birthCoordinates = [];
   collectionCoordinates = [];
@@ -107,67 +105,34 @@ export class SummaryComponent implements OnInit {
     }
   };
 
-  maleOrganisms = 0;
-  femaleOrganisms = 0;
-  totalOrganisms = 0;
-  otherOrganisms = 0;
-  totalSpecimens = 0;
-
   constructor(private tableService: TablesService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.changedSpecie.subscribe(data => {
       this.activeSpecie = data;
-      console.log(this.activeSpecie);
       this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
-      console.log(this.organismBreedOptions['title']['text']);
     });
-    this.tableService.getAllOrganismsShort('?page_size=100000').subscribe(data => {
-      const species = {};
-      const country = {};
-      this.totalOrganisms = data.length;
-      for (const point in data) {
-        if (data[point]['birthLocationLatitude'] !== null && data[point]['birthLocationLongitude'] !== null) {
-          const latitude = +data[point]['birthLocationLatitude'];
-          const longitude = +data[point]['birthLocationLongitude'];
-          this.latitude = latitude;
-          this.longitude = longitude;
-          const flag = new ol.Feature({
-            geometry: new ol.geom.Point(
-              ol.proj.fromLonLat([longitude, latitude])
-            ),
-          });
-          this.birthCoordinates.push(flag);
-        }
-        species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
-          species[data[point]['species']] = 1;
-        if (this.breed.hasOwnProperty(data[point]['species'])) {
-          this.breed[data[point]['species']].hasOwnProperty(data[point]['breed']) ?
-            this.breed[data[point]['species']][data[point]['breed']] += 1 :
-            this.breed[data[point]['species']][data[point]['breed']] = 1;
-        } else {
-          this.breed[data[point]['species']] = {};
-          this.breed[data[point]['species']][data[point]['breed']] = 1;
-        }
-        country.hasOwnProperty(data[point]['efabisBreedCountry']) ? country[data[point]['efabisBreedCountry']] += 1 :
-          country[data[point]['efabisBreedCountry']] = 1;
-        if (data[point]['sex'] === 'male') {
-          this.maleOrganisms += 1;
-        } else if (data[point]['sex'] === 'female') {
-          this.femaleOrganisms += 1;
-        } else {
-          this.otherOrganisms += 1;
-        }
-      }
+    this.tableService.getOrganismsGraphicalSummary().subscribe(data => {
+      this.organismSpeciesData = Object.values(data['species']);
+      this.organismSpeciesLabels = Object.keys(data['species']);
 
-      this.organismSpeciesLabels = Object.keys(species);
-      this.organismSpeciesData = Object.values(species);
+      this.organismCountryData = Object.values(data['countries']);
+      this.organismCountryLabels = Object.keys(data['countries']);
+
+      this.breed = data['breeds'];
       this.activeSpecie = Object.keys(this.breed)[0];
       this.organismBreedLabels = Object.keys(this.breed[this.activeSpecie]);
       this.organismBreedData = Object.values(this.breed[this.activeSpecie]);
-      this.changedSpecie.next(this.activeSpecie);
-      this.organismCountryLabels = Object.keys(country);
-      this.organismCountryData = Object.values(country);
+      this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
+
+      for (const coordinates of data['coordinates']) {
+        const flag = new ol.Feature({
+          geometry: new ol.geom.Point(
+            ol.proj.fromLonLat([+coordinates[0], +coordinates[1]])
+          ),
+        });
+        this.birthCoordinates.push(flag);
+      }
 
       this.birthBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
       this.birthMap = new ol.Map({
@@ -190,38 +155,9 @@ export class SummaryComponent implements OnInit {
       this.showOrganismsSummary = true;
     });
 
-    this.tableService.getAllSpecimensShort('?page_size=100000').subscribe(data => {
-      const species = {};
-      const part = {};
-      const country = {};
-      this.totalSpecimens = data.length;
-      for (const point in data) {
-        if (data[point]['collectionPlaceLatitude'] !== null && data[point]['collectionPlaceLongitude'] !== null) {
-          const latitude = +data[point]['collectionPlaceLatitude'];
-          const longitude = +data[point]['collectionPlaceLongitude'];
-          this.latitude = latitude;
-          this.longitude = longitude;
-          const flag = new ol.Feature({
-            geometry: new ol.geom.Point(
-              ol.proj.fromLonLat([longitude, latitude])
-            ),
-          });
-          this.collectionCoordinates.push(flag);
-        }
-        species.hasOwnProperty(data[point]['species']) ? species[data[point]['species']] += 1 :
-          species[data[point]['species']] = 1;
-        part.hasOwnProperty(data[point]['organismPart']) ? part[data[point]['organismPart']] += 1 :
-          part[data[point]['organismPart']] = 1;
-        country.hasOwnProperty(data[point]['geneBankCountry']) ? country[data[point]['geneBankCountry']] += 1 :
-          country[data[point]['geneBankCountry']] = 1;
-      }
-
-      this.specimenSpeciesLabels = Object.keys(species);
-      this.specimenSpeciesData = Object.values(species);
-      this.specimenPartLabels = Object.keys(part);
-      this.specimenPartData = Object.values(part);
-      this.specimenCountryLabels = Object.keys(country);
-      this.specimenCountryData = Object.values(country);
+    this.tableService.getSpecimensGraphicalSummary().subscribe(data => {
+      this.specimenPartData = Object.values(data['organism_part']);
+      this.specimenPartLabels = Object.keys(data['organism_part']);
 
       this.collectionBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
       this.collectionMap = new ol.Map({
@@ -233,6 +169,15 @@ export class SummaryComponent implements OnInit {
         })
       });
 
+      for (const coordinates of data['coordinates']) {
+        const flag = new ol.Feature({
+          geometry: new ol.geom.Point(
+            ol.proj.fromLonLat([+coordinates[0], +coordinates[1]])
+          ),
+        });
+        this.collectionCoordinates.push(flag);
+      }
+
       this.collectionVectorSource = new ol.source.Vector({
         features: this.collectionCoordinates
       });
@@ -241,9 +186,9 @@ export class SummaryComponent implements OnInit {
       });
       this.collectionMap.addLayer(this.collectionMarkerVectorLayer);
       this.collectionMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
+
       this.showSpecimensSummary = true;
     });
-    this.doughnutChartType = 'doughnut';
 
   }
 
