@@ -343,6 +343,11 @@ export class TablesService {
     return this.http.get('https://www.image2020genebank.eu/data_portal/backend/organism/graphical_summary/');
   }
 
+  OrganismsGISSearch(latitude: string, longitude: string, radius: string) {
+    const url = `https://www.image2020genebank.eu/data_portal/backend/organism/gis_search/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    return this.http.get(url);
+  }
+
   getSpecimensSummary(filterValue?: {[key: string]: []}) {
     let url = 'https://www.image2020genebank.eu/data_portal/backend/specimen/summary/';
 
@@ -365,6 +370,11 @@ export class TablesService {
 
   getSpecimensGraphicalSummary() {
     return this.http.get('https://www.image2020genebank.eu/data_portal/backend/specimen/graphical_summary/');
+  }
+
+  SpecimensGISSearch(latitude: string, longitude: string, radius: string) {
+    const url = `https://www.image2020genebank.eu/data_portal/backend/specimen/gis_search/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    return this.http.get(url);
   }
 
   checkFiltersEmpty(filterValue?: {[key: string]: []}) {

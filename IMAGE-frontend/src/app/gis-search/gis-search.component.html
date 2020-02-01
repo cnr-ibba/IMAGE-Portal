@@ -1,7 +1,7 @@
 <ng-container>
   <section class="gis-search" fxLayout fxLayoutAlign="center">
     <div id="map" class="map"></div>
-    <mat-card fxFlex.xs="100%" *ngIf="dataSourceSpecimen">
+    <mat-card fxFlex.xs="100%">
       <mat-card-title fxLayoutAlign="center">GIS-based search</mat-card-title>
       <mat-card-content fxLayoutAlign="center">
         <form class="example-container" [formGroup]="options">
@@ -27,10 +27,6 @@
         </form>
       </mat-card-content>
     </mat-card>
-    <mat-card fxFlex.xs="100%" *ngIf="!dataSourceSpecimen">
-      <h3>Building search indices...</h3>
-      <mat-spinner></mat-spinner>
-    </mat-card>
   </section>
 </ng-container>
 
@@ -38,9 +34,10 @@
   <h3 fxLayoutAlign="center center">Organisms:</h3>
   <div class="sticky-header">
     <table mat-table [dataSource]="dataSourceOrganism">
-      <ng-container matColumnDef="id">
+      <ng-container matColumnDef="data_source_id">
         <th mat-header-cell *matHeaderCellDef>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'organism', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'organism', element.data_source_id]">
+          {{ element.data_source_id }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
@@ -48,9 +45,9 @@
         <td mat-cell *matCellDef="let element">{{ element.species }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="breed">
+      <ng-container matColumnDef="supplied_breed">
         <th mat-header-cell *matHeaderCellDef>Supplied breed</th>
-        <td mat-cell *matCellDef="let element">{{ element.breed }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.supplied_breed }}</td>
       </ng-container>
 
       <ng-container matColumnDef="sex">
@@ -65,9 +62,10 @@
   <h3 fxLayoutAlign="center center">Specimens:</h3>
   <div class="sticky-header">
     <table mat-table [dataSource]="dataSourceSpecimen">
-      <ng-container matColumnDef="id">
+      <ng-container matColumnDef="data_source_id">
         <th mat-header-cell *matHeaderCellDef>Data source ID</th>
-        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'specimen', element.id]">{{ element.id }}</a></td>
+        <td mat-cell *matCellDef="let element"><a [routerLink]="['../tables', 'specimen', element.data_source_id]">
+          {{ element.data_source_id }}</a></td>
       </ng-container>
 
       <ng-container matColumnDef="species">
@@ -75,14 +73,18 @@
         <td mat-cell *matCellDef="let element">{{ element.species }}</td>
       </ng-container>
 
-      <ng-container matColumnDef="derived">
+      <ng-container matColumnDef="derived_from">
         <th mat-header-cell *matHeaderCellDef>Derived from</th>
-        <td mat-cell *matCellDef="let element">{{ element.derivedFrom }}</td>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="['../tables', 'organism', element.derived_from]">
+          {{ element.derived_from }}
+          </a>
+        </td>
       </ng-container>
 
-      <ng-container matColumnDef="organism">
+      <ng-container matColumnDef="organism_part">
         <th mat-header-cell *matHeaderCellDef>Organism part</th>
-        <td mat-cell *matCellDef="let element">{{ element.organismPart }}</td>
+        <td mat-cell *matCellDef="let element">{{ element.organism_part }}</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsSpecimens; sticky: true"></tr>

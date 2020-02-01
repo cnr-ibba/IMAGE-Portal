@@ -3,7 +3,6 @@ import {FormBuilder, FormGroup} from '@angular/forms';
 import {Subject} from 'rxjs';
 import {TablesService} from '../tables/tables.service';
 import {Title} from '@angular/platform-browser';
-import {MatTableDataSource} from '@angular/material';
 
 declare var ol: any;
 @Component({
@@ -22,8 +21,8 @@ export class GisSearchComponent implements OnInit {
   dataSourceOrganism: any;
   dataSourceSpecimen: any;
   error: any;
-  displayedColumnsOrganisms = ['id', 'species', 'breed', 'sex'];
-  displayedColumnsSpecimens = ['id', 'species', 'derived', 'organism'];
+  displayedColumnsOrganisms = ['data_source_id', 'species', 'supplied_breed', 'sex'];
+  displayedColumnsSpecimens = ['data_source_id', 'species', 'derived_from', 'organism_part'];
   filter: any;
 
   constructor(fb: FormBuilder, private tablesService: TablesService, private titleService: Title) {
@@ -32,24 +31,6 @@ export class GisSearchComponent implements OnInit {
       longitude: this.longitude,
       radius: undefined
     });
-    this.tablesService.getAllOrganismsShort('?page_size=100000').subscribe(
-      data => {
-        this.dataSourceOrganism = new MatTableDataSource(data);
-        this.setFilterOrganism();
-      },
-      error => {
-        this.error = error;
-      }
-    );
-    this.tablesService.getAllSpecimensShort('?page_size=100000').subscribe(
-      data => {
-        this.dataSourceSpecimen = new MatTableDataSource(data);
-        this.setFilterSpecimen();
-      },
-      error => {
-        this.error = error;
-      }
-    );
   }
 
   ngOnInit() {
@@ -91,42 +72,15 @@ export class GisSearchComponent implements OnInit {
     this.map.addInteraction(draw);
   }
 
-  calculateCosLaw(filter_lat, filter_lon, radius, data_lat, data_lon) {
-    const result = Math.acos(Math.sin(filter_lat) * Math.sin(data_lat) + Math.cos(filter_lat) *
-      Math.cos(data_lat) * Math.cos(data_lon - filter_lon)) * 6371;
-    return result < radius;
-  }
-
-  convertToRadians(degrees) {
-    return degrees * 3.14 / 180;
-  }
-
-  setFilterOrganism() {
-    this.dataSourceOrganism.filterPredicate = (data, filter) => {
-      const filter_lat = this.convertToRadians(+filter['latitude']);
-      const filter_lon = this.convertToRadians(+filter['longitude']);
-      const radius = +filter['radius'];
-      const data_lat = this.convertToRadians(+data.birthLocationLatitude);
-      const data_lon = this.convertToRadians(+data.birthLocationLongitude);
-      return this.calculateCosLaw(filter_lat, filter_lon, radius, data_lat, data_lon);
-    };
-  }
-
-  setFilterSpecimen() {
-    this.dataSourceSpecimen.filterPredicate = (data, filter) => {
-      const filter_lat = this.convertToRadians(+filter['latitude']);
-      const filter_lon = this.convertToRadians(+filter['longitude']);
-      const radius = +filter['radius'];
-      const data_lat = this.convertToRadians(+data.collectionPlaceLatitude);
-      const data_lon = this.convertToRadians(+data.collectionPlaceLongitude);
-      return this.calculateCosLaw(filter_lat, filter_lon, radius, data_lat, data_lon);
-    };
-  }
-
   doFilter() {
-    console.log(this.filter);
-    this.dataSourceOrganism.filter = this.filter;
-    this.dataSourceSpecimen.filter = this.filter;
+    this.tablesService.OrganismsGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
+      .subscribe(data => {
+        this.dataSourceOrganism = data['results'];
+      });
+    this.tablesService.SpecimensGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
+      .subscribe(data => {
+        this.dataSourceSpecimen = data['results'];
+      });
   }
 
   startSearch() {
