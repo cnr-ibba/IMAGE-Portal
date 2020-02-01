@@ -48,7 +48,7 @@ export class OrganismComponent implements OnInit {
             layers: [this.baseMapLayer],
             view: new ol.View({
               center: ol.proj.fromLonLat([+this.longitude, +this.latitude]),
-              zoom: 6
+              zoom: 10
             })
           });
           this.marker = new ol.Feature({
