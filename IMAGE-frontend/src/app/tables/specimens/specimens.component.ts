@@ -20,6 +20,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   aggregationsRequired = true;
   activatedRouteSubscription: Subscription;
   filtersChangedSubscription: Subscription;
+  downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/specimen/download/';
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -51,6 +52,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       this.activeFilters = filters;
+      this.constructDownloadLink(this.activeFilters);
       this.activeFiltersNames = Object.entries(this.activeFilters);
       this.filtersChange.emit(null);
       this.aggregationsRequired = true;
@@ -112,6 +114,23 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onRemoveActiveFilter(filterItem: string, title: string) {
     this.tablesService.addRemoveActiveFilters(filterItem, title);
+  }
+
+  constructDownloadLink(filterValue?: {[key: string]: []}) {
+    if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
+      for (let [key, values] of Object.entries(filterValue)) {
+        if (key === 'organism_part') {
+          key = 'specimens__organism_part';
+        }
+        for (const value of values) {
+          if (this.downloadLink.indexOf('?') !== -1) {
+            this.downloadLink = `${this.downloadLink}&${key}=${value}`;
+          } else {
+            this.downloadLink = `${this.downloadLink}?${key}=${value}`;
+          }
+        }
+      }
+    }
   }
 
   ngOnDestroy(): void {

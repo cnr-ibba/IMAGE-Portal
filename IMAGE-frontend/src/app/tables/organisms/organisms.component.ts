@@ -21,6 +21,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   aggregationsRequired = true;
   activatedRouteSubscription: Subscription;
   filtersChangedSubscription: Subscription;
+  downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/organism/download/';
 
 
   resultsLength = 0;
@@ -53,6 +54,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       this.activeFilters = filters;
+      this.constructDownloadLink(this.activeFilters);
       this.activeFiltersNames = Object.entries(this.activeFilters);
       this.filtersChange.emit(null);
       this.aggregationsRequired = true;
@@ -114,6 +116,26 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   onRemoveActiveFilter(filterItem: string, title: string) {
     this.tablesService.addRemoveActiveFilters(filterItem, title);
+  }
+
+  constructDownloadLink(filterValue?: {[key: string]: []}) {
+    if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
+      for (let [key, values] of Object.entries(filterValue)) {
+        if (key === 'sex') {
+          key = `organisms__${key}`;
+        }
+        if (key === 'breed') {
+          key = 'organisms__supplied_breed';
+        }
+        for (const value of values) {
+          if (this.downloadLink.indexOf('?') !== -1) {
+            this.downloadLink = `${this.downloadLink}&${key}=${value}`;
+          } else {
+            this.downloadLink = `${this.downloadLink}?${key}=${value}`;
+          }
+        }
+      }
+    }
   }
 
   ngOnDestroy() {
