@@ -3,8 +3,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {TablesService} from '../../tables.service';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material';
-import {breedsNames, specialBreedCases, speciesNames} from "../species";
-import {countries} from "../../countries";
+import {breedsNames, specialBreedCases, speciesNames} from '../species';
+import {countries} from '../../countries';
 
 declare var ol: any;
 @Component({
