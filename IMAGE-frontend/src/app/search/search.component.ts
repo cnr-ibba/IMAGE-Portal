@@ -12,6 +12,7 @@ export class SearchComponent implements OnInit {
   organismsSearchResults: any;
   organismsFound = 0;
   showResults = false;
+  searchStarted = false;
   specimensSearchResults: any;
   specimensFound = 0;
   displayedColumnsOrganisms = ['data_source_id', 'species', 'supplied_breed', 'sex'];
@@ -29,6 +30,7 @@ export class SearchComponent implements OnInit {
   }
 
   startSearch() {
+    this.searchStarted = true;
     this.tablesService.searchOrganisms(this.searchTerm).subscribe(data => {
       this.organismsSearchResults = data['results'];
       this.organismsFound = data['count'];
@@ -42,6 +44,7 @@ export class SearchComponent implements OnInit {
 
   hitEnter(event: any) {
     if (event['key'] === 'Enter') {
+      this.searchStarted = true;
       this.searchTerm = event['target']['value'];
       this.startSearch();
     }

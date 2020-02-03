@@ -9,6 +9,10 @@
   </button>
 </div>
 
+<div *ngIf="showResults === false && searchStarted === true" fxLayoutAlign="center center">
+  <mat-spinner></mat-spinner>
+</div>
+
 <div *ngIf="showResults===true">
   <h3 fxLayoutAlign="center center">{{organismsFound}} matching Organisms:</h3>
   <div class="sticky-header">
