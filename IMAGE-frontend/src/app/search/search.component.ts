@@ -30,6 +30,7 @@ export class SearchComponent implements OnInit {
   }
 
   startSearch() {
+    this.showResults = false;
     this.searchStarted = true;
     this.tablesService.searchOrganisms(this.searchTerm).subscribe(data => {
       this.organismsSearchResults = data['results'];
@@ -44,6 +45,7 @@ export class SearchComponent implements OnInit {
 
   hitEnter(event: any) {
     if (event['key'] === 'Enter') {
+      this.showResults = false;
       this.searchStarted = true;
       this.searchTerm = event['target']['value'];
       this.startSearch();
