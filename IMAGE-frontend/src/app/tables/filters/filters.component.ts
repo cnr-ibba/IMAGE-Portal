@@ -36,6 +36,7 @@ export class FiltersComponent implements OnInit, OnDestroy {
   }
 
   onClick(filterItem: string, title: string) {
+    this.filters = undefined;
     this.tableService.addRemoveActiveFilters(filterItem, title);
   }
 
