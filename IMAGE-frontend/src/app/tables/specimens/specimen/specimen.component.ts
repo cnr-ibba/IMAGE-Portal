@@ -119,4 +119,8 @@ export class SpecimenComponent implements OnInit {
     this.urls.forEach(url => FileSaver.saveAs(url));
   }
 
+  generateLink(url: string) {
+    return `http://www.ebi.ac.uk/ols/terms?iri=${url}`;
+  }
+
 }

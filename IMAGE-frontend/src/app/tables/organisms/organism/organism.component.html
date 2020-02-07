@@ -12,7 +12,7 @@
           <b>Submission title: </b> {{ data['submission_title'] }}
         </p>
         <p *ngIf="checkExistence('material')">
-          <b>Material: </b> <a href="{{data['material_ontology']}}">{{ data['material'] }}</a>
+          <b>Material: </b> <a href="{{generateLink(data['material_ontology'])}}">{{ data['material'] }}</a>
         </p>
         <p *ngIf="checkExistence('person_last_name')">
           <b>Person last name: </b> {{ convertArrayToStr(data['person_last_name']) }}
@@ -28,7 +28,7 @@
         </p>
         <p *ngIf="checkExistence('person_role')">
           <b>Person role: </b>
-          <a href="{{role['ontology']}}" *ngFor="let role of getOntologyField('person_role')">
+          <a href="{{generateLink(role['ontology'])}}" *ngFor="let role of getOntologyField('person_role')">
             {{ role['text'] }}</a>
         </p>
         <p *ngIf="checkExistence('organization_name')">
@@ -36,7 +36,7 @@
         </p>
         <p *ngIf="checkExistence('organization_role')">
           <b>Organization role: </b>
-          <a href="{{role['ontology']}}" *ngFor="let role of getOntologyField('organization_role')">
+          <a href="{{generateLink(role['ontology'])}}" *ngFor="let role of getOntologyField('organization_role')">
             {{ role['text'] }}</a>
         </p>
         <p *ngIf="checkExistence('gene_bank_name')">
@@ -47,7 +47,7 @@
             <b>Gene bank country: </b> <a href="{{countries[data['gene_bank_country']]}}">{{ data['gene_bank_country'] }}</a>
           </ng-container>
           <ng-container *ngIf="!countryInEugena(data['gene_bank_country'])">
-            <b>Gene bank country: </b> <a href="{{data['gene_bank_country_ontology']}}">{{ data['gene_bank_country'] }}</a>
+            <b>Gene bank country: </b> <a href="{{generateLink(data['gene_bank_country_ontology'])}}">{{ data['gene_bank_country'] }}</a>
           </ng-container>
         </p>
         <p *ngIf="checkExistence('data_source_type')">
@@ -57,7 +57,7 @@
           <b>Data source version: </b> {{ data['data_source_version'] }}
         </p>
         <p *ngIf="checkExistence('species')">
-          <b>Species: </b> <a href="{{data['species_ontology']}}">{{ data['species'] }}</a>
+          <b>Species: </b> <a href="{{generateLink(data['species_ontology'])}}">{{ data['species'] }}</a>
         </p>
         <mat-divider [inset]="true"></mat-divider>
 
@@ -73,7 +73,7 @@
         </p>
         <p *ngIf="checkExistence('organization_country')">
           <b>Organization country: </b>
-          <a href="{{country['ontology']}}" *ngFor="let country of getOntologyField('organization_country')">
+          <a href="{{generateLink(country['ontology'])}}" *ngFor="let country of getOntologyField('organization_country')">
             {{ country['text'] }}</a>
         </p>
 
@@ -107,7 +107,7 @@
           <b>EFABIS Breed country: </b> {{ data['organisms'][0]['efabis_breed_country'] }}
         </p>
         <p *ngIf="checkExistence('sex', true)">
-          <b>Sex: </b> <a href="{{data['organisms'][0]['sex_ontology']}}">{{ data['organisms'][0]['sex'] }}</a>
+          <b>Sex: </b> <a href="{{generateLink(data['organisms'][0]['sex_ontology'])}}">{{ data['organisms'][0]['sex'] }}</a>
         </p>
         <p *ngIf="checkExistence('birth_location_accuracy', true)">
           <b>Birth location accuracy: </b> {{ data['organisms'][0]['birth_location_accuracy'] }}
@@ -115,7 +115,7 @@
 
 
         <p *ngIf="checkExistence('mapped_breed', true)">
-          <b>Mapped breed: </b> <a href="{{data['organisms'][0]['mapped_breed_ontology']}}">
+          <b>Mapped breed: </b> <a href="{{generateLink(data['organisms'][0]['mapped_breed_ontology'])}}">
           {{ data['organisms'][0]['mapped_breed'] }}</a>
         </p>
         <p *ngIf="checkExistence('birth_location', true)">

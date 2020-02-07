@@ -132,4 +132,8 @@ export class OrganismComponent implements OnInit {
     return this.countries.hasOwnProperty(countryName);
   }
 
+  generateLink(url: string) {
+    return `http://www.ebi.ac.uk/ols/terms?iri=${url}`;
+  }
+
 }
