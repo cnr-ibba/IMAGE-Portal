@@ -45,6 +45,12 @@ export class GisSearchComponent implements OnInit {
     });
     const source = new ol.source.Vector({wrapX: false});
     const vector = new ol.layer.Vector({source: source});
+    raster.setSource(
+      new ol.source.OSM({
+        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+        attributions: '© <a href="https://services.arcgisonline.com/arcgis/rest/services">ArcGis Online Services</a>'
+      })
+    );
     this.map = new ol.Map({
       layers: [raster, vector],
       target: 'map',

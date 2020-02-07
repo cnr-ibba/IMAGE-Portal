@@ -135,6 +135,12 @@ export class SummaryComponent implements OnInit {
       }
 
       this.birthBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
+      this.birthBaseMapLayer.setSource(
+        new ol.source.OSM({
+          url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          attributions: '© <a href="https://services.arcgisonline.com/arcgis/rest/services">ArcGis Online Services</a>'
+        })
+      );
       this.birthMap = new ol.Map({
         target: 'birthMap',
         layers: [this.birthBaseMapLayer],
@@ -160,6 +166,12 @@ export class SummaryComponent implements OnInit {
       this.specimenPartLabels = Object.keys(data['organism_part']);
 
       this.collectionBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
+      this.collectionBaseMapLayer.setSource(
+        new ol.source.OSM({
+          url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+          attributions: '© <a href="https://services.arcgisonline.com/arcgis/rest/services">ArcGis Online Services</a>'
+        })
+      );
       this.collectionMap = new ol.Map({
         target: 'collectionMap',
         layers: [this.collectionBaseMapLayer],
