@@ -34,9 +34,6 @@ export class SummaryComponent implements OnInit {
   longitude = 11.518580;
   latitude = 48.164689;
 
-  birthCoordinates = [];
-  collectionCoordinates = [];
-
   organismSpeciesLabels = [];
   organismSpeciesData = [];
   activeSpecie: any;
@@ -125,13 +122,16 @@ export class SummaryComponent implements OnInit {
       this.organismBreedData = Object.values(this.breed[this.activeSpecie]);
       this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
 
+
+      const coordinatesVectorSource = new ol.source.Vector({
+        format: new ol.format.GeoJSON()
+      });
+
       for (const coordinates of data['coordinates']) {
-        const flag = new ol.Feature({
-          geometry: new ol.geom.Point(
-            ol.proj.fromLonLat([+coordinates[0], +coordinates[1]])
-          ),
+        const sample = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([+coordinates[0], +coordinates[1]]))
         });
-        this.birthCoordinates.push(flag);
+        coordinatesVectorSource.addFeature(sample);
       }
 
       this.birthBaseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
@@ -150,13 +150,17 @@ export class SummaryComponent implements OnInit {
         })
       });
 
-      this.birthVectorSource = new ol.source.Vector({
-        features: this.birthCoordinates
+      const coordinatesVector = new ol.layer.Vector({
+        source: coordinatesVectorSource,
+        style: new ol.style.Style({
+          image: new ol.style.Circle({
+            fill: new ol.style.Fill({color: 'red'}),
+            radius: 4
+          })
+        })
       });
-      this.birthMarkerVectorLayer = new ol.layer.Vector({
-        source: this.birthVectorSource,
-      });
-      this.birthMap.addLayer(this.birthMarkerVectorLayer);
+
+      this.birthMap.addLayer(coordinatesVector);
       this.birthMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
       this.showOrganismsSummary = true;
     });
@@ -181,22 +185,28 @@ export class SummaryComponent implements OnInit {
         })
       });
 
+      const coordinatesVectorSource = new ol.source.Vector({
+        format: new ol.format.GeoJSON()
+      });
+
       for (const coordinates of data['coordinates']) {
-        const flag = new ol.Feature({
-          geometry: new ol.geom.Point(
-            ol.proj.fromLonLat([+coordinates[0], +coordinates[1]])
-          ),
+        const sample = new ol.Feature({
+          geometry: new ol.geom.Point(ol.proj.fromLonLat([+coordinates[0], +coordinates[1]]))
         });
-        this.collectionCoordinates.push(flag);
+        coordinatesVectorSource.addFeature(sample);
       }
 
-      this.collectionVectorSource = new ol.source.Vector({
-        features: this.collectionCoordinates
-      });
-      this.collectionMarkerVectorLayer = new ol.layer.Vector({
-        source: this.collectionVectorSource,
-      });
-      this.collectionMap.addLayer(this.collectionMarkerVectorLayer);
+      const coordinatesVector = new ol.layer.Vector({
+        source: coordinatesVectorSource,
+        style: new ol.style.Style({
+          image: new ol.style.Circle({
+            fill: new ol.style.Fill({color: 'red'}),
+            radius: 4
+          })
+        })
+      })
+
+      this.collectionMap.addLayer(coordinatesVector);
       this.collectionMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
 
       this.showSpecimensSummary = true;

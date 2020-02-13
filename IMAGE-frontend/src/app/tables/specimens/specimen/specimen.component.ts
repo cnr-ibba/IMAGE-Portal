@@ -46,6 +46,12 @@ export class SpecimenComponent implements OnInit {
           this.latitude = data['specimens'][0]['collection_place_latitude'];
           this.longitude = data['specimens'][0]['collection_place_longitude'];
           this.baseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
+          this.baseMapLayer.setSource(
+            new ol.source.OSM({
+              url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
+              attributions: '© <a href="https://services.arcgisonline.com/arcgis/rest/services">ArcGis Online Services</a>'
+            })
+          );
           this.map = new ol.Map({
             target: 'map',
             layers: [this.baseMapLayer],
@@ -54,18 +60,23 @@ export class SpecimenComponent implements OnInit {
               zoom: 10
             })
           });
-          this.marker = new ol.Feature({
-            geometry: new ol.geom.Point(
-              ol.proj.fromLonLat([+this.longitude, +this.latitude])
-            ),
+          const coordinatesVectorSource = new ol.source.Vector({
+            format: new ol.format.GeoJSON()
           });
-          this.vectorSource = new ol.source.Vector({
-            features: [this.marker]
+          const sample = new ol.Feature({
+            geometry: new ol.geom.Point(ol.proj.fromLonLat([+this.longitude, +this.latitude]))
           });
-          this.markerVercotLayer = new ol.layer.Vector({
-            source: this.vectorSource,
+          coordinatesVectorSource.addFeature(sample);
+          const coordinatesVector = new ol.layer.Vector({
+            source: coordinatesVectorSource,
+            style: new ol.style.Style({
+              image: new ol.style.Circle({
+                fill: new ol.style.Fill({color: 'red'}),
+                radius: 4
+              })
+            })
           });
-          this.map.addLayer(this.markerVercotLayer);
+          this.map.addLayer(coordinatesVector);
         }
       },
       error => {
