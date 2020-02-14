@@ -25,6 +25,7 @@
     "@angular/pwa": "^0.803.22",
     "@angular/router": "^8.2.13",
     "@angular/service-worker": "^8.2.13",
+    "@types/file-saver": "^2.0.1",
     "angular2-cookie-law": "^7.0.1",
     "angular2-csv": "^0.2.9",
     "chart.js": "^2.9.3",

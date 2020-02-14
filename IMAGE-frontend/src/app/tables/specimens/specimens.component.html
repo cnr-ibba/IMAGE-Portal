@@ -17,9 +17,8 @@
   <div class="active-filters" *ngIf="hasActiveFilters()">
     <h3>Active filters:</h3>
     <mat-chip-list>
-      <mat-chip>
+      <mat-chip (click)="emptyActiveFilters()">
         Remove all filters
-        <mat-icon matChipRemove (click)="emptyActiveFilters()">cancel</mat-icon>
       </mat-chip>
     </mat-chip-list>
     <mat-chip-list>
@@ -31,8 +30,9 @@
     </mat-chip-list>
   </div>
 
-  <button mat-raised-button color="primary" class="download-button">
-    <a href="{{downloadLink}}" target="_blank" class="download-link">Download data</a>
+  <button mat-raised-button color="primary" class="download-button"
+          (click)="downloadData()" [disabled]="disableButton()">
+    {{downloadText}}
     <mat-icon>save</mat-icon>
   </button>
 

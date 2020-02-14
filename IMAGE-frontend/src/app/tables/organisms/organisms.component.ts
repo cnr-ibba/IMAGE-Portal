@@ -6,6 +6,7 @@ import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {saveAs} from "file-saver";
 
 @Component({
   selector: 'app-organisms',
@@ -22,6 +23,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   activatedRouteSubscription: Subscription;
   filtersChangedSubscription: Subscription;
   downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/organism/download/';
+  downloadText = 'Download data';
 
 
   resultsLength = 0;
@@ -136,6 +138,18 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+  }
+
+  downloadData() {
+    this.downloadText = 'Preparing data...';
+    this.tablesService.export(this.downloadLink).subscribe(data => {
+      this.downloadText = 'Download data';
+      saveAs(data, 'organisms.txt');
+    });
+  }
+
+  disableButton() {
+    return this.downloadText === 'Preparing data...';
   }
 
   ngOnDestroy() {

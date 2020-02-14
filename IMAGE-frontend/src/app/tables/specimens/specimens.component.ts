@@ -5,6 +5,7 @@ import {merge, of as observableOf, Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {saveAs} from "file-saver";
 
 @Component({
   selector: 'app-specimens',
@@ -21,6 +22,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   activatedRouteSubscription: Subscription;
   filtersChangedSubscription: Subscription;
   downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/specimen/download/';
+  downloadText = 'Download data';
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -131,6 +133,18 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
     }
+  }
+
+  downloadData() {
+    this.downloadText = 'Preparing data...';
+    this.tablesService.export(this.downloadLink).subscribe(data => {
+      this.downloadText = 'Download data';
+      saveAs(data, 'specimens.txt');
+    });
+  }
+
+  disableButton() {
+    return this.downloadText === 'Preparing data...';
   }
 
   ngOnDestroy(): void {

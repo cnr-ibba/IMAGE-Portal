@@ -214,6 +214,10 @@ export class TablesService {
     this.filtersChanged.next(this.activeFilters);
   }
 
+  export(url: string) {
+    return this.http.get(url, {responseType: 'blob'});
+  }
+
   convertTitleToKey(title: string) {
     let key: string;
     switch (title) {
