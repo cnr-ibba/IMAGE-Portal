@@ -1,0 +1,25 @@
+.example-card {
+  max-width: 750px;
+}
+
+.inner-card {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+a {
+  text-decoration: none;
+  color: dodgerblue;
+}
+
+a:hover, a:active {
+  color: lightgrey;
+}
+
+p {
+font-size: 20px;
+}
+
+.inner-text {
+  font-size: 15px;
+}

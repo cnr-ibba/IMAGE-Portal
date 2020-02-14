@@ -8,6 +8,7 @@ import {ApiComponent} from './help/api/api.component';
 import {NotExistsPathComponent} from './not-exists-path/not-exists-path.component';
 import {SummaryComponent} from './summary/summary.component';
 import {GisSearchComponent} from "./gis-search/gis-search.component";
+import {BreedersInterfaceComponent} from "./breeders-interface/breeders-interface.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'help', component: HelpComponent },
   { path: 'help/api', component: ApiComponent },
+  { path: 'breeders-interface', component: BreedersInterfaceComponent},
   { path: '**', component: NotExistsPathComponent}
 ];
 

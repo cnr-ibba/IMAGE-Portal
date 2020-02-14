@@ -25,6 +25,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GisSearchComponent } from './gis-search/gis-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { BreedersInterfaceComponent } from './breeders-interface/breeders-interface.component';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
     NotExistsPathComponent,
     SummaryComponent,
     GisSearchComponent,
-    ChooseSpeciesComponent
+    ChooseSpeciesComponent,
+    BreedersInterfaceComponent
   ],
   imports: [
     BrowserModule,
