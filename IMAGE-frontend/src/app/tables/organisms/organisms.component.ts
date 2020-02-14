@@ -137,6 +137,8 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       }
+    } else {
+      this.downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/organism/download/';
     }
   }
 
