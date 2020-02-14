@@ -19,6 +19,10 @@
     <mat-icon>public</mat-icon>
     <span class="nav-caption">GIS-Search</span>
   </a>
+  <a mat-list-item (click)="onClose()" routerLink="breeders-interface">
+    <mat-icon>device_hub</mat-icon>
+    <span class="nav-caption">Breeders Interface</span>
+  </a>
   <a mat-list-item (click)="onClose()" routerLink="about">
     <mat-icon>info</mat-icon>
     <span class="nav-caption">About</span>
@@ -26,9 +30,5 @@
   <a mat-list-item (click)="onClose()" routerLink="help">
     <mat-icon>help</mat-icon>
     <span class="nav-caption">Help</span>
-  </a>
-  <a mat-list-item (click)="onClose()" routerLink="breeders-interface">
-    <mat-icon>device_hub</mat-icon>
-    <span class="nav-caption">Breeders Interface</span>
   </a>
 </mat-nav-list>

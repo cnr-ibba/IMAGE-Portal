@@ -4,6 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {ObjectUnsubscribedError, Subject} from 'rxjs';
+import {Title} from "@angular/platform-browser";
 
 export interface DialogData {
   species: any;
@@ -102,9 +103,10 @@ export class SummaryComponent implements OnInit {
     }
   };
 
-  constructor(private tableService: TablesService, public dialog: MatDialog) { }
+  constructor(private tableService: TablesService, public dialog: MatDialog, private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle('IMAGE|Summary')
     this.changedSpecie.subscribe(data => {
       this.activeSpecie = data;
       this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
