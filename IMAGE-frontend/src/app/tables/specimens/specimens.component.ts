@@ -5,7 +5,7 @@ import {merge, of as observableOf, Subscription} from 'rxjs';
 import {Title} from '@angular/platform-browser';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
-import {saveAs} from "file-saver";
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-specimens',

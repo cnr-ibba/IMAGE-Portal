@@ -1,0 +1,66 @@
+<nav mat-tab-nav-bar>
+  <a mat-tab-link [routerLink]="['../', 'organism']" [active]="false">
+    Organisms
+  </a>
+  <a mat-tab-link [routerLink]="['../', 'specimen']" [active]="false">
+    Specimens
+  </a>
+  <a mat-tab-link [routerLink]="['../', 'file']" [active]="true">
+    Files
+  </a>
+</nav>
+<ng-container>
+  <button mat-raised-button color="primary" class="download-button"
+          (click)="downloadData()" [disabled]="disableButton()">
+    {{downloadText}}
+    <mat-icon>save</mat-icon>
+  </button>
+
+  <div>
+    <div class="example-loading-shade" *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    </div>
+
+    <table mat-table [dataSource]="data" matSort matSortActive="data_source_id"
+           matSortDisableClear matSortDirection="desc">
+
+      <ng-container matColumnDef="data_source_id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>Data source ID</th>
+        <td mat-cell *matCellDef="let element">
+          <a [routerLink]="['/tables/specimen', element['data_source_id']]">{{ element['data_source_id'] }}</a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="file_name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear>File name</th>
+        <td mat-cell *matCellDef="let element">
+          <a href="{{generateLink(element['file_url'])}}">{{ element['file_name'] }}</a></td>
+      </ng-container>
+
+      <ng-container matColumnDef="file_size">
+        <th mat-header-cell *matHeaderCellDef>File size</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element['file_size'] }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="index">
+        <th mat-header-cell *matHeaderCellDef>File index</th>
+        <td mat-cell *matCellDef="let element">
+          <a href="{{generateLink(element['file_index_url'])}}">{{ element['file_index_name'] }}</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="index_size">
+        <th mat-header-cell *matHeaderCellDef>File index size</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element['file_index_size'] }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator [pageSize]="10" [length]="resultsLength" showFirstLastButtons>
+    </mat-paginator>
+  </div>
+</ng-container>

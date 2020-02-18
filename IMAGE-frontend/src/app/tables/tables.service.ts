@@ -19,7 +19,7 @@ export interface OrganismsApi {
   birthLocationLatitude: string;
 }
 
-export interface CPDSpecimensApi {
+export interface CDPSpecimensApi {
   results: SpecimensApi[];
   count: number;
 }
@@ -31,6 +31,25 @@ export interface SpecimensApi {
   organismPart: string;
   collectionPlaceLatitude: string;
   collectionPlaceLongitude: string;
+}
+
+export interface CPDFilesApi {
+  results: FilesApi[];
+  count: number;
+}
+
+export interface FilesApi {
+  data_source_id: string;
+  file_name: string;
+  file_url: string;
+  file_size: string;
+  file_checksum: string;
+  file_checksum_method: string;
+  file_index_name: string;
+  file_index_url: string;
+  file_index_size: string;
+  file_index_checksum: string;
+  file_index_checksum_method: string;
 }
 
 
@@ -78,7 +97,7 @@ export class TablesService {
     return this.http.get<CDPOrganismsApi>(url);
   }
 
-  getSpecimens(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CPDSpecimensApi> {
+  getSpecimens(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CDPSpecimensApi> {
     pageNumber = +pageNumber + 1;
     if (sortColumn === 'derived_from' || sortColumn === 'organism_part') {
       sortColumn = `specimens__${sortColumn}`;
@@ -98,7 +117,17 @@ export class TablesService {
         }
       }
     }
-    return this.http.get<CPDSpecimensApi>(url);
+    return this.http.get<CDPSpecimensApi>(url);
+  }
+
+  getFiles(sortColumn, sortDirection, pageNumber) {
+    pageNumber = +pageNumber + 1;
+
+    if (sortDirection === 'asc') {
+      sortColumn = `-${sortColumn}`;
+    }
+    const url = this.hostSetting.host + `file/?page=${pageNumber}&ordering=${sortColumn}`;
+    return this.http.get<CPDFilesApi>(url);
   }
 
   getOrganismsSummary(filterValue?: {[key: string]: []}) {
