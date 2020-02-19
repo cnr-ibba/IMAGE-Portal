@@ -14,8 +14,7 @@ declare var ol: any;
   styleUrls: ['./specimen.component.css']
 })
 export class SpecimenComponent implements OnInit {
-  displayedColumns = ['filename', 'file_size', 'file_checksum', 'file_checksum_method',
-    'index', 'index_size', 'index_checksum', 'index_checksum_method'];
+  displayedColumns = ['file_name', 'file_size', 'index', 'index_size'];
   id: string;
   data;
   files: any;
@@ -86,6 +85,11 @@ export class SpecimenComponent implements OnInit {
         });
       }
       );
+    this.tablesService.getFile(this.id).subscribe(data => {
+      this.files = [data];
+      this.urls.push(this.generateFtpLink(data['file_url']));
+      this.urls.push(this.generateFtpLink(data['file_index_url']));
+    });
   }
 
   checkExistence(key: string, organism = false) {
@@ -132,6 +136,10 @@ export class SpecimenComponent implements OnInit {
 
   generateLink(url: string) {
     return `http://www.ebi.ac.uk/ols/terms?iri=${url}`;
+  }
+
+  generateFtpLink(url: string) {
+    return `ftp://${url}`;
   }
 
 }

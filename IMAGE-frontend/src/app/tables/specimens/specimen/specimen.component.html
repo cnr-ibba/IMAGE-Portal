@@ -172,36 +172,31 @@
         <h3>Related files</h3>
         <div class="sticky-header">
           <table mat-table [dataSource]="files">
-            <ng-container matColumnDef="filename">
+            <ng-container matColumnDef="file_name">
               <th mat-header-cell *matHeaderCellDef>File name</th>
+              <td mat-cell *matCellDef="let element">
+                <a href="{{generateFtpLink(element['file_url'])}}">{{ element['file_name'] }}</a></td>
             </ng-container>
 
             <ng-container matColumnDef="file_size">
               <th mat-header-cell *matHeaderCellDef>File size</th>
-            </ng-container>
-
-            <ng-container matColumnDef="file_checksum">
-              <th mat-header-cell *matHeaderCellDef>File checksum</th>
-            </ng-container>
-
-            <ng-container matColumnDef="file_checksum_method">
-              <th mat-header-cell *matHeaderCellDef>File checksum method</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element['file_size'] }}
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="index">
               <th mat-header-cell *matHeaderCellDef>File index</th>
+              <td mat-cell *matCellDef="let element">
+                <a href="{{generateFtpLink(element['file_index_url'])}}">{{ element['file_index_name'] }}</a>
+              </td>
             </ng-container>
 
             <ng-container matColumnDef="index_size">
               <th mat-header-cell *matHeaderCellDef>File index size</th>
-            </ng-container>
-
-            <ng-container matColumnDef="index_checksum">
-              <th mat-header-cell *matHeaderCellDef>File index checksum</th>
-            </ng-container>
-
-            <ng-container matColumnDef="index_checksum_method">
-              <th mat-header-cell *matHeaderCellDef>File index checksum method</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element['file_index_size'] }}
+              </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>

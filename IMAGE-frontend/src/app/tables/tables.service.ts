@@ -215,6 +215,11 @@ export class TablesService {
     return this.http.get(url);
   }
 
+  getFile(specimenId: string) {
+    const url = this.hostSetting.host + 'file/' + specimenId;
+    return this.http.get(url);
+  }
+
   searchOrganisms(query: string) {
     const url = `https://www.image2020genebank.eu/data_portal/backend/organism/?search=${query}`;
     return this.http.get(url);
