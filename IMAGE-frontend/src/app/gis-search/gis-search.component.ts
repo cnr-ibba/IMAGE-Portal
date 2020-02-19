@@ -82,6 +82,7 @@ export class GisSearchComponent implements OnInit {
     this.tablesService.OrganismsGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
       .subscribe(data => {
         this.dataSourceOrganism = data['results'];
+        console.log(this.dataSourceSpecimen);
       });
     this.tablesService.SpecimensGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
       .subscribe(data => {
@@ -93,6 +94,14 @@ export class GisSearchComponent implements OnInit {
     this.filter = this.options.getRawValue();
     this.doFilter();
     this.showResults = true;
+  }
+
+  showTables() {
+    return this.dataSourceOrganism && this.dataSourceOrganism.length !== 0 && this.dataSourceSpecimen && this.dataSourceSpecimen.length !== 0;
+  }
+
+  showMessage() {
+    return !this.showTables() && this.showResults;
   }
 
 }

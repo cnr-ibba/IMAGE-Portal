@@ -30,7 +30,7 @@
   </section>
 </ng-container>
 
-<div *ngIf="showResults===true">
+<div *ngIf="showTables()">
   <h3 fxLayoutAlign="center center">Organisms:</h3>
   <div class="sticky-header">
     <table mat-table [dataSource]="dataSourceOrganism">
@@ -91,4 +91,8 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumnsSpecimens"></tr>
     </table>
   </div>
+</div>
+
+<div *ngIf="showMessage()">
+  <h3 fxLayoutAlign="center center">No results found</h3>
 </div>
