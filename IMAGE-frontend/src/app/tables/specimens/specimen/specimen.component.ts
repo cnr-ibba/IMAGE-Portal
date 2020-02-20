@@ -14,7 +14,7 @@ declare var ol: any;
   styleUrls: ['./specimen.component.css']
 })
 export class SpecimenComponent implements OnInit {
-  displayedColumns = ['file_name', 'file_size', 'index', 'index_size'];
+  displayedColumns = ['file_name', 'file_size', 'file_checksum', 'file_checksum_method'];
   id: string;
   data;
   files: any;
@@ -86,9 +86,17 @@ export class SpecimenComponent implements OnInit {
       }
       );
     this.tablesService.getFile(this.id).subscribe(data => {
-      this.files = [data];
-      this.urls.push(this.generateFtpLink(data['file_url']));
-      this.urls.push(this.generateFtpLink(data['file_index_url']));
+      this.files = [];
+      for (let i = 0; i < data['file_name'].length; i++) {
+        const tmp = {};
+        tmp['file_name'] = data['file_name'][i];
+        tmp['file_url'] = data['file_url'][i];
+        tmp['file_size'] = data['file_size'][i];
+        tmp['file_checksum'] = data['file_checksum'][i];
+        tmp['file_checksum_method'] = data['file_checksum_method'][i];
+        this.files.push(tmp);
+        this.urls.push(this.generateFtpLink(data['file_url'][i]));
+      }
     });
   }
 

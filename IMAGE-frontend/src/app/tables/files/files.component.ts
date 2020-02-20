@@ -13,8 +13,8 @@ import * as FileSaver from 'file-saver';
   styleUrls: ['./files.component.css']
 })
 export class FilesComponent implements OnInit, AfterViewInit {
-  displayedColumns = ['data_source_id', 'file_name', 'file_size', 'index', 'index_size'];
-  data: FilesApi[] = [];
+  displayedColumns = ['data_source_id', 'file_name', 'file_size', 'file_checksum', 'file_checksum_method'];
+  data = [];
   downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/file/download/';
   resultsLength = 0;
   isLoadingResults = true;
@@ -51,16 +51,24 @@ export class FilesComponent implements OnInit, AfterViewInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-        console.log(data);
-      this.data = data;
+        const results = [];
       for (const record of data) {
-        if (this.urls.indexOf(record['file_url']) === -1) {
-          this.urls.push(this.generateLink(record['file_url']));
-        }
-        if (this.urls.indexOf(record['file_index_url']) === -1) {
-          this.urls.push(this.generateLink(record['file_index_url']));
+        for (let i = 0; i < record['file_name'].length; i++) {
+          if (this.urls.indexOf(record['file_url'][i]) === -1) {
+            this.urls.push(this.generateLink(record['file_url'][i]));
+          }
+          const tmp = {};
+          tmp['data_source_id'] = record['data_source_id'];
+          tmp['file_name'] = record['file_name'][i];
+          tmp['file_size'] = record['file_size'][i];
+          tmp['file_url'] = record['file_url'][i];
+          tmp['file_checksum'] = record['file_checksum'][i];
+          tmp['file_checksum_method'] = record['file_checksum_method'][i];
+          results.push(tmp);
         }
       }
+      this.data = results;
+      console.log(this.urls);
     });
   }
 

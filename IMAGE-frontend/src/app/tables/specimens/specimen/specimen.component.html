@@ -185,17 +185,17 @@
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="index">
-              <th mat-header-cell *matHeaderCellDef>File index</th>
+            <ng-container matColumnDef="file_checksum">
+              <th mat-header-cell *matHeaderCellDef>File checksum</th>
               <td mat-cell *matCellDef="let element">
-                <a href="{{generateFtpLink(element['file_index_url'])}}">{{ element['file_index_name'] }}</a>
+                {{ element['file_checksum'] }}
               </td>
             </ng-container>
 
-            <ng-container matColumnDef="index_size">
-              <th mat-header-cell *matHeaderCellDef>File index size</th>
+            <ng-container matColumnDef="file_checksum_method">
+              <th mat-header-cell *matHeaderCellDef>File checksum method</th>
               <td mat-cell *matCellDef="let element">
-                {{ element['file_index_size'] }}
+                {{ element['file_checksum_method'] }}
               </td>
             </ng-container>
 
