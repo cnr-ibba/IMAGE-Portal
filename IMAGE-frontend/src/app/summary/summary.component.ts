@@ -4,7 +4,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {ObjectUnsubscribedError, Subject} from 'rxjs';
-import {Title} from "@angular/platform-browser";
+import {Title} from '@angular/platform-browser';
 
 export interface DialogData {
   species: any;
@@ -106,7 +106,7 @@ export class SummaryComponent implements OnInit {
   constructor(private tableService: TablesService, public dialog: MatDialog, private titleService: Title) { }
 
   ngOnInit() {
-    this.titleService.setTitle('IMAGE|Summary')
+    this.titleService.setTitle('IMAGE|Summary');
     this.changedSpecie.subscribe(data => {
       this.activeSpecie = data;
       this.organismBreedOptions['title']['text'] = 'Supplied breed for ' + this.activeSpecie + ' (click to change)';
@@ -232,6 +232,25 @@ export class SummaryComponent implements OnInit {
         this.activeSpecie = result.active_specie;
         this.organismBreedLabels = Object.keys(this.breed[this.activeSpecie]);
         this.organismBreedData = Object.values(this.breed[this.activeSpecie]);
+        this.organismBreedOptions = {
+          title: {
+            text: 'Supplied breed',
+            display: true
+          },
+          responsive: true,
+          // We use these empty structures as placeholders for dynamic theming.
+          scales: { xAxes: [{
+              display: false
+            }], yAxes: [{
+              ticks: {
+                beginAtZero: true,
+              }
+            }] },
+          tooltips: {
+            enabled: true,
+            mode: 'label',
+          }
+        };
         this.changedSpecie.next(this.activeSpecie);
       }
     });
