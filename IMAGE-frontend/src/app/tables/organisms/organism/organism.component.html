@@ -138,8 +138,9 @@
         <p></p>
 
 
-        <p *ngIf="checkExistence('child_of', true)">
-          <b>Child of: </b> {{ convertArrayToStr(data['organisms'][0]['child_of']) }}
+        <p *ngIf="checkExistence('specimens', true)">
+          <b>Specimens: </b>
+          <a [routerLink]="['../../', 'specimen', specimen]" *ngFor="let specimen of data['organisms'][0]['specimens']">{{specimen}} </a>
         </p>
       </mat-card-content>
     </mat-card>
