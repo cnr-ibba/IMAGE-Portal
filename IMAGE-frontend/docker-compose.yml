@@ -3,8 +3,7 @@ version: '3'
 services:
   angular:
     image: teracy/angular-cli
-    entrypoint: ng
-    command: build
+    command: ng build
     volumes:
     - .:/usr/src/app
     working_dir: /usr/src/app
