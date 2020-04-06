@@ -27,7 +27,7 @@ docker-compose down
 
 ```
 $ docker-compose run angular /bin/bash
-$ npm install <package>@<version>
+$ npm install <package>@<version> [--save-dev]
 ```
 
 ## To run backend for this app:
