@@ -82,11 +82,12 @@ export class GisSearchComponent implements OnInit {
     this.tablesService.OrganismsGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
       .subscribe(data => {
         this.dataSourceOrganism = data['results'];
-        console.log(this.dataSourceSpecimen);
+        // console.log(this.dataSourceOrganism);
       });
     this.tablesService.SpecimensGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
       .subscribe(data => {
         this.dataSourceSpecimen = data['results'];
+        // console.log(this.dataSourceSpecimen);
       });
   }
 
@@ -97,7 +98,14 @@ export class GisSearchComponent implements OnInit {
   }
 
   showTables() {
-    return this.dataSourceOrganism && this.dataSourceOrganism.length !== 0 && this.dataSourceSpecimen && this.dataSourceSpecimen.length !== 0;
+    let results = [];
+
+    // https://stackoverflow.com/a/519157
+    if (typeof this.dataSourceOrganism !== 'undefined' || typeof this.dataSourceSpecimen !== 'undefined') {
+      results.concat(this.dataSourceOrganism);
+      results.concat(this.dataSourceSpecimen);
+      return results;
+    }
   }
 
   showMessage() {
