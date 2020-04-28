@@ -2,49 +2,44 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
 
-## To run app:
+
+# Execute application in development mode
 
 1. Install Docker
-2. Build the application:
+2. Execute:
 
 ```
-docker-compose run angular
+$ docker-compose up angular
 ```
 
-3. Start NGINX:
+# Build the application:
 
 ```
-docker-compose up -d nginx
+$ docker-compose run angular ng build --prod
+```
+
+## Serve compiled application using nginx:
+
+```
+$ docker-compose up -d nginx
 ```
 
 ## To stop app:
 
 ```
-docker-compose down
+$ docker-compose down
 ```
 
-## Upgrade a package:
+# Upgrade a package:
 
 ```
 $ docker-compose run angular /bin/bash
 $ npm install <package>@<version> [--save-dev]
 ```
 
-## To run backend for this app:
+# To run backend for this app:
 
-```
-$ git clone https://github.com/cnr-ibba/IMAGE-CommonDataPool.git
-$ cd image_backend
-$ docker-compose run web ./manage.py makemigrations
-$ docker-compose run web ./manage.py migrate
-$ docker-compose up
-```
-
-## To stop backend for this app:
-
-```
-docker-compose down
-```
+Please see IMAGE-CommonDataPool [README.md at GitHub](https://github.com/cnr-ibba/IMAGE-CommonDataPool)
 
 ## Development server
 
