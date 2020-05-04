@@ -1,43 +1,18 @@
 # IMAGE-portal frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
-
-
-# Execute application in development mode
-
-1. Install Docker
-2. Execute:
+## Install dependencies
 
 ```
-$ docker-compose up angular
+$ npm install
 ```
 
-# Build the application:
+## Upgrade a package:
 
 ```
-$ docker-compose run angular ng build --prod
-```
-
-## Serve compiled application using nginx:
-
-```
-$ docker-compose up -d nginx
-```
-
-## To stop app:
-
-```
-$ docker-compose down
-```
-
-# Upgrade a package:
-
-```
-$ docker-compose run angular /bin/bash
 $ npm install <package>@<version> [--save-dev]
 ```
 
-# To run backend for this app:
+## To run backend for this app:
 
 Please see IMAGE-CommonDataPool [README.md at GitHub](https://github.com/cnr-ibba/IMAGE-CommonDataPool)
 
