@@ -131,7 +131,7 @@ export class TablesService {
   }
 
   getOrganismsSummary(filterValue?: {[key: string]: []}) {
-    let url = 'https://www.image2020genebank.eu/data_portal/backend/organism/summary/';
+    let url = this.hostSetting.host + 'organism/summary/';
 
     if (this.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
@@ -155,16 +155,16 @@ export class TablesService {
 
 
   getOrganismsGraphicalSummary() {
-    return this.http.get('https://www.image2020genebank.eu/data_portal/backend/organism/graphical_summary/');
+    return this.http.get(this.hostSetting.host + 'organism/graphical_summary/');
   }
 
   OrganismsGISSearch(latitude: string, longitude: string, radius: string) {
-    const url = `https://www.image2020genebank.eu/data_portal/backend/organism/gis_search/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    const url = `${this.hostSetting.host}organism/gis_search/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
     return this.http.get(url);
   }
 
   getSpecimensSummary(filterValue?: {[key: string]: []}) {
-    let url = 'https://www.image2020genebank.eu/data_portal/backend/specimen/summary/';
+    let url = this.hostSetting.host + 'specimen/summary/';
 
     if (this.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
@@ -184,11 +184,11 @@ export class TablesService {
   }
 
   getSpecimensGraphicalSummary() {
-    return this.http.get('https://www.image2020genebank.eu/data_portal/backend/specimen/graphical_summary/');
+    return this.http.get(this.hostSetting.host + 'specimen/graphical_summary/');
   }
 
   SpecimensGISSearch(latitude: string, longitude: string, radius: string) {
-    const url = `https://www.image2020genebank.eu/data_portal/backend/specimen/gis_search/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
+    const url = `${this.hostSetting.host}specimen/gis_search/?latitude=${latitude}&longitude=${longitude}&radius=${radius}`;
     return this.http.get(url);
   }
 
@@ -221,12 +221,12 @@ export class TablesService {
   }
 
   searchOrganisms(query: string) {
-    const url = `https://www.image2020genebank.eu/data_portal/backend/organism/?search=${query}`;
+    const url = `${this.hostSetting.host}organism/?search=${query}`;
     return this.http.get(url);
   }
 
   searchSpecimens(query: string) {
-    const url = `https://www.image2020genebank.eu/data_portal/backend/specimen/?search=${query}`;
+    const url = `${this.hostSetting.host}specimen/?search=${query}`;
     return this.http.get(url);
   }
 
