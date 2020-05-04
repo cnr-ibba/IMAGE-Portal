@@ -47,6 +47,14 @@
               "buildOptimizer": true,
               "serviceWorker": true,
               "ngswConfigPath": "ngsw-config.json"
+            },
+            "test": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.test.ts"
+                }
+              ]
             }
           }
         },
@@ -58,6 +66,9 @@
           "configurations": {
             "production": {
               "browserTarget": "IMAGE-frontend:build:production"
+            },
+            "test": {
+              "browserTarget": "IMAGE-frontend:build:test"
             }
           }
         },

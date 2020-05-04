@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'http://localhost:26081/data_portal/backend/'
+  host: 'https://test.image2020genebank.eu/data_portal/backend/'
 };
 
 /*
