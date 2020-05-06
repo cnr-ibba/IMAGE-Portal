@@ -3,7 +3,6 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {TablesService} from '../../tables.service';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material';
-import {breedsNames, specialBreedCases, speciesNames} from '../species';
 import {countries} from '../../countries';
 import { DADis } from './organism.model';
 
@@ -123,30 +122,10 @@ export class OrganismComponent implements OnInit {
     return dataToReturn;
   }
 
-  getBreedLink(breedName: string, species: string) {
-    if (breedsNames[species].indexOf(breedName) !== -1) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
-        speciesNames[species] + '&breed=' + breedName + '&callback=allbreeds';
-    } else if (specialBreedCases.hasOwnProperty(breedName)) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
-        speciesNames[species] + '&breed=' + specialBreedCases[breedName] + '&callback=allbreeds';
-    }
-  }
-
   getDADisLink(dadis: DADis) {
     if (dadis !== null) {
       return dadis.dadis_url;
     }
-  }
-
-  speciesIsKnown(breedName: string, species: string) {
-    if (speciesNames.hasOwnProperty(species)) {
-      if (breedsNames[species].indexOf(breedName) !== -1 || specialBreedCases.hasOwnProperty(breedName)) {
-        return true;
-      }
-      return false;
-    }
-    return false;
   }
 
   countryInEugena(countryName: string) {
