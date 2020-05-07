@@ -62,6 +62,7 @@ export class SummaryComponent implements OnInit {
     scales: { xAxes: [{
         display: false
       }], yAxes: [{
+        type: 'logarithmic',
         ticks: {
           beginAtZero: true,
         }
@@ -81,6 +82,7 @@ export class SummaryComponent implements OnInit {
     scales: { xAxes: [{
         display: false
       }], yAxes: [{
+        type: 'logarithmic',
         ticks: {
           beginAtZero: true,
         }
