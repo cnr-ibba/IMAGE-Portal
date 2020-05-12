@@ -42,6 +42,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe((params: Params) => {
       const filters = {
         species: [],
+        countries: [],
         breed: [],
         sex: [],
         derivedFrom: [],
@@ -55,6 +56,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.onRemoveActiveFilter(params[key], key);
         }
       }
+
       this.activeFilters = filters;
       this.constructDownloadLink(this.activeFilters);
       this.activeFiltersNames = Object.entries(this.activeFilters);

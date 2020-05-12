@@ -60,6 +60,7 @@ export class TablesService {
 
   activeFilters = {
     species: [],
+    country: [],
     breed: [],
     sex: [],
     organism_part: [],
@@ -88,6 +89,10 @@ export class TablesService {
         }
         if (key === 'breed') {
           key = 'organisms__supplied_breed';
+        }
+        if (key === 'country') {
+          // use the same name of the API
+          key = 'organisms__efabis_breed_country';
         }
         for (const value of values) {
           url = `${url}&${key}=${value}`;
@@ -140,6 +145,10 @@ export class TablesService {
         }
         if (key === 'breed') {
           key = 'organisms__supplied_breed';
+        }
+        if (key === 'country') {
+          // use the same name of the API
+          key = 'organisms__efabis_breed_country';
         }
         for (const value of values) {
           if (url.indexOf('?') !== -1) {
@@ -257,6 +266,11 @@ export class TablesService {
     switch (title) {
       case 'Species': {
         key = 'species';
+        break;
+      }
+      case 'Countries': {
+        // the key is the key used in the API
+        key = 'country';
         break;
       }
       case 'Supplied breed': {
