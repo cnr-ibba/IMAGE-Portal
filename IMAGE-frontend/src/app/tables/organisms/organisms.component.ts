@@ -22,7 +22,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   aggregationsRequired = true;
   activatedRouteSubscription: Subscription;
   filtersChangedSubscription: Subscription;
-  downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/organism/download/';
+  downloadLink: string;
   downloadText = 'Download data';
 
 
@@ -42,6 +42,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activatedRouteSubscription = this.activatedRoute.queryParams.subscribe((params: Params) => {
       const filters = {
         species: [],
+        countries: [],
         breed: [],
         sex: [],
         derivedFrom: [],
@@ -55,6 +56,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
           this.onRemoveActiveFilter(params[key], key);
         }
       }
+
       this.activeFilters = filters;
       this.constructDownloadLink(this.activeFilters);
       this.activeFiltersNames = Object.entries(this.activeFilters);
@@ -121,6 +123,8 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   constructDownloadLink(filterValue?: {[key: string]: []}) {
+    this.downloadLink = this.tablesService.hostSetting.getHost() + "organism/download/";
+
     if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
         if (key === 'sex') {
@@ -137,8 +141,6 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       }
-    } else {
-      this.downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/organism/download/';
     }
   }
 

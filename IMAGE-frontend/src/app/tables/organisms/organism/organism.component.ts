@@ -3,8 +3,8 @@ import {ActivatedRoute, Params} from '@angular/router';
 import {TablesService} from '../../tables.service';
 import {Title} from '@angular/platform-browser';
 import {MatSnackBar} from '@angular/material';
-import {breedsNames, specialBreedCases, speciesNames} from '../species';
 import {countries} from '../../countries';
+import { DADis } from './organism.model';
 
 declare var ol: any;
 @Component({
@@ -36,6 +36,10 @@ export class OrganismComponent implements OnInit {
     this.tablesService.getOrganism(this.id).subscribe(
       data => {
         this.data = data;
+
+        // console.log(data);
+
+        // trip on organism coordinates
         if (this.checkExistence('birth_location_latitude', true) &&
           this.checkExistence('birth_location_longitude', true)) {
           this.latitude = data['organisms'][0]['birth_location_latitude'];
@@ -72,16 +76,17 @@ export class OrganismComponent implements OnInit {
             })
           });
           this.map.addLayer(coordinatesVector);
-        }
-      },
+        } // if - check on coordinates
+      }, // subscription - how to do
       error => {
         this.error = error;
         this.snackBar.open(this.error, 'close', {
           duration: 5000,
         });
-      }
+      } // error on subscription
     );
-  }
+
+  } // ngOnInit close
 
   checkExistence(key: string, organism = false) {
     if (organism) {
@@ -117,24 +122,10 @@ export class OrganismComponent implements OnInit {
     return dataToReturn;
   }
 
-  getBreedLink(breedName: string, species: string) {
-    if (breedsNames[species].indexOf(breedName) !== -1) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
-        speciesNames[species] + '&breed=' + breedName + '&callback=allbreeds';
-    } else if (specialBreedCases.hasOwnProperty(breedName)) {
-      return 'https://dadis-breed-4eff5.firebaseapp.com/?country=Netherlands&specie=' +
-        speciesNames[species] + '&breed=' + specialBreedCases[breedName] + '&callback=allbreeds';
+  getDADisLink(dadis: DADis) {
+    if (dadis !== null) {
+      return dadis.dadis_url;
     }
-  }
-
-  speciesIsKnown(breedName: string, species: string) {
-    if (speciesNames.hasOwnProperty(species)) {
-      if (breedsNames[species].indexOf(breedName) !== -1 || specialBreedCases.hasOwnProperty(breedName)) {
-        return true;
-      }
-      return false;
-    }
-    return false;
   }
 
   countryInEugena(countryName: string) {

@@ -21,7 +21,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   aggregationsRequired = true;
   activatedRouteSubscription: Subscription;
   filtersChangedSubscription: Subscription;
-  downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/specimen/download/';
+  downloadLink: string;
   downloadText = 'Download data';
 
   resultsLength = 0;
@@ -119,6 +119,8 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   constructDownloadLink(filterValue?: {[key: string]: []}) {
+    this.downloadLink = this.tablesService.hostSetting.getHost() + 'specimen/download/';
+
     if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
         if (key === 'organism_part') {
@@ -132,8 +134,6 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
           }
         }
       }
-    } else {
-      this.downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/specimen/download/';
     }
   }
 

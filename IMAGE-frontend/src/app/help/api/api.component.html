@@ -6,9 +6,9 @@
       <mat-card-content fxLayoutAlign="left">
         <p><b>1. There are two main entrypoints:</b>
           <br>
-          one for organism: <a href="https://www.image2020genebank.eu/data_portal/backend/organism/">https://www.image2020genebank.eu/data_portal/backend/organism/</a>
+          one for organism: <a [href]="getOrganism()">{{ getOrganism() }}</a>
           <br>
-          one for specimen: <a href="https://www.image2020genebank.eu/data_portal/backend/specimen/">https://www.image2020genebank.eu/data_portal/backend/specimen/</a>
+          one for specimen: <a [href]="getSpecimen()">{{ getSpecimen() }}</a>
         </p>
       </mat-card-content>
 
@@ -18,12 +18,12 @@
           <br>
           API format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/organism/?format=api</span>
+          <span>curl {{ getOrganism(null, 'api') }}</span>
 
           <br>
           JSON format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/organism/?format=json</span>
+          <span>curl {{ getOrganism(null, 'json') }}</span>
         </p>
       </mat-card-content>
 
@@ -32,12 +32,12 @@
           <br>
           API format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/organism/SAMEA5159526/?format=api</span>
+          <span>curl {{ getOrganism('SAMEA6877837', 'api') }}</span>
 
           <br>
           JSON format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/organism/SAMEA5159526/?format=json</span>
+          <span>curl {{ getOrganism('SAMEA6877837', 'json') }}</span>
         </p>
       </mat-card-content>
 
@@ -47,12 +47,12 @@
           <br>
           API format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/file/?format=api</span>
+          <span>curl {{ getFile(null, 'api')}}</span>
 
           <br>
           JSON format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/file/?format=json</span>
+          <span>curl {{ getFile(null, 'json') }}</span>
         </p>
       </mat-card-content>
 
@@ -61,12 +61,12 @@
           <br>
           API format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/file/SAMEA5159523/?format=api</span>
+          <span>curl {{ getFile('SAMEA6877837', 'api') }}</span>
 
           <br>
           JSON format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/file/SAMEA5159523/?format=json</span>
+          <span>curl {{ getFile('SAMEA6877837', 'json') }}</span>
         </p>
       </mat-card-content>
 
@@ -75,12 +75,12 @@
           <br>
           API format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/specimen/?format=api</span>
+          <span>curl {{ getSpecimen(null, 'api') }}</span>
 
           <br>
           JSON format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/specimen/?format=json</span>
+          <span>curl {{ getSpecimen(null, 'json') }}</span>
         </p>
       </mat-card-content>
 
@@ -89,12 +89,12 @@
           <br>
           API format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/specimen/SAMEA5159523/?format=api</span>
+          <span>curl {{ getSpecimen('SAMEA6877846', 'api') }}</span>
 
           <br>
           JSON format
           <br>
-          <span>curl https://www.image2020genebank.eu/data_portal/backend/specimen/SAMEA5159523/?format=json</span>
+          <span>curl {{ getSpecimen('SAMEA6877846', 'json') }}</span>
         </p>
       </mat-card-content>
     </mat-card>

@@ -93,15 +93,17 @@
         <mat-divider [inset]="true"></mat-divider>
 
         <p *ngIf="checkExistence('supplied_breed', true)">
-          <ng-container *ngIf="speciesIsKnown(data['organisms'][0]['supplied_breed'], data['species'])">
+          <ng-container *ngIf="data['organisms'][0]['dadis'] !== null else noDadis">
             <b>Supplied breed: </b>
-            <a href="{{getBreedLink(data['organisms'][0]['supplied_breed'], data['species'])}}">
+            <a href="{{ getDADisLink(data['organisms'][0]['dadis']) }}" target="_blank">
               {{ data['organisms'][0]['supplied_breed'] }}
             </a>
           </ng-container>
-          <ng-container *ngIf="!speciesIsKnown(data['organisms'][0]['supplied_breed'], data['species'])">
-            <b>Supplied breed: </b> {{ data['organisms'][0]['supplied_breed'] }}
-          </ng-container>
+          <ng-container>
+            <ng-template #noDadis>
+              <b>Supplied breed: </b> {{ data['organisms'][0]['supplied_breed'] }}
+            </ng-template>
+        </ng-container>
         </p>
         <p *ngIf="checkExistence('efabis_breed_country', true)">
           <b>EFABIS Breed country: </b> {{ data['organisms'][0]['efabis_breed_country'] }}

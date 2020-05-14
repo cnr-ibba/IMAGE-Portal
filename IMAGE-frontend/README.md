@@ -1,50 +1,20 @@
 # IMAGE-portal frontend
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.17.
-
-## To run app:
-
-1. Install Docker
-2. Build the application:
+## Install dependencies
 
 ```
-docker-compose run angular
-```
-
-3. Start NGINX:
-
-```
-docker-compose up -d nginx
-```
-
-## To stop app:
-
-```
-docker-compose down
+$ npm install
 ```
 
 ## Upgrade a package:
 
 ```
-$ docker-compose run angular /bin/bash
 $ npm install <package>@<version> [--save-dev]
 ```
 
 ## To run backend for this app:
 
-```
-$ git clone https://github.com/cnr-ibba/IMAGE-CommonDataPool.git
-$ cd image_backend
-$ docker-compose run web ./manage.py makemigrations
-$ docker-compose run web ./manage.py migrate
-$ docker-compose up
-```
-
-## To stop backend for this app:
-
-```
-docker-compose down
-```
+Please see IMAGE-CommonDataPool [README.md at GitHub](https://github.com/cnr-ibba/IMAGE-CommonDataPool)
 
 ## Development server
 
@@ -56,7 +26,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build, or `--configuration=test` for a test build
 
 ## Running unit tests
 

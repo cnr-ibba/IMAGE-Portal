@@ -15,7 +15,7 @@ import * as FileSaver from 'file-saver';
 export class FilesComponent implements OnInit, AfterViewInit {
   displayedColumns = ['data_source_id', 'file_name', 'file_size', 'file_checksum', 'file_checksum_method'];
   data = [];
-  downloadLink = 'https://www.image2020genebank.eu/data_portal/backend/file/download/';
+  downloadLink: string;
   resultsLength = 0;
   isLoadingResults = true;
   downloadText = 'Download table';
@@ -28,6 +28,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.titleService.setTitle('IMAGE Files');
+    this.downloadLink = this.tablesService.hostSetting.getHost() + 'file/download/'
   }
 
   ngAfterViewInit(): void {
