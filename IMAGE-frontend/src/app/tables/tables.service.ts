@@ -98,9 +98,6 @@ export class TablesService {
 
   getSpecimens(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CDPSpecimensApi> {
     pageNumber = +pageNumber + 1;
-    if (sortColumn === 'derived_from' || sortColumn === 'organism_part') {
-      sortColumn = `specimens__${sortColumn}`;
-    }
 
     if (sortDirection === 'asc') {
       sortColumn = `-${sortColumn}`;
@@ -108,9 +105,6 @@ export class TablesService {
     let url = this.hostSetting.host + `specimen_short/?page=${pageNumber}&ordering=${sortColumn}`;
     if (filterValue) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'organism_part') {
-          key = 'specimens__organism_part';
-        }
         for (const value of values) {
           url = `${url}&${key}=${value}`;
         }
@@ -168,9 +162,6 @@ export class TablesService {
 
     if (this.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'organism_part') {
-          key = 'specimens__organism_part';
-        }
         for (const value of values) {
           if (url.indexOf('?') !== -1) {
             url = `${url}&${key}=${value}`;

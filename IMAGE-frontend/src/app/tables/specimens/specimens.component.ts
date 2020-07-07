@@ -123,9 +123,6 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'organism_part') {
-          key = 'specimens__organism_part';
-        }
         for (const value of values) {
           if (this.downloadLink.indexOf('?') !== -1) {
             this.downloadLink = `${this.downloadLink}&${key}=${value}`;
