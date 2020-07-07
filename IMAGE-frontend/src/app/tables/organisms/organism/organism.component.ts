@@ -40,10 +40,10 @@ export class OrganismComponent implements OnInit {
         // console.log(data);
 
         // trip on organism coordinates
-        if (this.checkExistence('birth_location_latitude', true) &&
-          this.checkExistence('birth_location_longitude', true)) {
-          this.latitude = data['organisms'][0]['birth_location_latitude'];
-          this.longitude = data['organisms'][0]['birth_location_longitude'];
+        if (this.checkExistence('birth_location_latitude') &&
+          this.checkExistence('birth_location_longitude')) {
+          this.latitude = data['birth_location_latitude'];
+          this.longitude = data['birth_location_longitude'];
           this.baseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
           this.baseMapLayer.setSource(
             new ol.source.OSM({
@@ -88,13 +88,9 @@ export class OrganismComponent implements OnInit {
 
   } // ngOnInit close
 
-  checkExistence(key: string, organism = false) {
-    if (organism) {
-      return typeof this.data !== 'undefined' && this.data['organisms'][0][key] !== '' &&
-        this.data['organisms'][0][key] !== null && this.data['organisms'][0][key].length !== 0;
-    } else {
-      return typeof this.data !== 'undefined' && this.data[key] !== '' && this.data[key].length !== 0;
-    }
+  checkExistence(key: string) {
+    return typeof this.data !== 'undefined' && this.data[key] !== '' &&
+    this.data[key] !== null && this.data[key].length !== 0;
   }
 
   hasError() {
