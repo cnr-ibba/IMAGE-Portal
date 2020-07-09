@@ -5,7 +5,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class HostSetting {
-  host: string = environment.host;
+  host: string = environment.backend;
 
   public getHost(): string {
     return this.host;

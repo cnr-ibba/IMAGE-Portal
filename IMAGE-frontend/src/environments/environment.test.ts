@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  host: 'https://test.image2020genebank.eu/data_portal/backend/'
+  data_portal: 'https://test.image2020genebank.eu/data_portal/',
+  backend: 'https://test.image2020genebank.eu/data_portal/backend/'
 };
 
 /*
