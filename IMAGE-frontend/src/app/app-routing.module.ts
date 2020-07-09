@@ -9,7 +9,6 @@ import {NotExistsPathComponent} from './not-exists-path/not-exists-path.componen
 import {SummaryComponent} from './summary/summary.component';
 import {GisSearchComponent} from "./gis-search/gis-search.component";
 import {BreedersInterfaceComponent} from "./breeders-interface/breeders-interface.component";
-import { RedirectGuard } from './redirect.guard';
 import { environment } from '../environments/environment';
 
 const routes: Routes = [
@@ -26,13 +25,15 @@ const routes: Routes = [
     // prevent angular router catching /data_portal/ location using wildcards
     // path: by defining a Guard I can ensure that this location will be forwwarded
     // to server when accessing data_portal by URL
-    // https://stackoverflow.com/a/51059505/4385116
+    // https://stackoverflow.com/a/40421975/4385116
     path: 'data_portal',
-    canActivate: [RedirectGuard],
-    component: RedirectGuard,
-    data: {
-      externalUrl: 'https://www.image2020genebank.eu/data_portal/'
-    }
+    component: HomeComponent,
+      resolve: {
+        url: 'externalUrlRedirectResolver'
+      },
+      data: {
+        externalUrl: environment.data_portal
+      }
   },
   { path: '**', component: NotExistsPathComponent}
 ];
