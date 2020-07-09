@@ -26,7 +26,6 @@ import { environment } from '../environments/environment';
 import { GisSearchComponent } from './gis-search/gis-search.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BreedersInterfaceComponent } from './breeders-interface/breeders-interface.component';
-import { RedirectGuard } from './redirect.guard';
 
 @NgModule({
   declarations: [
@@ -58,10 +57,7 @@ import { RedirectGuard } from './redirect.guard';
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [
-    TablesService,
-    RedirectGuard
-  ],
+  providers: [TablesService],
   bootstrap: [AppComponent],
   entryComponents: [
     SummaryComponent,
