@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  host: 'http://localhost:26081/data_portal/backend/'
+  host: 'http://localhost:26081/backend/'
 };
 
 /*

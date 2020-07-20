@@ -92,57 +92,55 @@
 
         <mat-divider [inset]="true"></mat-divider>
 
-        <p *ngIf="checkExistence('supplied_breed', true)">
-          <ng-container *ngIf="data['organisms'][0]['dadis'] !== null else noDadis">
+        <p *ngIf="checkExistence('supplied_breed')">
+          <ng-container *ngIf="data['dadis'] !== null else noDadis">
             <b>Supplied breed: </b>
-            <a href="{{ getDADisLink(data['organisms'][0]['dadis']) }}" target="_blank">
-              {{ data['organisms'][0]['supplied_breed'] }}
+            <a href="{{ getDADisLink(data['dadis']) }}" target="_blank">
+              {{ data['supplied_breed'] }}
             </a>
           </ng-container>
           <ng-container>
             <ng-template #noDadis>
-              <b>Supplied breed: </b> {{ data['organisms'][0]['supplied_breed'] }}
+              <b>Supplied breed: </b> {{ data['supplied_breed'] }}
             </ng-template>
         </ng-container>
         </p>
-        <p *ngIf="checkExistence('efabis_breed_country', true)">
-          <b>EFABIS Breed country: </b> {{ data['organisms'][0]['efabis_breed_country'] }}
+        <p *ngIf="checkExistence('efabis_breed_country')">
+          <b>EFABIS Breed country: </b> {{ data['efabis_breed_country'] }}
         </p>
-        <p *ngIf="checkExistence('sex', true)">
-          <b>Sex: </b> <a href="{{generateLink(data['organisms'][0]['sex_ontology'])}}">{{ data['organisms'][0]['sex'] }}</a>
+        <p *ngIf="checkExistence('sex')">
+          <b>Sex: </b> <a href="{{generateLink(data['sex_ontology'])}}">{{ data['sex'] }}</a>
         </p>
-        <p *ngIf="checkExistence('birth_location_accuracy', true)">
-          <b>Birth location accuracy: </b> {{ data['organisms'][0]['birth_location_accuracy'] }}
-        </p>
-
-
-        <p *ngIf="checkExistence('mapped_breed', true)">
-          <b>Mapped breed: </b> <a href="{{generateLink(data['organisms'][0]['mapped_breed_ontology'])}}">
-          {{ data['organisms'][0]['mapped_breed'] }}</a>
-        </p>
-        <p *ngIf="checkExistence('birth_location', true)">
-          <b>Birth location: </b> {{ data['organisms'][0]['birth_location'] }}
+        <p *ngIf="checkExistence('birth_location_accuracy')">
+          <b>Birth location accuracy: </b> {{ data['birth_location_accuracy'] }}
         </p>
 
-        <p *ngIf="checkExistence('birth_date', true)">
-          <b>Birth date: </b> {{data['organisms'][0]['birth_date']}} {{data['organisms'][0]['birth_date_unit']}}
+        <p *ngIf="checkExistence('mapped_breed')">
+          <b>Mapped breed: </b> <a href="{{generateLink(data['mapped_breed_ontology'])}}">{{ data['mapped_breed'] }}</a>
+        </p>
+        <p *ngIf="checkExistence('birth_location')">
+          <b>Birth location: </b> {{ data['birth_location'] }}
         </p>
 
-        <p *ngIf="checkExistence('birth_location_longitude', true)">
-          <b>Birth location longitude: </b> {{ data['organisms'][0]['birth_location_longitude'] }}
-          {{ data['organisms'][0]['birth_location_longitude_unit'] }}
+        <p *ngIf="checkExistence('birth_date')">
+          <b>Birth date: </b> {{data['birth_date']}} {{data['birth_date_unit']}}
         </p>
-        <p *ngIf="checkExistence('birth_location_latitude', true)">
-          <b>Birth location latitude: </b> {{ data['organisms'][0]['birth_location_latitude'] }}
-          {{ data['organisms'][0]['birth_location_latitude_unit'] }}
+
+        <p *ngIf="checkExistence('birth_location_longitude')">
+          <b>Birth location longitude: </b> {{ data['birth_location_longitude'] }}
+          {{ data['birth_location_longitude_unit'] }}
+        </p>
+        <p *ngIf="checkExistence('birth_location_latitude')">
+          <b>Birth location latitude: </b> {{ data['birth_location_latitude'] }}
+          {{ data['birth_location_latitude_unit'] }}
         </p>
         <div id="map" class="map"></div>
         <p></p>
 
 
-        <p *ngIf="checkExistence('specimens', true)">
+        <p *ngIf="checkExistence('specimens')">
           <b>Specimens: </b>
-          <a [routerLink]="['../../', 'specimen', specimen]" *ngFor="let specimen of data['organisms'][0]['specimens']">{{specimen}} </a>
+          <a [routerLink]="['../../', 'specimen', specimen]" *ngFor="let specimen of data['specimens']">{{specimen}} </a>
         </p>
       </mat-card-content>
     </mat-card>

@@ -74,9 +74,6 @@ export class TablesService {
 
   getOrganisms(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CDPOrganismsApi> {
     pageNumber = +pageNumber + 1;
-    if (sortColumn === 'supplied_breed' || sortColumn === 'sex') {
-      sortColumn = `organisms__${sortColumn}`;
-    }
 
     if (sortDirection === 'asc') {
       sortColumn = `-${sortColumn}`;
@@ -84,15 +81,12 @@ export class TablesService {
     let url = this.hostSetting.host + `organism_short/?page=${pageNumber}&ordering=${sortColumn}`;
     if (filterValue) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'sex') {
-          key = `organisms__${key}`;
-        }
         if (key === 'breed') {
-          key = 'organisms__supplied_breed';
+          key = 'supplied_breed';
         }
         if (key === 'country') {
           // use the same name of the API
-          key = 'organisms__efabis_breed_country';
+          key = 'efabis_breed_country';
         }
         for (const value of values) {
           url = `${url}&${key}=${value}`;
@@ -104,9 +98,6 @@ export class TablesService {
 
   getSpecimens(sortColumn, sortDirection, pageNumber, filterValue: {[key: string]: []}): Observable<CDPSpecimensApi> {
     pageNumber = +pageNumber + 1;
-    if (sortColumn === 'derived_from' || sortColumn === 'organism_part') {
-      sortColumn = `specimens__${sortColumn}`;
-    }
 
     if (sortDirection === 'asc') {
       sortColumn = `-${sortColumn}`;
@@ -114,9 +105,6 @@ export class TablesService {
     let url = this.hostSetting.host + `specimen_short/?page=${pageNumber}&ordering=${sortColumn}`;
     if (filterValue) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'organism_part') {
-          key = 'specimens__organism_part';
-        }
         for (const value of values) {
           url = `${url}&${key}=${value}`;
         }
@@ -140,15 +128,12 @@ export class TablesService {
 
     if (this.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'sex') {
-          key = `organisms__${key}`;
-        }
         if (key === 'breed') {
-          key = 'organisms__supplied_breed';
+          key = 'supplied_breed';
         }
         if (key === 'country') {
           // use the same name of the API
-          key = 'organisms__efabis_breed_country';
+          key = 'efabis_breed_country';
         }
         for (const value of values) {
           if (url.indexOf('?') !== -1) {
@@ -177,9 +162,6 @@ export class TablesService {
 
     if (this.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'organism_part') {
-          key = 'specimens__organism_part';
-        }
         for (const value of values) {
           if (url.indexOf('?') !== -1) {
             url = `${url}&${key}=${value}`;
