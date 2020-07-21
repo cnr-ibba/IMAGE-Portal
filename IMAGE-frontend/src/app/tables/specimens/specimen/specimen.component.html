@@ -94,67 +94,67 @@
 
 
         <p *ngIf="checkExistence('derived_from', true)">
-          <b>Derived from: </b> <a [routerLink]="['/tables/organism', data['specimens'][0]['derived_from']]">
-          {{ data['specimens'][0]['derived_from'] }}
+          <b>Derived from: </b> <a [routerLink]="['/tables/organism', data['derived_from']]">
+          {{ data['derived_from'] }}
         </a>
         </p>
 
         <p *ngIf="checkExistence('collection_place_accuracy', true)">
-          <b>Collection place accuracy: </b> {{ data['specimens'][0]['collection_place_accuracy'] }}
+          <b>Collection place accuracy: </b> {{ data['collection_place_accuracy'] }}
         </p>
 
         <p *ngIf="checkExistence('organism_part', true)">
           <b>Organism part: </b>
-          <a href="{{ generateLink(data['specimens'][0]['organism_part_ontology']) }}">{{ data['specimens'][0]['organism_part'] }}</a>
+          <a href="{{ generateLink(data['organism_part_ontology']) }}">{{ data['organism_part'] }}</a>
         </p>
 
         <p *ngIf="checkExistence('specimen_collection_protocol', true)">
-          <b>Specimen collection protocol: </b> {{ data['specimens'][0]['specimen_collection_protocol'] }}
+          <b>Specimen collection protocol: </b> {{ data['specimen_collection_protocol'] }}
         </p>
 
         <p *ngIf="checkExistence('collection_date', true)">
-          <b>Collection date: </b> {{ data['specimens'][0]['collection_date'] }}
-          {{ data['specimens'][0]['collection_date_unit'] }}
+          <b>Collection date: </b> {{ data['collection_date'] }}
+          {{ data['collection_date_unit'] }}
         </p>
         <p *ngIf="checkExistence('collection_place_latitude', true)">
-          <b>Collection place latitude: </b> {{ data['specimens'][0]['collection_place_latitude'] }}
-          {{ data['specimens'][0]['collection_place_latitude_unit'] }}
+          <b>Collection place latitude: </b> {{ data['collection_place_latitude'] }}
+          {{ data['collection_place_latitude_unit'] }}
         </p>
         <p *ngIf="checkExistence('collection_place_longitude', true)">
-          <b>Collection place longitude: </b> {{ data['specimens'][0]['collection_place_longitude'] }}
-          {{ data['specimens'][0]['collection_place_longitude_unit'] }}
+          <b>Collection place longitude: </b> {{ data['collection_place_longitude'] }}
+          {{ data['collection_place_longitude_unit'] }}
         </p>
         <p *ngIf="checkExistence('collection_place', true)">
-          <b>Collection place: </b> {{ data['specimens'][0]['collection_place'] }}
+          <b>Collection place: </b> {{ data['collection_place'] }}
         </p>
 
         <div id="map" class="map"></div>
         <p></p>
         <p *ngIf="checkExistence('developmental_stage', true)">
           <b>Developmental stage: </b>
-          <a href="{{ generateLink(data['specimens'][0]['developmental_stage_ontology']) }}">{{ data['specimens'][0]['developmental_stage'] }}</a>
+          <a href="{{ generateLink(data['developmental_stage_ontology']) }}">{{ data['developmental_stage'] }}</a>
         </p>
         <p *ngIf="checkExistence('physiological_stage', true)">
           <b>Physiological stage: </b>
-          <a href="{{ generateLink(data['specimens'][0]['physiological_stage_ontology']) }}">{{ data['specimens'][0]['physiological_stage'] }}</a>
+          <a href="{{ generateLink(data['physiological_stage_ontology']) }}">{{ data['physiological_stage'] }}</a>
         </p>
         <p *ngIf="checkExistence('availability', true)">
           <b>Availability: </b>
-          <a href="{{ generateLink(data['specimens'][0]['availability']) }}">{{ data['specimens'][0]['availability'] }}</a>
+          <a href="{{ generateLink(data['availability']) }}">{{ data['availability'] }}</a>
         </p>
         <p *ngIf="checkExistence('sample_storage', true)">
-          <b>Sample storage: </b> {{ data['specimens'][0]['sample_storage'] }}
+          <b>Sample storage: </b> {{ data['sample_storage'] }}
         </p>
         <p *ngIf="checkExistence('sample_storage_processing', true)">
-          <b>Sample storage processing: </b> {{ data['specimens'][0]['sample_storage_processing'] }}
+          <b>Sample storage processing: </b> {{ data['sample_storage_processing'] }}
         </p>
         <p *ngIf="checkExistence('animal_age_at_collection', true)">
-          <b>Animal age at collection: </b> {{ data['specimens'][0]['animal_age_at_collection'] }}
-          {{ data['specimens'][0]['animal_age_at_collection_unit'] }}
+          <b>Animal age at collection: </b> {{ data['animal_age_at_collection'] }}
+          {{ data['animal_age_at_collection_unit'] }}
         </p>
         <p *ngIf="checkExistence('sampling_to_preparation_interval', true)">
-          <b>Sampling to preparation interval: </b> {{ data['specimens'][0]['sampling_to_preparation_interval'] }}
-          {{ data['specimens'][0]['sampling_to_preparation_interval_unit'] }}
+          <b>Sampling to preparation interval: </b> {{ data['sampling_to_preparation_interval'] }}
+          {{ data['sampling_to_preparation_interval_unit'] }}
         </p>
 
         <mat-divider [inset]="true"></mat-divider>

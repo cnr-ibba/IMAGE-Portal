@@ -42,8 +42,8 @@ export class SpecimenComponent implements OnInit {
         this.data = data;
         if (this.checkExistence('collection_place_latitude', true) &&
           this.checkExistence('collection_place_longitude', true)) {
-          this.latitude = data['specimens'][0]['collection_place_latitude'];
-          this.longitude = data['specimens'][0]['collection_place_longitude'];
+          this.latitude = data['collection_place_latitude'];
+          this.longitude = data['collection_place_longitude'];
           this.baseMapLayer = new ol.layer.Tile({source: new ol.source.OSM()});
           this.baseMapLayer.setSource(
             new ol.source.OSM({
@@ -102,8 +102,8 @@ export class SpecimenComponent implements OnInit {
 
   checkExistence(key: string, organism = false) {
     if (organism) {
-      return typeof this.data !== 'undefined' && this.data['specimens'][0][key] !== '' &&
-        this.data['specimens'][0][key] !== null && this.data['specimens'][0][key].length !== 0;
+      return typeof this.data !== 'undefined' && this.data[key] !== '' &&
+        this.data[key] !== null && this.data[key].length !== 0;
     } else {
       return typeof this.data !== 'undefined' && this.data[key] !== '' && this.data[key].length !== 0;
     }

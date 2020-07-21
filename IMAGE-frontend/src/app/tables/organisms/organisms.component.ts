@@ -127,11 +127,8 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
-        if (key === 'sex') {
-          key = `organisms__${key}`;
-        }
         if (key === 'breed') {
-          key = 'organisms__supplied_breed';
+          key = 'supplied_breed';
         }
         for (const value of values) {
           if (this.downloadLink.indexOf('?') !== -1) {
