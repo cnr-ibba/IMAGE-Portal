@@ -8,7 +8,7 @@ import {Title} from '@angular/platform-browser';
 import { ChooseSpeciesComponent } from './choose-species/choose-species.component';
 
 
-// is this openlayer?
+// this is openlayer. Required in order to use an external JS library, defined in index.html
 declare var ol: any;
 
 @Component({

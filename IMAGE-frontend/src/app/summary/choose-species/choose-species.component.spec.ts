@@ -1,5 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
+import { MaterialModule } from 'src/app/material.module';
 import { ChooseSpeciesComponent } from './choose-species.component';
 
 describe('ChooseSpeciesComponent', () => {
@@ -8,7 +11,17 @@ describe('ChooseSpeciesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ChooseSpeciesComponent ]
+      imports: [
+        BrowserAnimationsModule,
+        MaterialModule,
+      ],
+      declarations: [
+        ChooseSpeciesComponent,
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] },
+      ]
     })
     .compileComponents();
   }));

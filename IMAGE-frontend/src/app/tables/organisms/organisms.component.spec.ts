@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { MaterialModule } from 'src/app/material.module';
 import { OrganismsComponent } from './organisms.component';
+import { FiltersComponent } from '../filters/filters.component';
 
 describe('OrganismsComponent', () => {
   let component: OrganismsComponent;
@@ -8,7 +13,16 @@ describe('OrganismsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OrganismsComponent ]
+      imports: [
+        RouterTestingModule,
+        HttpClientModule,
+        BrowserAnimationsModule,
+        MaterialModule
+      ],
+      declarations: [
+        OrganismsComponent,
+        FiltersComponent
+      ]
     })
     .compileComponents();
   }));

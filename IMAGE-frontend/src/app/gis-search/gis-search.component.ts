@@ -5,6 +5,7 @@ import {TablesService} from '../tables/tables.service';
 import {Title} from '@angular/platform-browser';
 
 declare var ol: any;
+
 @Component({
   selector: 'app-gis-search',
   templateUrl: './gis-search.component.html',
