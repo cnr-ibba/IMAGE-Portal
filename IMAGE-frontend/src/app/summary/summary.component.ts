@@ -1,17 +1,16 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {TablesService} from '../tables/tables.service';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
+import {MatDialog} from '@angular/material/dialog';
+import { ChartOptions } from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
-import {ObjectUnsubscribedError, Subject} from 'rxjs';
+import {Subject} from 'rxjs';
 import {Title} from '@angular/platform-browser';
+import { ChooseSpeciesComponent } from './choose-species/choose-species.component';
 
-export interface DialogData {
-  species: any;
-  active_specie: string;
-}
 
+// is this openlayer?
 declare var ol: any;
+
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
@@ -208,7 +207,7 @@ export class SummaryComponent implements OnInit {
             radius: 4
           })
         })
-      })
+      });
 
       this.collectionMap.addLayer(coordinatesVector);
       this.collectionMap.getView().setCenter(ol.proj.fromLonLat([11.518580, 48.164689]));
@@ -257,33 +256,6 @@ export class SummaryComponent implements OnInit {
       }
     });
 
-  }
-
-}
-
-@Component({
-  selector: 'app-choose-species',
-  templateUrl: 'choose-species.html',
-  styleUrls: ['./choose-species.css']
-})
-export class ChooseSpeciesComponent {
-
-  constructor(
-    public dialogRef: MatDialogRef<ChooseSpeciesComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  onSpecieClick(data: DialogData, specie: string) {
-    data.active_specie = specie;
-  }
-
-  chooseClass(data: DialogData, specie: string) {
-    if (data.active_specie === specie) {
-      return 'active-specie';
-    }
   }
 
 }

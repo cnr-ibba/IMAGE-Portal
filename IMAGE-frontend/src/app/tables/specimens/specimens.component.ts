@@ -122,7 +122,7 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
     this.downloadLink = this.tablesService.hostSetting.getHost() + 'specimen/download/';
 
     if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
-      for (let [key, values] of Object.entries(filterValue)) {
+      for (const [key, values] of Object.entries(filterValue)) {
         for (const value of values) {
           if (this.downloadLink.indexOf('?') !== -1) {
             this.downloadLink = `${this.downloadLink}&${key}=${value}`;

@@ -98,7 +98,7 @@ export class GisSearchComponent implements OnInit {
   }
 
   showTables() {
-    let results = [];
+    const results = [];
 
     // https://stackoverflow.com/a/519157
     if (typeof this.dataSourceOrganism !== 'undefined' || typeof this.dataSourceSpecimen !== 'undefined') {

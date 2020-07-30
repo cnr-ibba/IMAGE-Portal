@@ -28,7 +28,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.titleService.setTitle('IMAGE Files');
-    this.downloadLink = this.tablesService.hostSetting.getHost() + 'file/download/'
+    this.downloadLink = this.tablesService.hostSetting.getHost() + 'file/download/';
   }
 
   ngAfterViewInit(): void {
