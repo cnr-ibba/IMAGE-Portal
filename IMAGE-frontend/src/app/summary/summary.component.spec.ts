@@ -1,5 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
+import { ChartsModule } from 'ng2-charts';
+
+import { MaterialModule } from '../material.module';
 import { SummaryComponent } from './summary.component';
 
 describe('SummaryComponent', () => {
@@ -8,6 +12,11 @@ describe('SummaryComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+        MaterialModule,
+        ChartsModule
+      ],
       declarations: [ SummaryComponent ]
     })
     .compileComponents();

@@ -1,34 +1,33 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 import { MaterialModule } from 'src/app/material.module';
-import { SpecimensComponent } from './specimens.component';
-import { FiltersComponent } from '../filters/filters.component';
+import { ChooseSpeciesComponent } from './choose-species.component';
 
-describe('SpecimensComponent', () => {
-  let component: SpecimensComponent;
-  let fixture: ComponentFixture<SpecimensComponent>;
+describe('ChooseSpeciesComponent', () => {
+  let component: ChooseSpeciesComponent;
+  let fixture: ComponentFixture<ChooseSpeciesComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
-        HttpClientModule,
         BrowserAnimationsModule,
-        MaterialModule
+        MaterialModule,
       ],
       declarations: [
-        SpecimensComponent,
-        FiltersComponent
+        ChooseSpeciesComponent,
+      ],
+      providers: [
+        { provide: MatDialogRef, useValue: {} },
+        { provide: MAT_DIALOG_DATA, useValue: [] },
       ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SpecimensComponent);
+    fixture = TestBed.createComponent(ChooseSpeciesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

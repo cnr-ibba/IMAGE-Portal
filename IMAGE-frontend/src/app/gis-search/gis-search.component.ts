@@ -5,6 +5,7 @@ import {TablesService} from '../tables/tables.service';
 import {Title} from '@angular/platform-browser';
 
 declare var ol: any;
+
 @Component({
   selector: 'app-gis-search',
   templateUrl: './gis-search.component.html',
@@ -98,7 +99,7 @@ export class GisSearchComponent implements OnInit {
   }
 
   showTables() {
-    let results = [];
+    const results = [];
 
     // https://stackoverflow.com/a/519157
     if (typeof this.dataSourceOrganism !== 'undefined' || typeof this.dataSourceSpecimen !== 'undefined') {

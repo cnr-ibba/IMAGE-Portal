@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { MaterialModule } from '../material.module';
 import { BreedersInterfaceComponent } from './breeders-interface.component';
 
 describe('BreedersInterfaceComponent', () => {
@@ -8,6 +9,9 @@ describe('BreedersInterfaceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [
+        MaterialModule,
+      ],
       declarations: [ BreedersInterfaceComponent ]
     })
     .compileComponents();

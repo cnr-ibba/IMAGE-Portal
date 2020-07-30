@@ -1,0 +1,45 @@
+
+dist: bionic
+sudo: false
+
+branches:
+  only:
+  - master
+
+language: node_js
+node_js:
+  - "10"
+
+addons:
+  apt:
+    sources:
+      - google-chrome
+    packages:
+      - google-chrome-stable
+
+cache:
+  directories:
+     - ./IMAGE-frontend/node_modules
+
+before_install:
+  - cd IMAGE-frontend
+
+install:
+  - npm install
+
+script:
+  # Runs linting tools on Angular app code in a given project folder
+  - ng lint
+  # executing tests
+  - ng test --no-watch --no-progress --browsers=ChromeHeadlessCI
+  - ng e2e --protractor-config=e2e/protractor-ci.conf.js
+  # Build site for github pages
+  - ng build --prod --base-href https://https://cnr-ibba.github.io/IMAGE-Portal/
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN
+  local_dir: dist/IMAGE-frontend/
+  on:
+    branch: master

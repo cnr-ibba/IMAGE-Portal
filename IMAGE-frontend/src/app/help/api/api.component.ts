@@ -29,7 +29,7 @@ export class ApiComponent implements OnInit {
       url += `?format=${format}`;
     }
 
-    return url
+    return url;
   }
 
   getOrganism(id?: string, format?: string) {

@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {Observable, Subject, throwError} from 'rxjs';
 import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {HostSetting} from './host-setting';
-import {catchError, map, retry} from 'rxjs/operators';
 
 export interface CDPOrganismsApi {
   results: OrganismsApi[];
@@ -104,7 +103,7 @@ export class TablesService {
     }
     let url = this.hostSetting.host + `specimen_short/?page=${pageNumber}&ordering=${sortColumn}`;
     if (filterValue) {
-      for (let [key, values] of Object.entries(filterValue)) {
+      for (const [key, values] of Object.entries(filterValue)) {
         for (const value of values) {
           url = `${url}&${key}=${value}`;
         }
@@ -161,7 +160,7 @@ export class TablesService {
     let url = this.hostSetting.host + 'specimen/summary/';
 
     if (this.checkFiltersEmpty(filterValue) === false) {
-      for (let [key, values] of Object.entries(filterValue)) {
+      for (const [key, values] of Object.entries(filterValue)) {
         for (const value of values) {
           if (url.indexOf('?') !== -1) {
             url = `${url}&${key}=${value}`;

@@ -6,7 +6,7 @@ import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
-import {saveAs} from "file-saver";
+import {saveAs} from 'file-saver';
 
 @Component({
   selector: 'app-organisms',
@@ -123,7 +123,7 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   constructDownloadLink(filterValue?: {[key: string]: []}) {
-    this.downloadLink = this.tablesService.hostSetting.getHost() + "organism/download/";
+    this.downloadLink = this.tablesService.hostSetting.getHost() + 'organism/download/';
 
     if (this.tablesService.checkFiltersEmpty(filterValue) === false) {
       for (let [key, values] of Object.entries(filterValue)) {
