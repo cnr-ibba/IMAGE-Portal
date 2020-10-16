@@ -5,9 +5,12 @@ export class DADisSpecie {
 }
 
 export class DADis {
-  dadis_url: string;
-  efabis_breed_country: string;
+  url: string;
   species: DADisSpecie;
   supplied_breed: string;
-  url: string;
+  country: string;
+  most_common_name: string;
+  transboundary_name: string;
+  other_name: string[];
+  dadis_url: string;
 }

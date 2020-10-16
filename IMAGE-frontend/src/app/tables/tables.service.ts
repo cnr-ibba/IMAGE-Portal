@@ -196,17 +196,17 @@ export class TablesService {
   }
 
   getOrganism(organismId: string) {
-    const url = this.hostSetting.host + 'organism/' + organismId;
+    const url = `${this.hostSetting.host}organism/${organismId}/`;
     return this.http.get(url);
   }
 
   getSpecimen(specimenId: string) {
-    const url = this.hostSetting.host + 'specimen/' + specimenId;
+    const url = `${this.hostSetting.host}specimen/${specimenId}/`;
     return this.http.get(url);
   }
 
   getFile(specimenId: string) {
-    const url = this.hostSetting.host + 'file/' + specimenId;
+    const url = `${this.hostSetting.host}file/${specimenId}/`;
     return this.http.get(url);
   }
 
