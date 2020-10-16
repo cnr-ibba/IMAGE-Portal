@@ -5,6 +5,7 @@ sudo: false
 branches:
   only:
   - master
+  - devel
 
 language: node_js
 node_js:
