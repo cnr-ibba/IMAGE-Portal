@@ -5,6 +5,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { LeafletMarkerClusterModule } from "@asymmetrik/ngx-leaflet-markercluster";
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 
 import {MaterialModule} from './material.module';
 import {AppRoutingModule} from './app-routing.module';
@@ -57,6 +58,7 @@ import { BreedersInterfaceComponent } from './breeders-interface/breeders-interf
     HttpClientModule,
     LeafletModule,
     LeafletMarkerClusterModule,
+    LeafletDrawModule,
     ChartsModule,
     CookieLawModule,
     FormsModule,
