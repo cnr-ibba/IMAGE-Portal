@@ -16,7 +16,7 @@ interface Organism {
 @Component({
   selector: 'app-organisms',
   templateUrl: './organisms.component.html',
-  styleUrls: ['./organisms.component.scss']
+  styleUrls: ['./organisms.component.css']
 })
 export class OrganismsComponent implements OnInit, AfterViewInit {
   // I will receive this data using property binding from the component which is

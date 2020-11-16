@@ -30,7 +30,7 @@ describe('SpecimensComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create (for gis)', () => {
     expect(component).toBeTruthy();
   });
 

@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
+import { environment } from 'src/environments/environment';
+
 import { geoJSON, LatLng, circleMarker, GeoJSON } from 'leaflet';
 import { Feature } from 'geojson';
 
@@ -151,7 +153,7 @@ export class CdpService {
   }
 
   getOrganisms() {
-    let url = 'https://api.image2020genebank.eu/backend/organism.geojson/?page_size=1000';
+    let url = environment.host + 'organism.geojson/?page_size=1000';
 
     // console.log([lat, lng, rad]);
 
@@ -202,7 +204,7 @@ export class CdpService {
   }
 
   getSpecimens() {
-    let url = 'https://api.image2020genebank.eu/backend/specimen.geojson/?page_size=1000';
+    let url = environment.host + 'specimen.geojson/?page_size=1000';
 
     if (this.selectedCircle.lat && this.selectedCircle.lng && this.selectedCircle.rad) {
       const lat = this.selectedCircle.lat;

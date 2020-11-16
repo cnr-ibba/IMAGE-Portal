@@ -9,6 +9,7 @@ import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 
 import { MaterialModule } from '../material.module';
 import { GisSearchComponent } from './gis-search.component';
+import { GisSearchModule } from './gis-search.module';
 
 describe('GisSearchComponent', () => {
   let component: GisSearchComponent;
@@ -26,6 +27,7 @@ describe('GisSearchComponent', () => {
         LeafletModule,
         LeafletMarkerClusterModule,
         LeafletDrawModule,
+        GisSearchModule
       ]
     })
     .compileComponents();
