@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from "@asymmetrik/ngx-leaflet-markercluster";
+
 import {MaterialModule} from './material.module';
 import {AppRoutingModule} from './app-routing.module';
 
@@ -52,6 +55,8 @@ import { BreedersInterfaceComponent } from './breeders-interface/breeders-interf
     AppRoutingModule,
     Angular2CsvModule,
     HttpClientModule,
+    LeafletModule,
+    LeafletMarkerClusterModule,
     ChartsModule,
     CookieLawModule,
     FormsModule,
