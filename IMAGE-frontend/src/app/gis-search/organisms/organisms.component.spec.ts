@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, ViewChild } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { MaterialModule } from 'src/app/material/material.module';
+import { MaterialModule } from 'src/app/material.module';
 import { OrganismsComponent } from './organisms.component';
 
 import { GeoOrganism } from '../cdp.service';
@@ -39,7 +39,7 @@ describe('OrganismsComponent', () => {
     template: `<app-organisms [geoOrganisms]="organismsData"></app-organisms>`
   })
   class TestOrganismsComponent {
-    @ViewChild(OrganismsComponent)
+    @ViewChild(OrganismsComponent, {static: false})
     public organismsComponent: OrganismsComponent;
 
     organismsData: GeoOrganism[] = [];

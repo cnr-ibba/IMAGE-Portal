@@ -29,6 +29,7 @@ import {CookieLawModule} from 'angular2-cookie-law';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GisSearchComponent } from './gis-search/gis-search.component';
+import { GisSearchModule } from './gis-search/gis-search.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BreedersInterfaceComponent } from './breeders-interface/breeders-interface.component';
 
@@ -59,6 +60,7 @@ import { BreedersInterfaceComponent } from './breeders-interface/breeders-interf
     LeafletModule,
     LeafletMarkerClusterModule,
     LeafletDrawModule,
+    GisSearchModule,
     ChartsModule,
     CookieLawModule,
     FormsModule,

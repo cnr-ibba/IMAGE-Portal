@@ -26,8 +26,8 @@ export class OrganismsComponent implements OnInit, AfterViewInit {
   // this will be the selected item that I want to display on map
   @Output() selectedOrganism = new EventEmitter<GeoOrganism>();
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   public displayedColumns = ['id', 'species', 'supplied_breed', 'sex', 'show_on_map', 'details'];
   public dataSource = new MatTableDataSource<Organism>();

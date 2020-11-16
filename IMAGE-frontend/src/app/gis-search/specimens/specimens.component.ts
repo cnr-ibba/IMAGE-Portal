@@ -26,8 +26,8 @@ export class SpecimensComponent implements OnInit, AfterViewInit {
   // this will be the selected item that I want to display on map
   @Output() selectedSpecimen = new EventEmitter<GeoSpecimen>();
 
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: false}) sort: MatSort;
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
 
   public displayedColumns = ['id', 'species', 'organism_part', 'derived_from', 'show_on_map', 'details'];
   public dataSource = new MatTableDataSource<Specimen>();

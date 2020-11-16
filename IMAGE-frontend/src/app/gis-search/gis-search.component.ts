@@ -34,14 +34,14 @@ import {
 } from './cdp.service';
 
 @Component({
-  selector: 'app-image-gis-search',
-  templateUrl: './image-gis-search.component.html',
-  styleUrls: ['./image-gis-search.component.scss']
+  selector: 'app-gis-search',
+  templateUrl: './gis-search.component.html',
+  styleUrls: ['./gis-search.component.scss']
 })
-export class ImageGisSearchComponent implements OnInit {
+export class GisSearchComponent implements OnInit {
   // this will listen for the sideNav local reference on html template. I can
   // manage the mat-sidenav using this property
-  @ViewChild('sideNav') public sideNav: MatSidenav;
+  @ViewChild('sideNav', {static: false}) public sideNav: MatSidenav;
 
   // start with angular material forms
   filterForm: FormGroup;
