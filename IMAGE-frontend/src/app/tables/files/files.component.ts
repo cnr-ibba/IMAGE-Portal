@@ -2,8 +2,8 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort} from '@angular/material';
 import {Title} from '@angular/platform-browser';
 import {TablesService} from '../tables.service';
-import {merge, of as observableOf} from 'rxjs';
-import {catchError, map, startWith, switchMap} from 'rxjs/operators';
+import {merge} from 'rxjs';
+import {map, startWith, switchMap} from 'rxjs/operators';
 import {saveAs} from 'file-saver';
 import * as FileSaver from 'file-saver';
 
@@ -83,10 +83,15 @@ export class FilesComponent implements OnInit, AfterViewInit {
 
   downloadData() {
     this.downloadText = 'Preparing data...';
-    this.tablesService.export(this.downloadLink).subscribe(data => {
-      this.downloadText = 'Download data';
-      saveAs(data, 'files.txt');
-    });
+    this.tablesService.export(this.downloadLink).subscribe(
+      data => {
+        this.downloadText = 'Download data';
+        saveAs(data, 'files.txt');
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
   }
 
   downloadFiles() {
