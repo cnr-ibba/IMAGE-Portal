@@ -71,9 +71,14 @@ export class SpecimensComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAggregations(filterData: any) {
-    this.tablesService.getSpecimensSummary(filterData).subscribe(data => {
-      this.tablesService.specimenSubject.next(data);
-    });
+    this.tablesService.getSpecimensSummary(filterData).subscribe(
+      data => {
+        this.tablesService.specimenSubject.next(data);
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
   }
 
   ngAfterViewInit(): void {

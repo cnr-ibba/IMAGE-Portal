@@ -79,7 +79,8 @@ export class OrganismComponent implements OnInit {
         } // if - check on coordinates
       }, // subscription - how to do
       error => {
-        this.error = error;
+        // get error message as a string
+        this.error = `Couldn't find organism '${this.id}': ${error.message}`;
         this.snackBar.open(this.error, 'close', {
           duration: 5000,
         });
