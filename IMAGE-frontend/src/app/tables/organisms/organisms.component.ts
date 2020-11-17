@@ -75,9 +75,14 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAggregations(filterData: any) {
-    this.tablesService.getOrganismsSummary(filterData).subscribe(data => {
-      this.tablesService.organismSubject.next(data);
-    });
+    this.tablesService.getOrganismsSummary(filterData).subscribe(
+      data => {
+        this.tablesService.organismSubject.next(data);
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
   }
 
   ngAfterViewInit(): void {

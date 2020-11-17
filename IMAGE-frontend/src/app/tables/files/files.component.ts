@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, MatSort} from '@angular/material';
 import {Title} from '@angular/platform-browser';
-import {FilesApi, TablesService} from '../tables.service';
+import {TablesService} from '../tables.service';
 import {merge, of as observableOf} from 'rxjs';
 import {catchError, map, startWith, switchMap} from 'rxjs/operators';
 import {saveAs} from 'file-saver';
@@ -34,6 +34,7 @@ export class FilesComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
@@ -46,31 +47,34 @@ export class FilesComponent implements OnInit, AfterViewInit {
           this.resultsLength = data.count;
 
           return data.results;
-        }),
-        catchError(() => {
-          this.isLoadingResults = false;
-          return observableOf([]);
         })
-      ).subscribe(data => {
-        const results = [];
-      for (const record of data) {
-        for (let i = 0; i < record['file_name'].length; i++) {
-          if (this.urls.indexOf(record['file_url'][i]) === -1) {
-            this.urls.push(this.generateLink(record['file_url'][i]));
+      ).subscribe(
+        data => {
+          const results = [];
+          for (const record of data) {
+            for (let i = 0; i < record['file_name'].length; i++) {
+              if (this.urls.indexOf(record['file_url'][i]) === -1) {
+                this.urls.push(this.generateLink(record['file_url'][i]));
+              }
+              const tmp = {};
+              tmp['data_source_id'] = record['data_source_id'];
+              tmp['file_name'] = record['file_name'][i];
+              tmp['file_size'] = record['file_size'][i];
+              tmp['file_url'] = record['file_url'][i];
+              tmp['file_checksum'] = record['file_checksum'][i];
+              tmp['file_checksum_method'] = record['file_checksum_method'][i];
+              results.push(tmp);
+            }
           }
-          const tmp = {};
-          tmp['data_source_id'] = record['data_source_id'];
-          tmp['file_name'] = record['file_name'][i];
-          tmp['file_size'] = record['file_size'][i];
-          tmp['file_url'] = record['file_url'][i];
-          tmp['file_checksum'] = record['file_checksum'][i];
-          tmp['file_checksum_method'] = record['file_checksum_method'][i];
-          results.push(tmp);
+
+          this.data = results;
+          // console.log(this.urls);
+        },
+        error => {
+          this.isLoadingResults = false;
+          console.log(error.message);
         }
-      }
-      this.data = results;
-      console.log(this.urls);
-    });
+      );
   }
 
   generateLink(url: string) {

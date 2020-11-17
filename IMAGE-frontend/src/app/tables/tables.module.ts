@@ -5,22 +5,18 @@ import {TablesRoutingModule} from './tables-routing.module';
 
 import { OrganismsComponent } from './organisms/organisms.component';
 import { SpecimensComponent } from './specimens/specimens.component';
-import { ExperimentsComponent } from './experiments/experiments.component';
 import { OrganismComponent } from './organisms/organism/organism.component';
 import { SpecimenComponent } from './specimens/specimen/specimen.component';
 import { FiltersComponent } from './filters/filters.component';
-import { ExportComponent } from './export/export.component';
 import { FilesComponent } from './files/files.component';
 
 @NgModule({
   declarations: [
     OrganismsComponent,
     SpecimensComponent,
-    ExperimentsComponent,
     OrganismComponent,
     SpecimenComponent,
     FiltersComponent,
-    ExportComponent,
     FilesComponent
   ],
   imports: [
