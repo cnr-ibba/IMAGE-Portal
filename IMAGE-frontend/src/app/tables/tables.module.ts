@@ -8,7 +8,6 @@ import { SpecimensComponent } from './specimens/specimens.component';
 import { OrganismComponent } from './organisms/organism/organism.component';
 import { SpecimenComponent } from './specimens/specimen/specimen.component';
 import { FiltersComponent } from './filters/filters.component';
-import { ExportComponent } from './export/export.component';
 import { FilesComponent } from './files/files.component';
 
 @NgModule({
@@ -18,7 +17,6 @@ import { FilesComponent } from './files/files.component';
     OrganismComponent,
     SpecimenComponent,
     FiltersComponent,
-    ExportComponent,
     FilesComponent
   ],
   imports: [
