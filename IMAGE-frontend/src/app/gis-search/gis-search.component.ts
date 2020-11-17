@@ -36,7 +36,7 @@ import {
 @Component({
   selector: 'app-gis-search',
   templateUrl: './gis-search.component.html',
-  styleUrls: ['./gis-search.component.scss']
+  styleUrls: ['./gis-search.component.css']
 })
 export class GisSearchComponent implements OnInit {
   // this will listen for the sideNav local reference on html template. I can

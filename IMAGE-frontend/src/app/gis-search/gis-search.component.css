@@ -1,0 +1,25 @@
+
+mat-sidenav-container {
+  margin-left: 35px;
+  margin-right: 35px;
+}
+
+.map {
+  height: 55vh;
+  padding: 0;
+  outline: 1px solid black;
+}
+
+mat-expansion-panel {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.button {
+  width: 100%;
+}
+
+mat-expansion-panel {
+  margin-left: 35px;
+  margin-right: 35px;
+}
