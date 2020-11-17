@@ -362,46 +362,50 @@ export class GisSearchComponent implements OnInit {
       this.cdpService.getSpecimens()
     );
 
-    CDPfetch.subscribe((data) => {
-      // deal with organism data
-      this.readOrganisms(data[0]);
+    CDPfetch.subscribe(
+      (data) => {
+        // deal with organism data
+        this.readOrganisms(data[0]);
 
-      // deal with specimen data
-      this.readSpecimens(data[1]);
+        // deal with specimen data
+        this.readSpecimens(data[1]);
 
-      // initialize filters
-      this.filteredSpecies = this.filterForm.get('specieControl').valueChanges.pipe(
-        startWith(''),
-        map(value  => this._filterSpecie(value))
-      );
+        // initialize filters
+        this.filteredSpecies = this.filterForm.get('specieControl').valueChanges.pipe(
+          startWith(''),
+          map(value  => this._filterSpecie(value))
+        );
 
-      this.filteredBreeds = this.filterForm.get('breedControl').valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterBreed(value))
-      );
+        this.filteredBreeds = this.filterForm.get('breedControl').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterBreed(value))
+        );
 
-      this.filteredParts = this.filterForm.get('partControl').valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterParts(value))
-      );
+        this.filteredParts = this.filterForm.get('partControl').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterParts(value))
+        );
 
-      this.filteredIds = this.filterForm.get('idControl').valueChanges.pipe(
-        startWith(''),
-        map(value => this._filterIds(value))
-      );
+        this.filteredIds = this.filterForm.get('idControl').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterIds(value))
+        );
 
-      // zoom map on group (if after select I have any group)
-      if (fitOnMap) {
-        if (this.markerClusterGroup.getLayers().length > 0) {
-          this.map.fitBounds(this.markerClusterGroup.getBounds(), {
-            padding: L.point(24, 24),
-            maxZoom: 12,
-            animate: true
-          });
+        // zoom map on group (if after select I have any group)
+        if (fitOnMap) {
+          if (this.markerClusterGroup.getLayers().length > 0) {
+            this.map.fitBounds(this.markerClusterGroup.getBounds(), {
+              padding: L.point(24, 24),
+              maxZoom: 12,
+              animate: true
+            });
+          }
         }
+      },
+      error => {
+        console.log(error.message);
       }
-
-    });
+    );
 
   }
 
