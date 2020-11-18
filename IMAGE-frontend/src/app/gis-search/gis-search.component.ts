@@ -246,10 +246,7 @@ export class GisSearchComponent implements OnInit {
     this.layersControl.overlays[key] = this.markerClusterGroup;
   }
 
-  public onDrawCreated(e: L.DrawEvents.Created) {
-    const circleLayer = (e.layer as L.Circle);
-    this.drawnItems.addLayer(circleLayer);
-
+  private selectByCircle(circleLayer: L.Circle) {
     // create a custom query and set data into CDP service
     const point = circleLayer.getLatLng();
     this.cdpService.selectedCircle.lat = point.lat;
@@ -263,6 +260,14 @@ export class GisSearchComponent implements OnInit {
 
     // fetching data using coordinates stored in CDP service
     this.collectData(false);
+  }
+
+  public onDrawCreated(e: L.DrawEvents.Created) {
+    const circleLayer = (e.layer as L.Circle);
+    this.drawnItems.addLayer(circleLayer);
+
+    // select data using the drawn circle
+    this.selectByCircle(circleLayer);
   }
 
   public resetCDPselectedCircle(): void {
@@ -293,6 +298,17 @@ export class GisSearchComponent implements OnInit {
 
     // read all data again
     this.collectData();
+  }
+
+  public onDrawEdited(e: L.DrawEvents.Edited) {
+    // tslint:disable-next-line:no-console
+    // console.log('Draw Edited Event!', e);
+
+    // get the modified circleLayer
+    const circleLayer = (this.drawnItems.getLayers()[0] as L.Circle);
+
+    // select data using the drawn circle
+    this.selectByCircle(circleLayer);
   }
 
   private updateUniqueSpecies(species: string[]) {

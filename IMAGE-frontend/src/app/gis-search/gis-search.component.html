@@ -102,7 +102,8 @@
     [leafletDrawOptions]="drawOptions"
     (leafletDrawCreated)="onDrawCreated($event)"
     (leafletDrawStart)="onDrawStart($event)"
-    (leafletDrawDeleted)="onDrawDeleted($event)">
+    (leafletDrawDeleted)="onDrawDeleted($event)"
+    (leafletDrawEdited)="onDrawEdited($event)">
 
       <!-- leaflet.draw layer -->
       <div [leafletLayer]="drawnItems"></div>
