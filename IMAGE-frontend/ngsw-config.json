@@ -38,8 +38,28 @@
       }
     },
     {
+      "name": "geoOrganism",
+      "urls": ["https://api.image2020genebank.eu/backend/organism.geojson/"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1d",
+        "strategy": "performance",
+        "timeout": "10s"
+      }
+    },
+    {
       "name": "specimen",
       "urls": ["https://api.image2020genebank.eu/backend/specimen/graphical_summary/"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1d",
+        "strategy": "performance",
+        "timeout": "10s"
+      }
+    },
+    {
+      "name": "geoSpecimen",
+      "urls": ["https://api.image2020genebank.eu/backend/specimen.geojson/"],
       "cacheConfig": {
         "maxSize": 10,
         "maxAge": "1d",

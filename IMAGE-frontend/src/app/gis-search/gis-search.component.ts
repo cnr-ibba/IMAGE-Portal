@@ -103,16 +103,23 @@ export class GisSearchComponent implements OnInit {
     detectRetina: true,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
-  wMaps = L.tileLayer('http://maps.wikimedia.org/osm-intl/{z}/{x}/{y}.png', {
+  topoMaps = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
     detectRetina: true,
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   });
+  waterColorMaps = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
+    detectRetina: true,
+    // tslint:disable-next-line:max-line-length
+    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  });
+
 
   // Layers control object with our two base layers and the three overlay layers
   layersControl = {
     baseLayers: {
       'Street Maps': this.streetMaps,
-      'Wikimedia Maps': this.wMaps
+      'OpenTopo Maps': this.topoMaps,
+      'WaterColor': this.waterColorMaps
     },
     overlays: { }
   };
