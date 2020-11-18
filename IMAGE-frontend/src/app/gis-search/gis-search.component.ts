@@ -33,6 +33,8 @@ import {
   SpecimensResponse
 } from './cdp.service';
 
+import { MapService } from './map.service';
+
 @Component({
   selector: 'app-gis-search',
   templateUrl: './gis-search.component.html',
@@ -98,33 +100,13 @@ export class GisSearchComponent implements OnInit {
   // for the accordion(?), track the status of organism panel (example)
   panelOpenState = false;
 
-  // Define our base layers so we can reference them multiple times
-  streetMaps = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    detectRetina: true,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  });
-  topoMaps = L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png', {
-    detectRetina: true,
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  });
-  waterColorMaps = L.tileLayer('http://{s}.tile.stamen.com/watercolor/{z}/{x}/{y}.jpg', {
-    detectRetina: true,
-    // tslint:disable-next-line:max-line-length
-    attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  });
-
-
   // Layers control object with our two base layers and the three overlay layers
   layersControl = {
-    baseLayers: {
-      'Street Maps': this.streetMaps,
-      'OpenTopo Maps': this.topoMaps,
-      'WaterColor': this.waterColorMaps
-    },
+    baseLayers: { },
     overlays: { }
   };
 
-  layers = [ this.streetMaps ];
+  layers = [ ];
 
   // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
   options = {
@@ -138,9 +120,15 @@ export class GisSearchComponent implements OnInit {
   markerClusterData: L.Marker[] = [];
   markerClusterOptions: L.MarkerClusterGroupOptions;
 
-  constructor(private cdpService: CdpService) { }
+  constructor(
+    private cdpService: CdpService,
+    private mapService: MapService
+  ) { }
 
   ngOnInit(): void {
+    this.layersControl.baseLayers = this.mapService.baseMaps;
+    this.layers = [ this.mapService.baseMaps.OpenStreetMap ];
+
     this.collectData();
 
     // initialize form
