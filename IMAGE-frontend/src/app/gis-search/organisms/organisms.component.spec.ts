@@ -2,6 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Component, ViewChild } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
 
 import { MaterialModule } from 'src/app/material.module';
 import { OrganismsComponent } from './organisms.component';
@@ -29,6 +30,7 @@ describe('OrganismsComponent', () => {
       imports: [
         BrowserAnimationsModule,
         HttpClientModule,
+        RouterModule,
         MaterialModule
       ]
     })

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 // need to import MaterialModule even here
 import { MaterialModule } from '../material.module';
@@ -15,6 +16,7 @@ import { SpecimensComponent } from './specimens/specimens.component';
   imports: [
     CommonModule,
     MaterialModule,
+    RouterModule,
   ],
   exports: [
     OrganismsComponent,
