@@ -71,7 +71,11 @@ export class TablesService {
 
   constructor(private http: HttpClient) {}
 
-  getOrganisms(sortColumn: string, sortDirection: string, pageNumber:number, filterValue: {[key: string]: []}): Observable<CDPOrganismsApi> {
+  getOrganisms(
+      sortColumn: string,
+      sortDirection: string,
+      pageNumber: number,
+      filterValue: {[key: string]: []}): Observable<CDPOrganismsApi> {
     pageNumber = +pageNumber + 1;
 
     if (sortDirection === 'asc') {
@@ -95,7 +99,11 @@ export class TablesService {
     return this.http.get<CDPOrganismsApi>(url);
   }
 
-  getSpecimens(sortColumn: string, sortDirection: string, pageNumber:number, filterValue: {[key: string]: []}): Observable<CDPSpecimensApi> {
+  getSpecimens(
+      sortColumn: string,
+      sortDirection: string,
+      pageNumber: number,
+      filterValue: {[key: string]: []}): Observable<CDPSpecimensApi> {
     pageNumber = +pageNumber + 1;
 
     if (sortDirection === 'asc') {
@@ -112,7 +120,7 @@ export class TablesService {
     return this.http.get<CDPSpecimensApi>(url);
   }
 
-  getFiles(sortColumn: string, sortDirection: string, pageNumber:number) {
+  getFiles(sortColumn: string, sortDirection: string, pageNumber: number) {
     pageNumber = +pageNumber + 1;
 
     if (sortDirection === 'asc') {
