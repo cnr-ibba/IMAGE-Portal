@@ -12,6 +12,17 @@ describe('SpecimensComponent', () => {
   let component: TestSpecimensComponent;
   let fixture: ComponentFixture<TestSpecimensComponent>;
 
+  @Component({
+    selector: `app-test-specimens`,
+    template: `<app-specimens [geoSpecimens]="specimensData"></app-specimens>`
+  })
+  class TestSpecimensComponent {
+    @ViewChild(SpecimensComponent, {static: false})
+    public specimensComponent: SpecimensComponent;
+
+    specimensData: GeoSpecimen[] = [];
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ SpecimensComponent, TestSpecimensComponent ],
@@ -34,14 +45,4 @@ describe('SpecimensComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  @Component({
-    selector: `app-test-specimens`,
-    template: `<app-specimens [geoSpecimens]="specimensData"></app-specimens>`
-  })
-  class TestSpecimensComponent {
-    @ViewChild(SpecimensComponent, {static: false})
-    public specimensComponent: SpecimensComponent;
-
-    specimensData: GeoSpecimen[] = [];
-  }
 });

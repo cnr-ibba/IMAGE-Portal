@@ -12,6 +12,17 @@ describe('OrganismsComponent', () => {
   let component: TestOrganismsComponent;
   let fixture: ComponentFixture<TestOrganismsComponent>;
 
+  @Component({
+    selector: `app-test-organisms`,
+    template: `<app-organisms [geoOrganisms]="organismsData"></app-organisms>`
+  })
+  class TestOrganismsComponent {
+    @ViewChild(OrganismsComponent, {static: false})
+    public organismsComponent: OrganismsComponent;
+
+    organismsData: GeoOrganism[] = [];
+  }
+
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ OrganismsComponent, TestOrganismsComponent ],
@@ -34,14 +45,4 @@ describe('OrganismsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  @Component({
-    selector: `app-test-organisms`,
-    template: `<app-organisms [geoOrganisms]="organismsData"></app-organisms>`
-  })
-  class TestOrganismsComponent {
-    @ViewChild(OrganismsComponent, {static: false})
-    public organismsComponent: OrganismsComponent;
-
-    organismsData: GeoOrganism[] = [];
-  }
 });
