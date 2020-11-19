@@ -28,7 +28,17 @@
   ],
   "dataGroups": [
     {
-      "name": "organism",
+      "name": "organismSummary",
+      "urls": ["https://api.image2020genebank.eu/backend/organism/summary/"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1d",
+        "strategy": "performance",
+        "timeout": "10s"
+      }
+    },
+    {
+      "name": "organismGraphicalSummary",
       "urls": ["https://api.image2020genebank.eu/backend/organism/graphical_summary/"],
       "cacheConfig": {
         "maxSize": 10,
@@ -48,7 +58,17 @@
       }
     },
     {
-      "name": "specimen",
+      "name": "specimenSummary",
+      "urls": ["https://api.image2020genebank.eu/backend/specimen/summary/"],
+      "cacheConfig": {
+        "maxSize": 10,
+        "maxAge": "1d",
+        "strategy": "performance",
+        "timeout": "10s"
+      }
+    },
+    {
+      "name": "specimenGraphicalSummary",
       "urls": ["https://api.image2020genebank.eu/backend/specimen/graphical_summary/"],
       "cacheConfig": {
         "maxSize": 10,
