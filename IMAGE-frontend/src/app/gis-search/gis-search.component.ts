@@ -97,7 +97,7 @@ export class GisSearchComponent implements OnInit {
 
   constructor(
     private cdpService: CdpService,
-    private mapService: MapService
+    public mapService: MapService
   ) { }
 
   ngOnInit(): void {
