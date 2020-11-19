@@ -13,13 +13,6 @@ import 'leaflet/dist/images/marker-shadow.png';
 import 'leaflet-draw';
 import 'leaflet-easybutton';
 
-// geotiff extensions
-import plotty from 'plotty';
-import GeoTIFF from 'geotiff';
-import 'geotiff-layer-leaflet/dist/geotiff-layer-leaflet';
-import 'geotiff-layer-leaflet/src/geotiff-layer-leaflet-plotty';
-import 'geotiff-layer-leaflet/src/geotiff-layer-leaflet-vector-arrows';
-
 // coordinates extension
 import 'leaflet.coordinates/dist/Leaflet.Coordinates-0.1.5.src.js';
 
@@ -54,9 +47,6 @@ export class GisSearchComponent implements OnInit {
 
   // this will be my selected layer
   selectedItem: L.GeoJSON;
-
-  // this will be my leaflet map instance
-  map: L.Map;
 
   // this will track drawn items with leaflet.draw
   drawnItems: L.FeatureGroup = L.featureGroup();
@@ -100,21 +90,6 @@ export class GisSearchComponent implements OnInit {
   // for the accordion(?), track the status of organism panel (example)
   panelOpenState = false;
 
-  // Layers control object with our two base layers and the three overlay layers
-  layersControl = {
-    baseLayers: { },
-    overlays: { }
-  };
-
-  layers = [ ];
-
-  // Set the initial set of displayed layers (we could also use the leafletLayers input binding for this)
-  options = {
-    layers: this.layers,
-    zoom: 4,
-    center: L.latLng([ 40, 5 ])
-  };
-
   // Marker cluster stuff
   markerClusterGroup: L.MarkerClusterGroup;
   markerClusterData: L.Marker[] = [];
@@ -126,9 +101,6 @@ export class GisSearchComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.layersControl.baseLayers = this.mapService.baseMaps;
-    this.layers = [ this.mapService.baseMaps.OpenStreetMap ];
-
     this.collectData();
 
     // initialize form
@@ -181,12 +153,10 @@ export class GisSearchComponent implements OnInit {
   }
 
   onMapReady(leafletMap: L.Map) {
-    this.map = leafletMap;
+    this.mapService.onMapReady(leafletMap);
 
-    // add coordinates to map
-    L.control.coordinates({
-      // enableUserInput: false, //optional default true
-    }).addTo(this.map);
+    // this is the sideNav which appears on the right when clicking the
+    // search icon button on the map
 
     // defining the custombuttom here and assigning it to my map after it is ready
     // is the only way to toggle the material sidenav using leaflet.easybutton
@@ -198,39 +168,8 @@ export class GisSearchComponent implements OnInit {
     );
     customButton.options.position = 'bottomright'; // topleft, topright, bottomleft, bottomright
 
-    customButton.addTo(this.map);
+    customButton.addTo(this.mapService.map);
 
-    // Hyperarid AI < 0.05 - 7.5% of the global land area
-    // Arid 0.05 < AI < 0.20 - 12.1% of the global land area
-    // Semi-arid 0.20 < AI < 0.50 - 17.7% of the global land area
-    // Dry subhumid 0.50 < AI < 0.65 - 9.9% of the global land area
-    plotty.addColorScale('aridity', ['#A80000', '#FF0000', '#FFAA00', '#FFFF00', '#D1FF73'], [0.01, 0.05, 0.20, 0.50, 0.65]);
-
-    const aridity = new L.LeafletGeotiff(
-      './assets/aridity.tif',
-      {
-        band: 0,
-        name: 'FAO Aridity',
-        opacity: 0.5,
-        renderer: new L.LeafletGeotiff.Plotty({
-          colorScale: 'aridity',
-          // displayMin: 0.01,
-          // displayMax: 7.8,
-          clampLow: false,
-          clampHigh: true,
-        })
-      }
-    ); // .addTo(this.map);
-
-    this.layersControl.overlays['FAO aridity'] = aridity;
-
-    // This event is actually of type LeafletMouseEvent, which extends LeafletEvent.
-    // So cast the event to gain access to the properties of LeafletMouseEvent
-    // https://stackoverflow.com/a/48746870/4385116:
-    this.map.on('click', <LeafletMouseEvent>(e) => {
-      // console.log(e.latlng);
-      console.log(`aridity value at ${e.latlng}: ` + aridity.getValueAtLatLng(e.latlng.lat, e.latlng.lng));
-    });
   }
 
   markerClusterReady(group: L.MarkerClusterGroup) {
@@ -238,7 +177,7 @@ export class GisSearchComponent implements OnInit {
     this.markerClusterGroup = group;
 
     const key = 'IMAGE samples';
-    this.layersControl.overlays[key] = this.markerClusterGroup;
+    this.mapService.layersControl.overlays[key] = this.markerClusterGroup;
   }
 
   private selectByCircle(circleLayer: L.Circle) {
@@ -405,7 +344,7 @@ export class GisSearchComponent implements OnInit {
         // zoom map on group (if after select I have any group)
         if (fitOnMap) {
           if (this.markerClusterGroup.getLayers().length > 0) {
-            this.map.fitBounds(this.markerClusterGroup.getBounds(), {
+            this.mapService.map.fitBounds(this.markerClusterGroup.getBounds(), {
               padding: L.point(24, 24),
               maxZoom: 12,
               animate: true
@@ -446,7 +385,7 @@ export class GisSearchComponent implements OnInit {
     const key = 'Selected item';
 
     // test if there is already a selected item
-    if (key in this.layersControl.overlays) {
+    if (key in this.mapService.layersControl.overlays) {
       // remove selected item
       this.selectedItem.clearLayers();
     }
@@ -472,17 +411,17 @@ export class GisSearchComponent implements OnInit {
     );
 
     // add marker to map
-    this.map.addLayer(this.selectedItem);
+    this.mapService.map.addLayer(this.selectedItem);
 
     // center map on feature
-    this.map.fitBounds(this.selectedItem.getBounds(), {
+    this.mapService.map.fitBounds(this.selectedItem.getBounds(), {
       padding: L.point(6, 6),
       maxZoom: 12,
       animate: true
     });
 
     // add layer to control
-    this.layersControl.overlays[key] = this.selectedItem;
+    this.mapService.layersControl.overlays[key] = this.selectedItem;
   }
 
   onSubmitForm() {
