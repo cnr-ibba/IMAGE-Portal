@@ -1,11 +1,15 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
 
 import { MaterialModule } from '../material.module';
 import { GisSearchComponent } from './gis-search.component';
+import { GisSearchModule } from './gis-search.module';
 
 describe('GisSearchComponent', () => {
   let component: GisSearchComponent;
@@ -13,16 +17,17 @@ describe('GisSearchComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      declarations: [ GisSearchComponent ],
       imports: [
-        RouterTestingModule,
+        BrowserAnimationsModule,
         HttpClientModule,
         FormsModule,
         ReactiveFormsModule,
-        BrowserAnimationsModule,
-        MaterialModule
-      ],
-      declarations: [
-        GisSearchComponent,
+        MaterialModule,
+        LeafletModule,
+        LeafletMarkerClusterModule,
+        LeafletDrawModule,
+        GisSearchModule
       ]
     })
     .compileComponents();

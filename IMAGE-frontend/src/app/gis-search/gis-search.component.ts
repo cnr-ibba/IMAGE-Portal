@@ -1,10 +1,32 @@
-import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {Subject} from 'rxjs';
-import {TablesService} from '../tables/tables.service';
-import {Title} from '@angular/platform-browser';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Observable, zip } from 'rxjs';
+import { FormControl, FormGroup } from '@angular/forms';
+import { startWith, map } from 'rxjs/operators';
 
-declare var ol: any;
+import { Feature } from 'geojson';
+
+import * as L from 'leaflet';
+import 'leaflet.markercluster';
+import 'leaflet/dist/images/marker-icon.png';
+import 'leaflet/dist/images/marker-shadow.png';
+import 'leaflet-draw';
+import 'leaflet-easybutton';
+
+// coordinates extension
+import 'leaflet.coordinates/dist/Leaflet.Coordinates-0.1.5.src.js';
+
+import {
+  CdpService,
+  GeoOrganism,
+  GeoSpecimen,
+  organismDescription,
+  specimenDescription,
+  OrganismsResponse,
+  SpecimensResponse
+} from './cdp.service';
+
+import { MapService } from './map.service';
 
 @Component({
   selector: 'app-gis-search',
@@ -12,105 +34,440 @@ declare var ol: any;
   styleUrls: ['./gis-search.component.css']
 })
 export class GisSearchComponent implements OnInit {
-  showResults = false;
-  options: FormGroup;
-  baseMapLayer: any;
-  map: any;
-  latitude: number;
-  longitude: number;
-  pointCoordinates = new Subject();
-  dataSourceOrganism: any;
-  dataSourceSpecimen: any;
-  error: any;
-  displayedColumnsOrganisms = ['data_source_id', 'species', 'supplied_breed', 'sex'];
-  displayedColumnsSpecimens = ['data_source_id', 'species', 'derived_from', 'organism_part'];
-  filter: any;
+  // this will listen for the sideNav local reference on html template. I can
+  // manage the mat-sidenav using this property
+  @ViewChild('sideNav', {static: false}) public sideNav: MatSidenav;
 
-  constructor(fb: FormBuilder, private tablesService: TablesService, private titleService: Title) {
-    this.options = fb.group({
-      latitude: this.latitude,
-      longitude: this.longitude,
-      radius: undefined
-    });
-  }
+  // start with angular material forms
+  filterForm: FormGroup;
 
-  ngOnInit() {
-    this.titleService.setTitle('IMAGE|GIS-Search');
-    this.pointCoordinates.subscribe(data => {
-      this.latitude = data['latitude'];
-      this.longitude = data['longitude'];
-      this.options.setValue(data);
-    });
-    const raster = new ol.layer.Tile({
-      source: new ol.source.OSM()
-    });
-    const source = new ol.source.Vector({wrapX: false});
-    const vector = new ol.layer.Vector({source: source});
-    raster.setSource(
-      new ol.source.OSM({
-        url: 'https://services.arcgisonline.com/ArcGIS/rest/services/World_Street_Map/MapServer/tile/{z}/{y}/{x}',
-        attributions: '© <a href="https://services.arcgisonline.com/arcgis/rest/services">ArcGis Online Services</a>'
-      })
-    );
-    this.map = new ol.Map({
-      layers: [raster, vector],
-      target: 'map',
-      view: new ol.View({
-        center: [975268, 5987031],
-        zoom: 5
-      })
-    });
-    const draw = new ol.interaction.Draw({
-      source: source,
-      type: 'Point'
-    });
-    draw.on('drawend', (evt) => {
-      const currentFeature = evt.feature;
-      // this.map.removeInteraction(draw);
-      const numFeatures = currentFeature.getGeometry().getCoordinates();
-      const c_numFeatures = ol.proj.transform(numFeatures, 'EPSG:3857', 'EPSG:4326');
-      const data = {
-        latitude: c_numFeatures[1],
-        longitude: c_numFeatures[0],
-        radius: ''
-      };
-      this.pointCoordinates.next(data);
-    });
-    this.map.addInteraction(draw);
-  }
+  // this will be my geojson layers
+  organismsLyr: L.GeoJSON;
+  specimensLyr: L.GeoJSON;
 
-  doFilter() {
-    this.tablesService.OrganismsGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
-      .subscribe(data => {
-        this.dataSourceOrganism = data['results'];
-        // console.log(this.dataSourceOrganism);
-      });
-    this.tablesService.SpecimensGISSearch(this.filter['latitude'], this.filter['longitude'], this.filter['radius'])
-      .subscribe(data => {
-        this.dataSourceSpecimen = data['results'];
-        // console.log(this.dataSourceSpecimen);
-      });
-  }
+  // this will be my selected layer
+  selectedItem: L.GeoJSON;
 
-  startSearch() {
-    this.filter = this.options.getRawValue();
-    this.doFilter();
-    this.showResults = true;
-  }
+  // this will track drawn items with leaflet.draw
+  drawnItems: L.FeatureGroup = L.featureGroup();
 
-  showTables() {
-    const results = [];
-
-    // https://stackoverflow.com/a/519157
-    if (typeof this.dataSourceOrganism !== 'undefined' || typeof this.dataSourceSpecimen !== 'undefined') {
-      results.concat(this.dataSourceOrganism);
-      results.concat(this.dataSourceSpecimen);
-      return results;
+  drawOptions = {
+    position: 'bottomright',
+    draw: {
+      // disable those editing features
+      polygon : false,
+      polyline : false,
+      rectangle : false,
+      marker: false,
+      circlemarker: false
+    },
+    edit: {
+      featureGroup: this.drawnItems
     }
+  };
+
+  // here I will track data to visualize tables
+  organismsData: GeoOrganism[];
+  specimensData: GeoSpecimen[];
+
+  // in order to use material autocomplete
+  uniqueBreeds: string[] = [];
+  filteredBreeds: Observable<string[]>;
+
+  uniqueSpecies: string[] = [];
+  filteredSpecies: Observable<string[]>;
+
+  uniqueParts: string[] = [];
+  filteredParts: Observable<string[]>;
+
+  uniqueIds: string[] = [];
+  filteredIds: Observable<string[]>;
+
+  // two flags to determine if I'm waiting for data or not
+  isFetchingOrganisms = false;
+  isFetchingSpecimens = false;
+
+  // for the accordion(?), track the status of organism panel (example)
+  panelOpenState = false;
+
+  // Marker cluster stuff
+  markerClusterGroup: L.MarkerClusterGroup;
+  markerClusterData: L.Marker[] = [];
+  markerClusterOptions: L.MarkerClusterGroupOptions;
+
+  constructor(
+    private cdpService: CdpService,
+    public mapService: MapService
+  ) { }
+
+  ngOnInit(): void {
+    this.collectData();
+
+    // initialize form
+    this.filterForm = new FormGroup({
+      idControl: new FormControl(),
+      specieControl: new FormControl(),
+      breedControl: new FormControl(),
+      partControl: new FormControl()
+    });
   }
 
-  showMessage() {
-    return !this.showTables() && this.showResults;
+  private _filterBreed(value: string): string[] {
+    if (value == null) {
+      // TODO: workaround to be able to reset form using autocomplete
+      return this.uniqueSpecies;
+    }
+
+    const filterValue = value.toLowerCase();
+    return this.uniqueBreeds.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private _filterSpecie(value: string): string[] {
+    if (value == null) {
+      // TODO: workaround to be able to reset form using autocomplete
+      return this.uniqueSpecies;
+    }
+
+    const filterValue = value.toLowerCase();
+    return this.uniqueSpecies.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private _filterParts(value: string): string[] {
+    if (value == null) {
+      // TODO: workaround to be able to reset form using autocomplete
+      return this.uniqueSpecies;
+    }
+
+    const filterValue = value.toLowerCase();
+    return this.uniqueParts.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  private _filterIds(value: string): string[] {
+    if (value == null) {
+      // TODO: workaround to be able to reset form using autocomplete
+      return this.uniqueIds;
+    }
+
+    const filterValue = value.toLowerCase();
+    return this.uniqueIds.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  onMapReady(leafletMap: L.Map) {
+    this.mapService.onMapReady(leafletMap);
+
+    // this is the sideNav which appears on the right when clicking the
+    // search icon button on the map
+
+    // defining the custombuttom here and assigning it to my map after it is ready
+    // is the only way to toggle the material sidenav using leaflet.easybutton
+    const customButton = L.easyButton(
+      '<i style="font-size:18px;" class="material-icons">search</i>',
+      () => {
+        this.sideNav.toggle();
+      }
+    );
+    customButton.options.position = 'bottomright'; // topleft, topright, bottomleft, bottomright
+
+    customButton.addTo(this.mapService.map);
+
+  }
+
+  markerClusterReady(group: L.MarkerClusterGroup) {
+    // Do stuff with group
+    this.markerClusterGroup = group;
+
+    const key = 'IMAGE samples';
+    this.mapService.layersControl.overlays[key] = this.markerClusterGroup;
+  }
+
+  private selectByCircle(circleLayer: L.Circle) {
+    // create a custom query and set data into CDP service
+    const point = circleLayer.getLatLng();
+    this.cdpService.selectedCircle.lat = point.lat;
+    this.cdpService.selectedCircle.lng = point.lng;
+    this.cdpService.selectedCircle.rad = Math.round(circleLayer.getRadius() / 1000); // get radius in Km
+
+    // console.log([lat, lng, rad]);
+
+    // erase all data selected on map
+    this.clearData();
+
+    // fetching data using coordinates stored in CDP service
+    this.collectData(false);
+  }
+
+  public onDrawCreated(e: L.DrawEvents.Created) {
+    const circleLayer = (e.layer as L.Circle);
+    this.drawnItems.addLayer(circleLayer);
+
+    // select data using the drawn circle
+    this.selectByCircle(circleLayer);
+  }
+
+  public resetCDPselectedCircle(): void {
+    this.cdpService.selectedCircle.lat = null;
+    this.cdpService.selectedCircle.lng = null;
+    this.cdpService.selectedCircle.rad = null;
+  }
+
+  public onDrawStart(e: L.DrawEvents.DrawStart) {
+    // clear up items from drawn layer
+    this.drawnItems.clearLayers();
+
+    // rest circlelocation in CDP
+    this.resetCDPselectedCircle();
+
+    // tslint:disable-next-line:no-console
+    // console.log('Draw Started Event!', e);
+  }
+
+  public onDrawDeleted(e: L.DrawEvents.Deleted) {
+    // console.log('deleted event!!', e);
+
+    // erase all data selected on map
+    this.clearData();
+
+    // rest circlelocation in CDP
+    this.resetCDPselectedCircle();
+
+    // read all data again
+    this.collectData();
+  }
+
+  public onDrawEdited(e: L.DrawEvents.Edited) {
+    // tslint:disable-next-line:no-console
+    // console.log('Draw Edited Event!', e);
+
+    // get the modified circleLayer
+    const circleLayer = (this.drawnItems.getLayers()[0] as L.Circle);
+
+    // select data using the drawn circle
+    this.selectByCircle(circleLayer);
+  }
+
+  private updateUniqueSpecies(species: string[]) {
+    // add new species to uniqueSpecies array
+    species.forEach((item: string) => {
+      if (! this.uniqueSpecies.includes(item)) {
+        // console.log(`Add ${item} to unique species`);
+        this.uniqueSpecies.push(item);
+      }
+    });
+  }
+
+  private updateUniqueIds(ids: string[]) {
+    // add new species to uniqueSpecies array
+    ids.forEach((item: string) => {
+      if (! this.uniqueIds.includes(item)) {
+        // console.log(`Add ${item} to unique ids`);
+        this.uniqueIds.push(item);
+      }
+    });
+  }
+
+  readOrganisms(data: OrganismsResponse) {
+    this.organismsLyr = data.organismsLyr;
+    this.organismsData = data.organismsData;
+    this.uniqueBreeds = data.uniqueBreeds;
+
+    // add new species to uniqueSpecies array
+    this.updateUniqueSpecies(data.uniqueSpecies);
+
+    // add new unique ids to list
+    this.updateUniqueIds(data.uniqueIds);
+
+    // add organisms layer to marker cluster group
+    this.markerClusterGroup.addLayer(this.organismsLyr);
+
+    // set flag values
+    this.isFetchingOrganisms = false;
+  }
+
+  readSpecimens(data: SpecimensResponse) {
+    this.specimensLyr = data.specimensLyr;
+    this.specimensData = data.specimensData;
+    this.uniqueParts = data.uniqueParts;
+
+    // add new species to uniqueSpecies array
+    this.updateUniqueSpecies(data.uniqueSpecies);
+
+    // add new unique ids to list
+    this.updateUniqueIds(data.uniqueIds);
+
+    // add organisms layer to marker cluster group
+    this.markerClusterGroup.addLayer(this.specimensLyr);
+
+    // set flag values
+    this.isFetchingSpecimens = false;
+  }
+
+  public collectData(fitOnMap: boolean = true): void {
+    // setting flag values
+    this.isFetchingOrganisms = true;
+    this.isFetchingSpecimens = true;
+
+    // After all observables emit, emit values as an array
+    const CDPfetch = zip(
+      this.cdpService.getOrganisms(),
+      this.cdpService.getSpecimens()
+    );
+
+    CDPfetch.subscribe(
+      (data) => {
+        // deal with organism data
+        this.readOrganisms(data[0]);
+
+        // deal with specimen data
+        this.readSpecimens(data[1]);
+
+        // initialize filters
+        this.filteredSpecies = this.filterForm.get('specieControl').valueChanges.pipe(
+          startWith(''),
+          map(value  => this._filterSpecie(value))
+        );
+
+        this.filteredBreeds = this.filterForm.get('breedControl').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterBreed(value))
+        );
+
+        this.filteredParts = this.filterForm.get('partControl').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterParts(value))
+        );
+
+        this.filteredIds = this.filterForm.get('idControl').valueChanges.pipe(
+          startWith(''),
+          map(value => this._filterIds(value))
+        );
+
+        // zoom map on group (if after select I have any group)
+        if (fitOnMap) {
+          if (this.markerClusterGroup.getLayers().length > 0) {
+            this.mapService.map.fitBounds(this.markerClusterGroup.getBounds(), {
+              padding: L.point(24, 24),
+              maxZoom: 12,
+              animate: true
+            });
+          }
+        }
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
+
+  }
+
+  clearData() {
+    // erase markercluster layers
+    this.markerClusterGroup.clearLayers();
+
+    // remove organismsLyr and specimensLyr
+    this.organismsLyr.clearLayers();
+    this.specimensLyr.clearLayers();
+  }
+
+  onSelectedOrganism(geoOrganism: GeoOrganism) {
+    // console.log(geoOrganism);
+    this.addSelected(geoOrganism);
+    this.selectedItem.bindTooltip(organismDescription(geoOrganism));
+  }
+
+  onSelectedSpecimen(geoSpecimen: GeoSpecimen) {
+    // console.log(geoSpecimen);
+    this.addSelected(geoSpecimen);
+    this.selectedItem.bindTooltip(specimenDescription(geoSpecimen));
+  }
+
+  private addSelected(feature: Feature) {
+    // the layer key
+    const key = 'Selected item';
+
+    // test if there is already a selected item
+    if (key in this.mapService.layersControl.overlays) {
+      // remove selected item
+      this.selectedItem.clearLayers();
+    }
+
+    // read received GeoJSON object, Define manually the marker in order to set
+    // the correct urls for icon images
+    this.selectedItem = L.geoJSON(
+      feature,
+      {
+        pointToLayer: (geojson, latlng) => {
+          return L.marker(
+            latlng, {
+              icon: L.icon({
+                iconSize: [ 25, 41 ],
+                iconAnchor: [ 13, 41 ],
+                iconUrl: 'leaflet/marker-icon.png',
+                shadowUrl: 'leaflet/marker-shadow.png'
+              })
+            }
+          );
+        }
+      }
+    );
+
+    // add marker to map
+    this.mapService.map.addLayer(this.selectedItem);
+
+    // center map on feature
+    this.mapService.map.fitBounds(this.selectedItem.getBounds(), {
+      padding: L.point(6, 6),
+      maxZoom: 12,
+      animate: true
+    });
+
+    // add layer to control
+    this.mapService.layersControl.overlays[key] = this.selectedItem;
+  }
+
+  onSubmitForm() {
+    // console.log(this.filterForm);
+    // console.log(this.filterForm.value.specieControl);
+
+    // closing sideNav
+    this.sideNav.close();
+
+    // setting value for selected items
+    this.cdpService.setSelected({
+      selectedSpecie: this.filterForm.value.specieControl,
+      selectedBreed: this.filterForm.value.breedControl,
+      selectedPart: this.filterForm.value.partControl,
+      selectedId: this.filterForm.value.idControl
+    });
+
+    // erase all data selected on map
+    this.clearData();
+
+    // read all data again
+    this.collectData();
+
+    // log cdpService properties
+    // console.log(this.cdpService.selectedSpecie);
+    // console.log(this.cdpService.selectedBreed);
+    // console.log(this.cdpService.selectedPart);
+  }
+
+  onResetForm() {
+    // console.log(this.filterForm);
+
+    // closing sideNav
+    this.sideNav.close();
+
+    // resetting value for selected items
+    this.cdpService.resetSelected();
+
+    // erase all data selected on map
+    this.clearData();
+
+    // read all data again
+    this.collectData();
+
+    // reset form to initial state
+    this.filterForm.reset();
   }
 
 }
