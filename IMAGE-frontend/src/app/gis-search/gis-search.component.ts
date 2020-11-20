@@ -327,12 +327,39 @@ export class GisSearchComponent implements OnInit {
 
         // zoom map on group (if after select I have any group)
         if (fitOnMap) {
+          // try to determine appropriates bounds
+          let bounds: L.LatLngBoundsExpression;
+
           if (this.markerClusterGroup.getLayers().length > 0) {
-            this.mapService.map.fitBounds(this.markerClusterGroup.getBounds(), {
+            // case: I have selected some items, maybe with search, maybe with circle
+            if (this.mapService.drawnItems.getLayers().length > 0) {
+              // I have drawn a circle and I have features selected. Focus on circle
+              bounds = this.mapService.drawnItems.getBounds();
+            } else {
+              // focus on features instead
+              bounds = this.markerClusterGroup.getBounds();
+            }
+
+            // fit on selected bounds
+            this.mapService.map.fitBounds(bounds, {
               padding: L.point(24, 24),
               maxZoom: 12,
               animate: true
             });
+
+          } else {
+            // case: no items selected. Did I draw a circle on map?
+            if (this.mapService.drawnItems.getLayers().length > 0) {
+              // I have drawn a circle and I have features selected. Focus on circle
+              bounds = this.mapService.drawnItems.getBounds();
+
+              // fit on selected bounds
+              this.mapService.map.fitBounds(bounds, {
+                padding: L.point(24, 24),
+                maxZoom: 12,
+                animate: true
+              });
+            }
           }
         }
       },
