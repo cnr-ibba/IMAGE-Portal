@@ -17,7 +17,7 @@
               formControlName="idControl"
               [matAutocomplete]="autoId">
               <mat-autocomplete autoActiveFirstOption #autoId="matAutocomplete">
-                <mat-option *ngFor="let id of filteredIds | async" [value]="id">
+                <mat-option *ngFor="let id of cdpService.filteredIds | async" [value]="id">
                   {{ id }}
                 </mat-option>
               </mat-autocomplete>
@@ -33,7 +33,7 @@
               formControlName="specieControl"
               [matAutocomplete]="autoSpecie">
               <mat-autocomplete autoActiveFirstOption #autoSpecie="matAutocomplete">
-                <mat-option *ngFor="let specie of filteredSpecies | async" [value]="specie">
+                <mat-option *ngFor="let specie of cdpService.filteredSpecies | async" [value]="specie">
                   {{ specie }}
                 </mat-option>
               </mat-autocomplete>
@@ -49,7 +49,7 @@
               formControlName="breedControl"
               [matAutocomplete]="autoBreed">
               <mat-autocomplete autoActiveFirstOption #autoBreed="matAutocomplete">
-                <mat-option *ngFor="let breed of filteredBreeds | async" [value]="breed">
+                <mat-option *ngFor="let breed of cdpService.filteredBreeds | async" [value]="breed">
                   {{ breed }}
                 </mat-option>
               </mat-autocomplete>
@@ -65,7 +65,7 @@
               formControlName="partControl"
               [matAutocomplete]="autoPart">
               <mat-autocomplete autoActiveFirstOption #autoPart="matAutocomplete">
-                <mat-option *ngFor="let part of filteredParts | async" [value]="part">
+                <mat-option *ngFor="let part of cdpService.filteredParts | async" [value]="part">
                   {{ part }}
                 </mat-option>
               </mat-autocomplete>

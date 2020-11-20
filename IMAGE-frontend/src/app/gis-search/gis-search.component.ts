@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Observable, zip } from 'rxjs';
+import { zip } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
 
@@ -52,19 +52,6 @@ export class GisSearchComponent implements OnInit {
   organismsData: GeoOrganism[];
   specimensData: GeoSpecimen[];
 
-  // in order to use material autocomplete
-  uniqueBreeds: string[] = [];
-  filteredBreeds: Observable<string[]>;
-
-  uniqueSpecies: string[] = [];
-  filteredSpecies: Observable<string[]>;
-
-  uniqueParts: string[] = [];
-  filteredParts: Observable<string[]>;
-
-  uniqueIds: string[] = [];
-  filteredIds: Observable<string[]>;
-
   // two flags to determine if I'm waiting for data or not
   isFetchingOrganisms = false;
   isFetchingSpecimens = false;
@@ -78,7 +65,7 @@ export class GisSearchComponent implements OnInit {
   markerClusterOptions: L.MarkerClusterGroupOptions;
 
   constructor(
-    private cdpService: CdpService,
+    public cdpService: CdpService,
     public mapService: MapService
   ) { }
 
@@ -87,51 +74,51 @@ export class GisSearchComponent implements OnInit {
 
     // initialize form
     this.filterForm = new FormGroup({
-      idControl: new FormControl(),
-      specieControl: new FormControl(),
-      breedControl: new FormControl(),
-      partControl: new FormControl()
+      idControl: new FormControl(this.cdpService.selectedId),
+      specieControl: new FormControl(this.cdpService.selectedSpecie),
+      breedControl: new FormControl(this.cdpService.selectedBreed),
+      partControl: new FormControl(this.cdpService.selectedPart)
     });
   }
 
   private _filterBreed(value: string): string[] {
     if (value == null) {
       // TODO: workaround to be able to reset form using autocomplete
-      return this.uniqueSpecies;
+      return this.cdpService.uniqueSpecies;
     }
 
     const filterValue = value.toLowerCase();
-    return this.uniqueBreeds.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.cdpService.uniqueBreeds.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private _filterSpecie(value: string): string[] {
     if (value == null) {
       // TODO: workaround to be able to reset form using autocomplete
-      return this.uniqueSpecies;
+      return this.cdpService.uniqueSpecies;
     }
 
     const filterValue = value.toLowerCase();
-    return this.uniqueSpecies.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.cdpService.uniqueSpecies.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private _filterParts(value: string): string[] {
     if (value == null) {
       // TODO: workaround to be able to reset form using autocomplete
-      return this.uniqueSpecies;
+      return this.cdpService.uniqueSpecies;
     }
 
     const filterValue = value.toLowerCase();
-    return this.uniqueParts.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.cdpService.uniqueParts.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   private _filterIds(value: string): string[] {
     if (value == null) {
       // TODO: workaround to be able to reset form using autocomplete
-      return this.uniqueIds;
+      return this.cdpService.uniqueIds;
     }
 
     const filterValue = value.toLowerCase();
-    return this.uniqueIds.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
+    return this.cdpService.uniqueIds.filter(option => option.toLowerCase().indexOf(filterValue) === 0);
   }
 
   onMapReady(leafletMap: L.Map) {
@@ -232,9 +219,9 @@ export class GisSearchComponent implements OnInit {
   private updateUniqueSpecies(species: string[]) {
     // add new species to uniqueSpecies array
     species.forEach((item: string) => {
-      if (! this.uniqueSpecies.includes(item)) {
+      if (! this.cdpService.uniqueSpecies.includes(item)) {
         // console.log(`Add ${item} to unique species`);
-        this.uniqueSpecies.push(item);
+        this.cdpService.uniqueSpecies.push(item);
       }
     });
   }
@@ -242,9 +229,9 @@ export class GisSearchComponent implements OnInit {
   private updateUniqueIds(ids: string[]) {
     // add new species to uniqueSpecies array
     ids.forEach((item: string) => {
-      if (! this.uniqueIds.includes(item)) {
+      if (! this.cdpService.uniqueIds.includes(item)) {
         // console.log(`Add ${item} to unique ids`);
-        this.uniqueIds.push(item);
+        this.cdpService.uniqueIds.push(item);
       }
     });
   }
@@ -252,7 +239,7 @@ export class GisSearchComponent implements OnInit {
   readOrganisms(data: OrganismsResponse) {
     this.organismsLyr = data.organismsLyr;
     this.organismsData = data.organismsData;
-    this.uniqueBreeds = data.uniqueBreeds;
+    this.cdpService.uniqueBreeds = data.uniqueBreeds;
 
     // add new species to uniqueSpecies array
     this.updateUniqueSpecies(data.uniqueSpecies);
@@ -270,7 +257,7 @@ export class GisSearchComponent implements OnInit {
   readSpecimens(data: SpecimensResponse) {
     this.specimensLyr = data.specimensLyr;
     this.specimensData = data.specimensData;
-    this.uniqueParts = data.uniqueParts;
+    this.cdpService.uniqueParts = data.uniqueParts;
 
     // add new species to uniqueSpecies array
     this.updateUniqueSpecies(data.uniqueSpecies);
@@ -305,22 +292,22 @@ export class GisSearchComponent implements OnInit {
         this.readSpecimens(data[1]);
 
         // initialize filters
-        this.filteredSpecies = this.filterForm.get('specieControl').valueChanges.pipe(
+        this.cdpService.filteredSpecies = this.filterForm.get('specieControl').valueChanges.pipe(
           startWith(''),
           map(value  => this._filterSpecie(value))
         );
 
-        this.filteredBreeds = this.filterForm.get('breedControl').valueChanges.pipe(
+        this.cdpService.filteredBreeds = this.filterForm.get('breedControl').valueChanges.pipe(
           startWith(''),
           map(value => this._filterBreed(value))
         );
 
-        this.filteredParts = this.filterForm.get('partControl').valueChanges.pipe(
+        this.cdpService.filteredParts = this.filterForm.get('partControl').valueChanges.pipe(
           startWith(''),
           map(value => this._filterParts(value))
         );
 
-        this.filteredIds = this.filterForm.get('idControl').valueChanges.pipe(
+        this.cdpService.filteredIds = this.filterForm.get('idControl').valueChanges.pipe(
           startWith(''),
           map(value => this._filterIds(value))
         );

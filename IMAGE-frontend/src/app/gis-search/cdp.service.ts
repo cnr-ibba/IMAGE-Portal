@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { environment } from 'src/environments/environment';
 
@@ -99,10 +100,10 @@ export function filterPart(feature: GeoSpecimen, selectedPart: string) {
 })
 export class CdpService {
   // used to filter data
-  selectedSpecie: string;
-  selectedBreed: string;
-  selectedPart: string;
-  selectedId: string;
+  selectedSpecie: string = '';
+  selectedBreed: string = '';
+  selectedPart: string = '';
+  selectedId: string = '';
 
   // filter data by location
   selectedCircle: CircleLocation = {
@@ -110,6 +111,19 @@ export class CdpService {
     lng: null,
     rad: null
   };
+
+  // in order to use material autocomplete
+  uniqueBreeds: string[] = [];
+  filteredBreeds: Observable<string[]>;
+
+  uniqueSpecies: string[] = [];
+  filteredSpecies: Observable<string[]>;
+
+  uniqueParts: string[] = [];
+  filteredParts: Observable<string[]>;
+
+  uniqueIds: string[] = [];
+  filteredIds: Observable<string[]>;
 
   constructor(private http: HttpClient) { }
 
