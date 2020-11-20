@@ -6,11 +6,11 @@ import { startWith, map } from 'rxjs/operators';
 
 import { Feature } from 'geojson';
 
+// leaflet modules
 import * as L from 'leaflet';
 import 'leaflet.markercluster';
 import 'leaflet/dist/images/marker-icon.png';
 import 'leaflet/dist/images/marker-shadow.png';
-import 'leaflet-draw';
 import 'leaflet-easybutton';
 
 // coordinates extension
@@ -47,24 +47,6 @@ export class GisSearchComponent implements OnInit {
 
   // this will be my selected layer
   selectedItem: L.GeoJSON;
-
-  // this will track drawn items with leaflet.draw
-  drawnItems: L.FeatureGroup = L.featureGroup();
-
-  drawOptions = {
-    position: 'bottomright',
-    draw: {
-      // disable those editing features
-      polygon : false,
-      polyline : false,
-      rectangle : false,
-      marker: false,
-      circlemarker: false
-    },
-    edit: {
-      featureGroup: this.drawnItems
-    }
-  };
 
   // here I will track data to visualize tables
   organismsData: GeoOrganism[];
@@ -200,7 +182,7 @@ export class GisSearchComponent implements OnInit {
 
   public onDrawCreated(e: L.DrawEvents.Created) {
     const circleLayer = (e.layer as L.Circle);
-    this.drawnItems.addLayer(circleLayer);
+    this.mapService.drawnItems.addLayer(circleLayer);
 
     // select data using the drawn circle
     this.selectByCircle(circleLayer);
@@ -214,7 +196,7 @@ export class GisSearchComponent implements OnInit {
 
   public onDrawStart(e: L.DrawEvents.DrawStart) {
     // clear up items from drawn layer
-    this.drawnItems.clearLayers();
+    this.mapService.drawnItems.clearLayers();
 
     // rest circlelocation in CDP
     this.resetCDPselectedCircle();
@@ -241,7 +223,7 @@ export class GisSearchComponent implements OnInit {
     // console.log('Draw Edited Event!', e);
 
     // get the modified circleLayer
-    const circleLayer = (this.drawnItems.getLayers()[0] as L.Circle);
+    const circleLayer = (this.mapService.drawnItems.getLayers()[0] as L.Circle);
 
     // select data using the drawn circle
     this.selectByCircle(circleLayer);

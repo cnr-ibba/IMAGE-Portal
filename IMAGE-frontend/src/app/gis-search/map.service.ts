@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
+// leaflet modules
 import * as L from 'leaflet';
+import 'leaflet-draw';
 
 // geotiff extensions
 import plotty from 'plotty';
@@ -30,6 +32,24 @@ export class MapService {
     layers: this.layers,
     zoom: 4,
     center: L.latLng([ 40, 5 ])
+  };
+
+  // this will track drawn items with leaflet.draw
+  drawnItems: L.FeatureGroup = L.featureGroup();
+
+  drawOptions = {
+    position: 'bottomright',
+    draw: {
+      // disable those editing features
+      polygon : false,
+      polyline : false,
+      rectangle : false,
+      marker: false,
+      circlemarker: false
+    },
+    edit: {
+      featureGroup: this.drawnItems
+    }
   };
 
   constructor() {
