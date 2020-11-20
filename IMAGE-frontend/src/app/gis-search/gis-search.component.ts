@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { MatSnackBar } from '@angular/material';
 import { zip } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import { startWith, map } from 'rxjs/operators';
@@ -66,7 +67,8 @@ export class GisSearchComponent implements OnInit {
 
   constructor(
     public cdpService: CdpService,
-    public mapService: MapService
+    public mapService: MapService,
+    public snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -236,10 +238,13 @@ export class GisSearchComponent implements OnInit {
     });
   }
 
-  readOrganisms(data: OrganismsResponse) {
+  readOrganisms(data: OrganismsResponse): number {
     this.organismsLyr = data.organismsLyr;
     this.organismsData = data.organismsData;
     this.cdpService.uniqueBreeds = data.uniqueBreeds;
+
+    // count number of selected features
+    const count = this.organismsLyr.getLayers().length;
 
     // add new species to uniqueSpecies array
     this.updateUniqueSpecies(data.uniqueSpecies);
@@ -252,12 +257,17 @@ export class GisSearchComponent implements OnInit {
 
     // set flag values
     this.isFetchingOrganisms = false;
+
+    return count;
   }
 
-  readSpecimens(data: SpecimensResponse) {
+  readSpecimens(data: SpecimensResponse): number {
     this.specimensLyr = data.specimensLyr;
     this.specimensData = data.specimensData;
     this.cdpService.uniqueParts = data.uniqueParts;
+
+    // count number of selected features
+    const count = this.specimensLyr.getLayers().length;
 
     // add new species to uniqueSpecies array
     this.updateUniqueSpecies(data.uniqueSpecies);
@@ -270,10 +280,12 @@ export class GisSearchComponent implements OnInit {
 
     // set flag values
     this.isFetchingSpecimens = false;
+
+    return count;
   }
 
   public collectData(fitOnMap: boolean = true): void {
-    // setting flag values
+    // setting flag values (will be resetted by this.readOrganisms and this.readSpecimens)
     this.isFetchingOrganisms = true;
     this.isFetchingSpecimens = true;
 
@@ -286,10 +298,17 @@ export class GisSearchComponent implements OnInit {
     CDPfetch.subscribe(
       (data) => {
         // deal with organism data
-        this.readOrganisms(data[0]);
+        const organisms_count = this.readOrganisms(data[0]);
 
         // deal with specimen data
-        this.readSpecimens(data[1]);
+        const specimens_count = this.readSpecimens(data[1]);
+
+        // report how many objects we get
+        const total_count = organisms_count + specimens_count;
+
+        this.snackBar.open(`${total_count} objects found`, 'close', {
+          duration: 3000,
+        });
 
         // initialize filters
         this.cdpService.filteredSpecies = this.filterForm.get('specieControl').valueChanges.pipe(
