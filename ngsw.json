@@ -1,0 +1,175 @@
+{
+  "configVersion": 1,
+  "timestamp": 1605873742321,
+  "index": "https://cnr-ibba.github.io/IMAGE-Portal/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://cnr-ibba.github.io/IMAGE-Portal/5.e73cd6c5832bd5396ea3.js",
+        "https://cnr-ibba.github.io/IMAGE-Portal/favicon.ico",
+        "https://cnr-ibba.github.io/IMAGE-Portal/index.html",
+        "https://cnr-ibba.github.io/IMAGE-Portal/main.8e64c32be8162195cd21.js",
+        "https://cnr-ibba.github.io/IMAGE-Portal/manifest.webmanifest",
+        "https://cnr-ibba.github.io/IMAGE-Portal/polyfills-es5.d1915ab629ed243ca902.js",
+        "https://cnr-ibba.github.io/IMAGE-Portal/polyfills.209c6ded6bc9bc9a6df0.js",
+        "https://cnr-ibba.github.io/IMAGE-Portal/runtime.2506ad2d58558f3337f0.js",
+        "https://cnr-ibba.github.io/IMAGE-Portal/styles.346324b16ce9fe3ffeb3.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/IMAGE--logo_CMJN.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/IMAGE--logo_RVB.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/aridity.tif",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/cdp.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/data_model.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-128x128.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-144x144.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-152x152.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-192x192.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-384x384.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-512x512.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-72x72.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-96x96.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/image001.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/image002.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/assets/inject_tool.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/layers-2x.4f0283c6ce28e888000e.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/layers.a6137456ed160d760698.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/marker-icon.2273e3d8ad9264b7daa5.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/marker-shadow.44a526eed258222515aa.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/spritesheet-2x.6a1e950d14904d4b6fb5.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/spritesheet.deac1d4aa2ccf7ed832e.png",
+        "https://cnr-ibba.github.io/IMAGE-Portal/spritesheet.fd5728f2cf777b06b966.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "organismSummary",
+      "patterns": [
+        "https:\\/\\/api\\.image2020genebank\\.eu\\/backend\\/organism\\/summary\\/"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    },
+    {
+      "name": "organismGraphicalSummary",
+      "patterns": [
+        "https:\\/\\/api\\.image2020genebank\\.eu\\/backend\\/organism\\/graphical_summary\\/"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    },
+    {
+      "name": "geoOrganism",
+      "patterns": [
+        "https:\\/\\/api\\.image2020genebank\\.eu\\/backend\\/organism\\.geojson\\/"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    },
+    {
+      "name": "specimenSummary",
+      "patterns": [
+        "https:\\/\\/api\\.image2020genebank\\.eu\\/backend\\/specimen\\/summary\\/"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    },
+    {
+      "name": "specimenGraphicalSummary",
+      "patterns": [
+        "https:\\/\\/api\\.image2020genebank\\.eu\\/backend\\/specimen\\/graphical_summary\\/"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    },
+    {
+      "name": "geoSpecimen",
+      "patterns": [
+        "https:\\/\\/api\\.image2020genebank\\.eu\\/backend\\/specimen\\.geojson\\/"
+      ],
+      "strategy": "performance",
+      "maxSize": 10,
+      "maxAge": 86400000,
+      "timeoutMs": 10000,
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "https://cnr-ibba.github.io/IMAGE-Portal/5.e73cd6c5832bd5396ea3.js": "90e1759bd526365dee096a64b4880c6be2257230",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/IMAGE--logo_CMJN.png": "ad2318caaea6dbdcdeeda48b940bd3ba240b5e57",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/IMAGE--logo_RVB.png": "773cef3694d3041a0be2bc963fa67319e05eba55",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/aridity.tif": "876a1da181a5f9827081fa26ae540443756df3a1",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/cdp.png": "6fd251cb54d1e06552d2bd06fe530fd25972e3c5",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/data_model.png": "48aabd53b92b5f5c7e216d1ed7b2110b179cdd17",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-128x128.png": "dae3b6ed49bdaf4327b92531d4b5b4a5d30c7532",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-144x144.png": "b0bd89982e08f9bd2b642928f5391915b74799a7",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-152x152.png": "7479a9477815dfd9668d60f8b3b2fba709b91310",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-192x192.png": "1abd80d431a237a853ce38147d8c63752f10933b",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-384x384.png": "329749cd6393768d3131ed6304c136b1ca05f2fd",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-512x512.png": "559d9c4318b45a1f2b10596bbb4c960fe521dbcc",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/image001.png": "a00aae97002d592496aab6f49f23853770bc0015",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/image002.png": "e0024cfe3b51aaac449c9a629f74f5def41333cd",
+    "https://cnr-ibba.github.io/IMAGE-Portal/assets/inject_tool.png": "e1b83d8a6da5589fcbe4f9545a2ee1bae81d1e3c",
+    "https://cnr-ibba.github.io/IMAGE-Portal/favicon.ico": "31de7b2145c29705bbb0ca80424b9efccaab874e",
+    "https://cnr-ibba.github.io/IMAGE-Portal/index.html": "5cfaae64684cd087c1913b4935b48ef59c70e5b5",
+    "https://cnr-ibba.github.io/IMAGE-Portal/layers-2x.4f0283c6ce28e888000e.png": "152a162333e46d24f9d89f566312fc0c64011dee",
+    "https://cnr-ibba.github.io/IMAGE-Portal/layers.a6137456ed160d760698.png": "c9e7528e491a39232ba24a2706c6c739d6fb0f06",
+    "https://cnr-ibba.github.io/IMAGE-Portal/main.8e64c32be8162195cd21.js": "89f128868e367c485dabbd7f9126c4243f3ca0be",
+    "https://cnr-ibba.github.io/IMAGE-Portal/manifest.webmanifest": "00b3ae06afad7a1deed1d76259b3a6b9c9b3032e",
+    "https://cnr-ibba.github.io/IMAGE-Portal/marker-icon.2273e3d8ad9264b7daa5.png": "60a90bcbb2b42b7ddb4556db94eb7c1084b0e5da",
+    "https://cnr-ibba.github.io/IMAGE-Portal/marker-shadow.44a526eed258222515aa.png": "7b6a8df63930381e96604e705168d0527d6b82bc",
+    "https://cnr-ibba.github.io/IMAGE-Portal/polyfills-es5.d1915ab629ed243ca902.js": "76a5b7e5a2136f2eee233ff0da1c960839e4cd67",
+    "https://cnr-ibba.github.io/IMAGE-Portal/polyfills.209c6ded6bc9bc9a6df0.js": "1b1a312e9a1ffa1caf7409d1c8d55c425b3e8dac",
+    "https://cnr-ibba.github.io/IMAGE-Portal/runtime.2506ad2d58558f3337f0.js": "0bfdece701592dc19b3ea103e0e36b47bb61085e",
+    "https://cnr-ibba.github.io/IMAGE-Portal/spritesheet-2x.6a1e950d14904d4b6fb5.png": "4625eac5b01eb0e5227467558ee02053d06efe37",
+    "https://cnr-ibba.github.io/IMAGE-Portal/spritesheet.deac1d4aa2ccf7ed832e.png": "d9e8c56f483ef0f1e94f47a725c13fd029daeeae",
+    "https://cnr-ibba.github.io/IMAGE-Portal/spritesheet.fd5728f2cf777b06b966.svg": "47e6aa6d64f8e6f6e7a7067cb0d41652135c9222",
+    "https://cnr-ibba.github.io/IMAGE-Portal/styles.346324b16ce9fe3ffeb3.css": "b70e50a92e4ecd88acac0ed693758615b6c7c428"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
