@@ -75,9 +75,14 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getAggregations(filterData: any) {
-    this.tablesService.getOrganismsSummary(filterData).subscribe(data => {
-      this.tablesService.organismSubject.next(data);
-    });
+    this.tablesService.getOrganismsSummary(filterData).subscribe(
+      data => {
+        this.tablesService.organismSubject.next(data);
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
   }
 
   ngAfterViewInit(): void {
@@ -102,12 +107,12 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
           return observableOf([]);
         })
       ).subscribe(data => {
-      this.data = data;
-      if (this.aggregationsRequired) {
-        this.getAggregations(this.activeFilters);
-        this.aggregationsRequired = false;
-      }
-    });
+        this.data = data;
+        if (this.aggregationsRequired) {
+          this.getAggregations(this.activeFilters);
+          this.aggregationsRequired = false;
+        }
+      });
   }
 
   hasActiveFilters() {
@@ -143,10 +148,15 @@ export class OrganismsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   downloadData() {
     this.downloadText = 'Preparing data...';
-    this.tablesService.export(this.downloadLink).subscribe(data => {
-      this.downloadText = 'Download data';
-      saveAs(data, 'organisms.txt');
-    });
+    this.tablesService.export(this.downloadLink).subscribe(
+      data => {
+        this.downloadText = 'Download data';
+        saveAs(data, 'organisms.txt');
+      },
+      error => {
+        console.log(error.message);
+      }
+    );
   }
 
   disableButton() {

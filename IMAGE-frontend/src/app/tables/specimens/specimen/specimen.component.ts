@@ -79,25 +79,33 @@ export class SpecimenComponent implements OnInit {
         }
       },
       error => {
-        this.error = error;
+        // get error message as a string
+        this.error = `Couldn't find specimen '${this.id}': ${error.message}`;
         this.snackBar.open(this.error, 'close', {
           duration: 5000,
         });
       }
-      );
-    this.tablesService.getFile(this.id).subscribe(data => {
-      this.files = [];
-      for (let i = 0; i < data['file_name'].length; i++) {
-        const tmp = {};
-        tmp['file_name'] = data['file_name'][i];
-        tmp['file_url'] = data['file_url'][i];
-        tmp['file_size'] = data['file_size'][i];
-        tmp['file_checksum'] = data['file_checksum'][i];
-        tmp['file_checksum_method'] = data['file_checksum_method'][i];
-        this.files.push(tmp);
-        this.urls.push(this.generateFtpLink(data['file_url'][i]));
+    );
+
+    this.tablesService.getFile(this.id).subscribe(
+      data => {
+        this.files = [];
+        for (let i = 0; i < data['file_name'].length; i++) {
+          const tmp = {};
+          tmp['file_name'] = data['file_name'][i];
+          tmp['file_url'] = data['file_url'][i];
+          tmp['file_size'] = data['file_size'][i];
+          tmp['file_checksum'] = data['file_checksum'][i];
+          tmp['file_checksum_method'] = data['file_checksum_method'][i];
+          this.files.push(tmp);
+          this.urls.push(this.generateFtpLink(data['file_url'][i]));
+        }
+      },
+      error => {
+        // this is the case for specimen whitout associated file
+        console.log(`Couldn't find a file for '${this.id}: ${error.error.message}'`);
       }
-    });
+    );
   }
 
   checkExistence(key: string, organism = false) {

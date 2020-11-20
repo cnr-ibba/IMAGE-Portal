@@ -1,0 +1,50 @@
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Component, ViewChild } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { RouterModule } from '@angular/router';
+
+import { MaterialModule } from 'src/app/material.module';
+import { SpecimensComponent } from './specimens.component';
+
+import { GeoSpecimen } from '../cdp.service';
+
+describe('SpecimensComponent', () => {
+  let component: TestSpecimensComponent;
+  let fixture: ComponentFixture<TestSpecimensComponent>;
+
+  @Component({
+    selector: `app-test-specimens`,
+    template: `<app-specimens [geoSpecimens]="specimensData"></app-specimens>`
+  })
+  class TestSpecimensComponent {
+    @ViewChild(SpecimensComponent, {static: false})
+    public specimensComponent: SpecimensComponent;
+
+    specimensData: GeoSpecimen[] = [];
+  }
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ SpecimensComponent, TestSpecimensComponent ],
+      imports: [
+        BrowserAnimationsModule,
+        HttpClientModule,
+        RouterModule,
+        MaterialModule
+      ]
+    })
+    .compileComponents();
+  }));
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(TestSpecimensComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create (for gis)', () => {
+    expect(component).toBeTruthy();
+  });
+
+});

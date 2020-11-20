@@ -1,38 +1,25 @@
-.gis-search {
-  margin-top: 15px;
-  height: 100%;
-  width: 100%;
-}
 
-.example-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.example-container > * {
-  width: 100%;
+mat-sidenav-container {
+  margin-left: 35px;
+  margin-right: 35px;
 }
 
 .map {
-  margin-right: 15px;
-  height: 50%;
-  width: 50%;
+  height: 55vh;
+  padding: 0;
+  outline: 1px solid black;
 }
 
-a {
-  text-decoration: none;
-  color: dodgerblue;
+mat-expansion-panel {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
 
-a:hover, a:active {
-  color: lightgrey;
-}
-
-table {
+.button {
   width: 100%;
 }
 
-.sticky-header {
-  height: 400px;
-  overflow: auto;
+mat-expansion-panel {
+  margin-left: 35px;
+  margin-right: 35px;
 }

@@ -3,6 +3,10 @@ import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { LeafletMarkerClusterModule } from '@asymmetrik/ngx-leaflet-markercluster';
+import { LeafletDrawModule } from '@asymmetrik/ngx-leaflet-draw';
+
 import {MaterialModule} from './material.module';
 import {AppRoutingModule} from './app-routing.module';
 
@@ -25,6 +29,7 @@ import {CookieLawModule} from 'angular2-cookie-law';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { GisSearchComponent } from './gis-search/gis-search.component';
+import { GisSearchModule } from './gis-search/gis-search.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { BreedersInterfaceComponent } from './breeders-interface/breeders-interface.component';
 
@@ -52,6 +57,10 @@ import { BreedersInterfaceComponent } from './breeders-interface/breeders-interf
     AppRoutingModule,
     Angular2CsvModule,
     HttpClientModule,
+    LeafletModule,
+    LeafletMarkerClusterModule,
+    LeafletDrawModule,
+    GisSearchModule,
     ChartsModule,
     CookieLawModule,
     FormsModule,
