@@ -100,10 +100,10 @@ export function filterPart(feature: GeoSpecimen, selectedPart: string) {
 })
 export class CdpService {
   // used to filter data
-  selectedSpecie: string = '';
-  selectedBreed: string = '';
-  selectedPart: string = '';
-  selectedId: string = '';
+  selectedSpecie = '';
+  selectedBreed = '';
+  selectedPart = '';
+  selectedId = '';
 
   // filter data by location
   selectedCircle: CircleLocation = {
