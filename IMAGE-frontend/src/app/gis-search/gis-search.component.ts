@@ -183,6 +183,8 @@ export class GisSearchComponent implements OnInit {
   private selectByCircle(circleLayer: L.Circle) {
     // create a custom query and set data into CDP service
     const point = circleLayer.getLatLng();
+
+    // set variables in service for search
     this.cdpService.selectedCircle.lat = point.lat;
     this.cdpService.selectedCircle.lng = point.lng;
     this.cdpService.selectedCircle.rad = Math.round(circleLayer.getRadius() / 1000); // get radius in Km
