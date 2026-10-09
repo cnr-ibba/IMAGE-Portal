@@ -1,10 +1,24 @@
 # IMAGE-portal frontend
 
+## Setup environment
+
+The Angular CLI (`ng`, version 8.3) is a project dependency: do **not** install it globally
+(a recent global version is incompatible with this Angular 8 project). Create a conda
+environment with Node.js only, then install the dependencies:
+
+```
+$ conda create -n image-portal -c conda-forge nodejs=14
+$ conda activate image-portal
+```
+
 ## Install dependencies
 
 ```
-$ npm install
+$ npm ci
 ```
+
+Use `npm install` instead if you need to update `package-lock.json`. The `ng` command is then
+available through the npm scripts below, or with `npx ng <command>`.
 
 ## Upgrade a package:
 
@@ -18,7 +32,7 @@ Please see IMAGE-CommonDataPool [README.md at GitHub](https://github.com/cnr-ibb
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` (or `npx ng serve`) for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
@@ -26,7 +40,15 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build, or `--configuration=test` for a test build
+The build artifacts will be stored in the `dist/` directory:
+
+```
+$ npm run build            # development build
+$ npm run build:prod       # production build
+$ npm run build:test       # build against the test API
+$ npm run build:gh-pages   # production build with the GitHub Pages base-href (as in CI)
+$ npm run clean:dist       # remove old build artifacts (dist/)
+```
 
 ## Running unit tests
 

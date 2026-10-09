@@ -11,16 +11,20 @@ Stack: Angular 8 (CLI 8.3), Angular Material 6 + Flex Layout, Leaflet (+ draw, m
 ## Commands
 
 ```
-npm install
-ng serve                       # dev server at http://localhost:4200 (uses environment.ts -> local backend)
-ng lint
-ng test                        # Karma, watch mode
-ng test --no-watch --no-progress --browsers=ChromeHeadlessCI   # as in CI
-ng test --include='**/cdp.service.spec.ts'                      # single spec (Angular 8.1+ CLI)
-ng e2e --protractor-config=e2e/protractor-ci.conf.js            # CI e2e config
-ng build --prod --base-href https://cnr-ibba.github.io/IMAGE-Portal/   # what CI deploys
-ng build --configuration=test  # build against the test API
+npm ci                         # conda env: `conda create -n image-portal -c conda-forge nodejs=14`
+npm start                      # dev server at http://localhost:4200 (uses environment.ts -> local backend)
+npm run lint
+npm test                       # Karma, watch mode
+npx ng test --no-watch --no-progress --browsers=ChromeHeadlessCI   # as in CI
+npx ng test --include='**/cdp.service.spec.ts'                      # single spec (Angular 8.1+ CLI)
+npx ng e2e --protractor-config=e2e/protractor-ci.conf.js            # CI e2e config
+npm run build:gh-pages         # prod build with the base-href CI deploys
+npm run build:prod             # prod build
+npm run build:test             # build against the test API
+npm run clean:dist             # remove old build output (dist/); `npm run clean` removes node_modules
 ```
+
+`ng` is the project-local Angular CLI 8.3 (devDependency): don't use a global `ng`, use `npm run` / `npx ng`.
 
 CI (`.travis.yml`, branches `master` and `devel`) runs lint → unit tests → e2e → prod build, and deploys `dist/IMAGE-frontend/` to GitHub Pages from `master`. Work happens on `devel`; `master` is release.
 
